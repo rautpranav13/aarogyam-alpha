@@ -1,3 +1,4 @@
+import '/app_state.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/backend/firebase_storage/storage.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
@@ -5,7 +6,7 @@ import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import '/flutter_flow/upload_data.dart';
+import '/flutter_flow/upload_data.dart' hide uploadData;
 import 'dart:math';
 import 'dart:ui';
 import '/custom_code/actions/index.dart' as actions;
@@ -115,7 +116,7 @@ class _ReportSannerWidgetState extends State<ReportSannerWidget>
     DebugFlutterFlowModelContext.maybeOf(context)
         ?.parentModelCallback
         ?.call(_model);
-    context.watch<FFAppState>();
+    context.read<AppState>();
 
     return GestureDetector(
       onTap: () {
@@ -128,7 +129,7 @@ class _ReportSannerWidgetState extends State<ReportSannerWidget>
         body: SafeArea(
           top: true,
           child: Align(
-            alignment: AlignmentDirectional(0.0, -1.0),
+            alignment: const AlignmentDirectional(0.0, -1.0),
             child: SingleChildScrollView(
               child: Column(
                 mainAxisSize: MainAxisSize.max,
@@ -136,7 +137,7 @@ class _ReportSannerWidgetState extends State<ReportSannerWidget>
                 children: [
                   Padding(
                     padding:
-                        EdgeInsetsDirectional.fromSTEB(12.0, 30.0, 12.0, 12.0),
+                        const EdgeInsetsDirectional.fromSTEB(12.0, 30.0, 12.0, 12.0),
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -155,7 +156,7 @@ class _ReportSannerWidgetState extends State<ReportSannerWidget>
                             context.safePop();
                           },
                         ),
-                      ].divide(SizedBox(width: 6.0)),
+                      ].divide(const SizedBox(width: 6.0)),
                     ),
                   ),
                   Stack(
@@ -276,14 +277,13 @@ class _ReportSannerWidgetState extends State<ReportSannerWidget>
                                         letterSpacing: 0.0,
                                       ),
                                 ),
-                              ].divide(SizedBox(height: 16.0)),
+                              ].divide(const SizedBox(height: 16.0)),
                             ),
                           ),
                         ),
                       ),
                       if (valueOrDefault<bool>(
-                        _model.uploadedFileUrl != null &&
-                            _model.uploadedFileUrl != '',
+                        _model.uploadedFileUrl != '',
                         false,
                       ))
                         ClipRRect(
@@ -293,7 +293,7 @@ class _ReportSannerWidgetState extends State<ReportSannerWidget>
                             width: 364.0,
                             height: 276.0,
                             fit: BoxFit.cover,
-                            alignment: Alignment(0.0, 0.0),
+                            alignment: const Alignment(0.0, 0.0),
                           ),
                         ),
                     ],
@@ -337,7 +337,7 @@ class _ReportSannerWidgetState extends State<ReportSannerWidget>
                                             .primaryText,
                                       ),
                                     ),
-                                    duration: Duration(milliseconds: 4000),
+                                    duration: const Duration(milliseconds: 4000),
                                     backgroundColor:
                                         FlutterFlowTheme.of(context).secondary,
                                   ),
@@ -363,7 +363,7 @@ class _ReportSannerWidgetState extends State<ReportSannerWidget>
                                             .primaryText,
                                       ),
                                     ),
-                                    duration: Duration(milliseconds: 4000),
+                                    duration: const Duration(milliseconds: 4000),
                                     backgroundColor:
                                         FlutterFlowTheme.of(context).secondary,
                                   ),
@@ -381,20 +381,20 @@ class _ReportSannerWidgetState extends State<ReportSannerWidget>
                                 context: context,
                                 builder: (alertDialogContext) {
                                   return AlertDialog(
-                                    title: Text(
+                                    title: const Text(
                                         'Prescription Scanned Successfully!'),
-                                    content: Text(
+                                    content: const Text(
                                         'Do you want to schedule automatic reminders?'),
                                     actions: [
                                       TextButton(
                                         onPressed: () => Navigator.pop(
                                             alertDialogContext, false),
-                                        child: Text('No'),
+                                        child: const Text('No'),
                                       ),
                                       TextButton(
                                         onPressed: () => Navigator.pop(
                                             alertDialogContext, true),
-                                        child: Text('Sure'),
+                                        child: const Text('Sure'),
                                       ),
                                     ],
                                   );
@@ -430,9 +430,9 @@ class _ReportSannerWidgetState extends State<ReportSannerWidget>
                         ),
                         options: FFButtonOptions(
                           height: 40.0,
-                          padding: EdgeInsetsDirectional.fromSTEB(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
                               16.0, 0.0, 16.0, 0.0),
-                          iconPadding: EdgeInsetsDirectional.fromSTEB(
+                          iconPadding: const EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 0.0, 0.0),
                           color: valueOrDefault<Color>(
                             FFAppState().whatClicked == 1
@@ -495,7 +495,7 @@ class _ReportSannerWidgetState extends State<ReportSannerWidget>
                                             .primaryText,
                                       ),
                                     ),
-                                    duration: Duration(milliseconds: 4000),
+                                    duration: const Duration(milliseconds: 4000),
                                     backgroundColor:
                                         FlutterFlowTheme.of(context).secondary,
                                   ),
@@ -521,7 +521,7 @@ class _ReportSannerWidgetState extends State<ReportSannerWidget>
                                             .primaryText,
                                       ),
                                     ),
-                                    duration: Duration(milliseconds: 4000),
+                                    duration: const Duration(milliseconds: 4000),
                                     backgroundColor:
                                         FlutterFlowTheme.of(context).secondary,
                                   ),
@@ -539,7 +539,7 @@ class _ReportSannerWidgetState extends State<ReportSannerWidget>
                                 animationsMap[
                                         'containerOnActionTriggerAnimation']!
                                     .controller
-                                  ..reset()
+                                  ?..reset()
                                   ..repeat();
                               }
                             }),
@@ -549,7 +549,7 @@ class _ReportSannerWidgetState extends State<ReportSannerWidget>
                               null) {
                             animationsMap['containerOnActionTriggerAnimation']!
                                 .controller
-                                .reset();
+                                ?.reset();
                           }
 
                           FFAppState().update(() {});
@@ -566,9 +566,9 @@ class _ReportSannerWidgetState extends State<ReportSannerWidget>
                         ),
                         options: FFButtonOptions(
                           height: 40.0,
-                          padding: EdgeInsetsDirectional.fromSTEB(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
                               16.0, 0.0, 16.0, 0.0),
-                          iconPadding: EdgeInsetsDirectional.fromSTEB(
+                          iconPadding: const EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 0.0, 0.0),
                           color: valueOrDefault<Color>(
                             FFAppState().whatClicked == 2
@@ -607,17 +607,16 @@ class _ReportSannerWidgetState extends State<ReportSannerWidget>
                         ),
                       ),
                     ]
-                        .divide(SizedBox(width: 10.0))
-                        .addToStart(SizedBox(width: 12.0))
-                        .addToEnd(SizedBox(width: 12.0)),
+                        .divide(const SizedBox(width: 10.0))
+                        .addToStart(const SizedBox(width: 12.0))
+                        .addToEnd(const SizedBox(width: 12.0)),
                   ),
                   Row(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       if (valueOrDefault<bool>(
-                        FFAppState().userTitle == null ||
-                            FFAppState().userTitle == '',
+                        FFAppState().userTitle == '',
                         true,
                       ))
                         FFButtonWidget(
@@ -635,9 +634,9 @@ class _ReportSannerWidgetState extends State<ReportSannerWidget>
                           ),
                           options: FFButtonOptions(
                             height: 40.0,
-                            padding: EdgeInsetsDirectional.fromSTEB(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
                                 16.0, 0.0, 16.0, 0.0),
-                            iconPadding: EdgeInsetsDirectional.fromSTEB(
+                            iconPadding: const EdgeInsetsDirectional.fromSTEB(
                                 0.0, 0.0, 0.0, 0.0),
                             color: valueOrDefault<Color>(
                               FFAppState().whatClicked == 3
@@ -677,8 +676,7 @@ class _ReportSannerWidgetState extends State<ReportSannerWidget>
                                 FlutterFlowTheme.of(context).primaryText,
                           ),
                         ),
-                      if (FFAppState().userTitle != null &&
-                          FFAppState().userTitle != '')
+                      if (FFAppState().userTitle != '')
                         FFButtonWidget(
                           onPressed: () async {
                             await Future.wait([
@@ -703,7 +701,7 @@ class _ReportSannerWidgetState extends State<ReportSannerWidget>
                                               .primaryText,
                                         ),
                                       ),
-                                      duration: Duration(milliseconds: 4000),
+                                      duration: const Duration(milliseconds: 4000),
                                       backgroundColor:
                                           FlutterFlowTheme.of(context)
                                               .secondary,
@@ -729,7 +727,7 @@ class _ReportSannerWidgetState extends State<ReportSannerWidget>
                                               .primaryText,
                                         ),
                                       ),
-                                      duration: Duration(milliseconds: 4000),
+                                      duration: const Duration(milliseconds: 4000),
                                       backgroundColor:
                                           FlutterFlowTheme.of(context)
                                               .secondary,
@@ -745,10 +743,10 @@ class _ReportSannerWidgetState extends State<ReportSannerWidget>
                                 if (animationsMap[
                                         'containerOnActionTriggerAnimation'] !=
                                     null) {
-                                  await animationsMap[
+                                  animationsMap[
                                           'containerOnActionTriggerAnimation']!
                                       .controller
-                                    ..reset()
+                                    ?..reset()
                                     ..repeat();
                                 }
                               }),
@@ -759,7 +757,7 @@ class _ReportSannerWidgetState extends State<ReportSannerWidget>
                               animationsMap[
                                       'containerOnActionTriggerAnimation']!
                                   .controller
-                                  .stop();
+                                  ?.stop();
                             }
 
                             safeSetState(() {});
@@ -773,9 +771,9 @@ class _ReportSannerWidgetState extends State<ReportSannerWidget>
                           ),
                           options: FFButtonOptions(
                             height: 40.0,
-                            padding: EdgeInsetsDirectional.fromSTEB(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
                                 16.0, 0.0, 16.0, 0.0),
-                            iconPadding: EdgeInsetsDirectional.fromSTEB(
+                            iconPadding: const EdgeInsetsDirectional.fromSTEB(
                                 0.0, 0.0, 0.0, 0.0),
                             color: FlutterFlowTheme.of(context).primaryText,
                             textStyle: FlutterFlowTheme.of(context)
@@ -803,20 +801,20 @@ class _ReportSannerWidgetState extends State<ReportSannerWidget>
                           ),
                         ),
                     ]
-                        .divide(SizedBox(width: 10.0))
-                        .addToStart(SizedBox(width: 12.0))
-                        .addToEnd(SizedBox(width: 12.0)),
+                        .divide(const SizedBox(width: 10.0))
+                        .addToStart(const SizedBox(width: 12.0))
+                        .addToEnd(const SizedBox(width: 12.0)),
                   ),
                   if (FFAppState().whatClicked != 0)
                     Align(
-                      alignment: AlignmentDirectional(0.0, 0.0),
+                      alignment: const AlignmentDirectional(0.0, 0.0),
                       child: Padding(
-                        padding: EdgeInsets.all(4.0),
+                        padding: const EdgeInsets.all(4.0),
                         child: Container(
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             shape: BoxShape.rectangle,
                           ),
-                          alignment: AlignmentDirectional(0.0, 0.0),
+                          alignment: const AlignmentDirectional(0.0, 0.0),
                           child: Column(
                             mainAxisSize: MainAxisSize.max,
                             children: [
@@ -832,7 +830,7 @@ class _ReportSannerWidgetState extends State<ReportSannerWidget>
                                   visible: (FFAppState().whatClicked == 1) ||
                                       (FFAppState().whatClicked == 2) ||
                                       (FFAppState().whatClicked == 3),
-                                  child: Container(
+                                  child: SizedBox(
                                     width: double.infinity,
                                     height: double.infinity,
                                     child: custom_widgets.HtmlWidget3(
@@ -852,9 +850,9 @@ class _ReportSannerWidgetState extends State<ReportSannerWidget>
                                 ),
                               ),
                               Align(
-                                alignment: AlignmentDirectional(0.0, 0.0),
+                                alignment: const AlignmentDirectional(0.0, 0.0),
                                 child: Padding(
-                                  padding: EdgeInsets.all(10.0),
+                                  padding: const EdgeInsets.all(10.0),
                                   child: Container(
                                     width: double.infinity,
                                     height: 50.0,
@@ -864,9 +862,9 @@ class _ReportSannerWidgetState extends State<ReportSannerWidget>
                                       borderRadius: BorderRadius.circular(25.0),
                                     ),
                                     child: Align(
-                                      alignment: AlignmentDirectional(0.0, 0.0),
+                                      alignment: const AlignmentDirectional(0.0, 0.0),
                                       child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                        padding: const EdgeInsetsDirectional.fromSTEB(
                                             24.0, 0.0, 0.0, 0.0),
                                         child: Row(
                                           mainAxisSize: MainAxisSize.max,
@@ -874,7 +872,7 @@ class _ReportSannerWidgetState extends State<ReportSannerWidget>
                                               MainAxisAlignment.start,
                                           children: [
                                             Align(
-                                              alignment: AlignmentDirectional(
+                                              alignment: const AlignmentDirectional(
                                                   -1.0, 1.0),
                                               child: FlutterFlowIconButton(
                                                 borderRadius: 25.0,
@@ -882,7 +880,7 @@ class _ReportSannerWidgetState extends State<ReportSannerWidget>
                                                 fillColor:
                                                     FlutterFlowTheme.of(context)
                                                         .primaryText,
-                                                icon: Icon(
+                                                icon: const Icon(
                                                   Icons.volume_up,
                                                   color: Colors.white,
                                                   size: 24.0,
@@ -915,7 +913,7 @@ class _ReportSannerWidgetState extends State<ReportSannerWidget>
                                               ),
                                             ),
                                             Align(
-                                              alignment: AlignmentDirectional(
+                                              alignment: const AlignmentDirectional(
                                                   -1.0, 1.0),
                                               child: FlutterFlowIconButton(
                                                 borderRadius: 25.0,
@@ -923,7 +921,7 @@ class _ReportSannerWidgetState extends State<ReportSannerWidget>
                                                 fillColor:
                                                     FlutterFlowTheme.of(context)
                                                         .primaryText,
-                                                icon: Icon(
+                                                icon: const Icon(
                                                   Icons.translate_rounded,
                                                   color: Colors.white,
                                                   size: 24.0,
@@ -946,7 +944,7 @@ class _ReportSannerWidgetState extends State<ReportSannerWidget>
                                                 },
                                               ),
                                             ),
-                                          ].divide(SizedBox(width: 16.0)),
+                                          ].divide(const SizedBox(width: 16.0)),
                                         ),
                                       ),
                                     ),
@@ -961,8 +959,8 @@ class _ReportSannerWidgetState extends State<ReportSannerWidget>
                       ),
                     ),
                 ]
-                    .divide(SizedBox(height: 30.0))
-                    .addToEnd(SizedBox(height: 30.0)),
+                    .divide(const SizedBox(height: 30.0))
+                    .addToEnd(const SizedBox(height: 30.0)),
               ),
             ),
           ),

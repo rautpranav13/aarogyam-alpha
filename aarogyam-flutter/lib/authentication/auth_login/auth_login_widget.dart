@@ -1,12 +1,7 @@
 import '/auth/firebase_auth/auth_util.dart';
-import '/flutter_flow/flutter_flow_icon_button.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
-import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
-import 'dart:ui';
+import '/core/router/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 import 'auth_login_model.dart';
 export 'auth_login_model.dart';
 
@@ -17,429 +12,181 @@ class AuthLoginWidget extends StatefulWidget {
   State<AuthLoginWidget> createState() => _AuthLoginWidgetState();
 }
 
-class _AuthLoginWidgetState extends State<AuthLoginWidget> with RouteAware {
+class _AuthLoginWidgetState extends State<AuthLoginWidget> {
   late AuthLoginModel _model;
-
-  final scaffoldKey = GlobalKey<ScaffoldState>();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => AuthLoginModel());
-
-    _model.emailAddressTextController ??= TextEditingController()
-      ..addListener(() {
-        debugLogWidgetClass(_model);
-      });
-    _model.emailAddressFocusNode ??= FocusNode();
-
-    _model.passwordTextController ??= TextEditingController()
-      ..addListener(() {
-        debugLogWidgetClass(_model);
-      });
-    _model.passwordFocusNode ??= FocusNode();
+    _model = AuthLoginModel();
+    _model.init(context);
   }
 
   @override
   void dispose() {
     _model.dispose();
-
     super.dispose();
   }
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    final route = DebugModalRoute.of(context);
-    if (route != null) {
-      routeObserver.subscribe(this, route);
-    }
-    debugLogGlobalProperty(context);
-  }
-
-  @override
-  void didPopNext() {
-    if (mounted && DebugFlutterFlowModelContext.maybeOf(context) == null) {
-      setState(() => _model.isRouteVisible = true);
-      debugLogWidgetClass(_model);
-    }
-  }
-
-  @override
-  void didPush() {
-    if (mounted && DebugFlutterFlowModelContext.maybeOf(context) == null) {
-      setState(() => _model.isRouteVisible = true);
-      debugLogWidgetClass(_model);
-    }
-  }
-
-  @override
-  void didPop() {
-    _model.isRouteVisible = false;
-  }
-
-  @override
-  void didPushNext() {
-    _model.isRouteVisible = false;
-  }
-
-  @override
   Widget build(BuildContext context) {
-    DebugFlutterFlowModelContext.maybeOf(context)
-        ?.parentModelCallback
-        ?.call(_model);
+    final cs = Theme.of(context).colorScheme;
+    final tt = Theme.of(context).textTheme;
 
     return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
-        FocusManager.instance.primaryFocus?.unfocus();
-      },
+      onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-        key: scaffoldKey,
-        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+        backgroundColor: cs.surface,
         body: SafeArea(
-          top: true,
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                child: Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 12.0, 0.0),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                Expanded(
                   child: SingleChildScrollView(
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
                     child: Column(
-                      mainAxisSize: MainAxisSize.max,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        // Back button
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 30.0, 0.0, 12.0),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              FlutterFlowIconButton(
-                                borderRadius: 30.0,
-                                buttonSize: 60.0,
-                                fillColor: FlutterFlowTheme.of(context)
-                                    .secondaryBackground,
-                                icon: Icon(
-                                  Icons.arrow_back,
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryText,
-                                  size: 24.0,
-                                ),
-                                onPressed: () async {
-                                  context.safePop();
-                                },
-                              ),
-                            ].divide(SizedBox(width: 6.0)),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              12.0, 32.0, 0.0, 8.0),
-                          child: Text(
-                            FFLocalizations.of(context).getText(
-                              'egpcac1x' /* Get to my account */,
+                          padding: const EdgeInsets.only(top: 30, bottom: 12),
+                          child: IconButton.filled(
+                            onPressed: () => context.pop(),
+                            icon: const Icon(Icons.arrow_back),
+                            style: IconButton.styleFrom(
+                              backgroundColor: cs.surfaceContainerHighest,
+                              foregroundColor: cs.onSurface,
                             ),
-                            textAlign: TextAlign.start,
-                            style: FlutterFlowTheme.of(context)
-                                .displayMedium
-                                .override(
-                                  font: GoogleFonts.outfit(),
-                                  letterSpacing: 0.0,
-                                ),
                           ),
                         ),
+                        // Title
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              12.0, 0.0, 12.0, 12.0),
+                          padding: const EdgeInsets.fromLTRB(12, 32, 0, 8),
                           child: Text(
-                            FFLocalizations.of(context).getText(
-                              '6z3qfnth' /* Access your health tools by lo... */,
+                            'Get to my account',
+                            style: tt.displayMedium?.copyWith(
+                              fontFamily: GoogleFonts.outfit().fontFamily,
                             ),
-                            textAlign: TextAlign.start,
-                            style: FlutterFlowTheme.of(context)
-                                .labelLarge
-                                .override(
-                                  font: GoogleFonts.manrope(),
-                                  letterSpacing: 0.0,
-                                ),
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              16.0, 12.0, 16.0, 0.0),
+                          padding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
+                          child: Text(
+                            'Access your health tools by logging in.',
+                            style: tt.labelLarge?.copyWith(
+                              fontFamily: GoogleFonts.manrope().fontFamily,
+                              color: cs.onSurfaceVariant,
+                            ),
+                          ),
+                        ),
+                        // Email field
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
                           child: TextFormField(
                             controller: _model.emailAddressTextController,
                             focusNode: _model.emailAddressFocusNode,
-                            autofocus: false,
-                            obscureText: false,
-                            decoration: InputDecoration(
-                              labelText: FFLocalizations.of(context).getText(
-                                '75j59flg' /* Email Address */,
-                              ),
-                              labelStyle: FlutterFlowTheme.of(context)
-                                  .labelLarge
-                                  .override(
-                                    font: GoogleFonts.manrope(),
-                                    letterSpacing: 0.0,
-                                  ),
-                              errorStyle: FlutterFlowTheme.of(context)
-                                  .labelMedium
-                                  .override(
-                                    font: GoogleFonts.manrope(),
-                                    color: FlutterFlowTheme.of(context).error,
-                                    letterSpacing: 0.0,
-                                    lineHeight: 1.5,
-                                  ),
-                              enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: FlutterFlowTheme.of(context).alternate,
-                                  width: 2.0,
-                                ),
-                                borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(4.0),
-                                  topRight: Radius.circular(4.0),
-                                ),
-                              ),
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: FlutterFlowTheme.of(context).primary,
-                                  width: 2.0,
-                                ),
-                                borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(4.0),
-                                  topRight: Radius.circular(4.0),
-                                ),
-                              ),
-                              errorBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: FlutterFlowTheme.of(context).error,
-                                  width: 2.0,
-                                ),
-                                borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(4.0),
-                                  topRight: Radius.circular(4.0),
-                                ),
-                              ),
-                              focusedErrorBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: FlutterFlowTheme.of(context).error,
-                                  width: 2.0,
-                                ),
-                                borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(4.0),
-                                  topRight: Radius.circular(4.0),
-                                ),
-                              ),
-                              filled: true,
-                              fillColor: FlutterFlowTheme.of(context)
-                                  .primaryBackground,
-                              contentPadding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 16.0, 16.0, 8.0),
+                            keyboardType: TextInputType.emailAddress,
+                            decoration: const InputDecoration(
+                              labelText: 'Email Address',
+                              border: OutlineInputBorder(),
                             ),
-                            style: FlutterFlowTheme.of(context)
-                                .headlineMedium
-                                .override(
-                                  font: GoogleFonts.outfit(),
-                                  letterSpacing: 0.0,
-                                  lineHeight: 1.5,
-                                ),
-                            cursorColor: FlutterFlowTheme.of(context).primary,
-                            validator: _model
-                                .emailAddressTextControllerValidator
-                                .asValidator(context),
+                            validator: (v) {
+                              if (v == null || v.isEmpty) return 'Email required';
+                              if (!v.contains('@')) return 'Enter a valid email';
+                              return null;
+                            },
                           ),
                         ),
+                        // Password field
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              16.0, 12.0, 16.0, 0.0),
+                          padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
                           child: TextFormField(
                             controller: _model.passwordTextController,
                             focusNode: _model.passwordFocusNode,
-                            autofocus: false,
-                            textCapitalization: TextCapitalization.none,
                             obscureText: !_model.passwordVisibility,
                             decoration: InputDecoration(
-                              labelText: FFLocalizations.of(context).getText(
-                                'im2ohehm' /* Password */,
-                              ),
-                              labelStyle: FlutterFlowTheme.of(context)
-                                  .labelLarge
-                                  .override(
-                                    font: GoogleFonts.manrope(),
-                                    letterSpacing: 0.0,
-                                  ),
-                              errorStyle: FlutterFlowTheme.of(context)
-                                  .labelMedium
-                                  .override(
-                                    font: GoogleFonts.manrope(),
-                                    color: FlutterFlowTheme.of(context).error,
-                                    letterSpacing: 0.0,
-                                    lineHeight: 1.5,
-                                  ),
-                              enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: FlutterFlowTheme.of(context).alternate,
-                                  width: 2.0,
-                                ),
-                                borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(4.0),
-                                  topRight: Radius.circular(4.0),
-                                ),
-                              ),
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: FlutterFlowTheme.of(context).primary,
-                                  width: 2.0,
-                                ),
-                                borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(4.0),
-                                  topRight: Radius.circular(4.0),
-                                ),
-                              ),
-                              errorBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: FlutterFlowTheme.of(context).error,
-                                  width: 2.0,
-                                ),
-                                borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(4.0),
-                                  topRight: Radius.circular(4.0),
-                                ),
-                              ),
-                              focusedErrorBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: FlutterFlowTheme.of(context).error,
-                                  width: 2.0,
-                                ),
-                                borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(4.0),
-                                  topRight: Radius.circular(4.0),
-                                ),
-                              ),
-                              filled: true,
-                              fillColor: FlutterFlowTheme.of(context)
-                                  .primaryBackground,
-                              contentPadding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 16.0, 16.0, 8.0),
-                              suffixIcon: InkWell(
-                                onTap: () => safeSetState(
-                                  () => _model.passwordVisibility =
-                                      !_model.passwordVisibility,
-                                ),
-                                focusNode: FocusNode(skipTraversal: true),
-                                child: Icon(
+                              labelText: 'Password',
+                              border: const OutlineInputBorder(),
+                              suffixIcon: IconButton(
+                                icon: Icon(
                                   _model.passwordVisibility
                                       ? Icons.visibility_outlined
                                       : Icons.visibility_off_outlined,
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryText,
-                                  size: 24.0,
+                                ),
+                                onPressed: () => setState(
+                                  () => _model.passwordVisibility =
+                                      !_model.passwordVisibility,
                                 ),
                               ),
                             ),
-                            style: FlutterFlowTheme.of(context)
-                                .headlineMedium
-                                .override(
-                                  font: GoogleFonts.outfit(),
-                                  letterSpacing: 0.0,
-                                  lineHeight: 1.5,
-                                ),
-                            cursorColor: FlutterFlowTheme.of(context).primary,
-                            validator: _model.passwordTextControllerValidator
-                                .asValidator(context),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              16.0, 12.0, 16.0, 0.0),
-                          child: FFButtonWidget(
-                            onPressed: () async {
-                              context.pushNamed('auth_ForgotPassword');
+                            validator: (v) {
+                              if (v == null || v.isEmpty) return 'Password required';
+                              if (v.length < 6) return 'Min 6 characters';
+                              return null;
                             },
-                            text: FFLocalizations.of(context).getText(
-                              'v6maou3j' /* Forgot Password? */,
-                            ),
-                            options: FFButtonOptions(
-                              width: double.infinity,
-                              height: 60.0,
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 0.0, 0.0),
-                              iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 0.0, 0.0),
-                              color: FlutterFlowTheme.of(context)
-                                  .primaryBackground,
-                              textStyle: FlutterFlowTheme.of(context)
-                                  .titleLarge
-                                  .override(
-                                    font: GoogleFonts.outfit(),
-                                    letterSpacing: 0.0,
-                                  ),
-                              elevation: 0.0,
-                              borderSide: BorderSide(
-                                color: Colors.transparent,
-                                width: 1.0,
+                          ),
+                        ),
+                        // Forgot password
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(16, 4, 16, 0),
+                          child: Align(
+                            alignment: Alignment.centerRight,
+                            child: TextButton(
+                              onPressed: () =>
+                                  context.pushNamed('auth_ForgotPassword'),
+                              child: Text(
+                                'Forgot Password?',
+                                style: tt.titleMedium?.copyWith(
+                                  fontFamily: GoogleFonts.outfit().fontFamily,
+                                  color: cs.primary,
+                                ),
                               ),
-                              borderRadius: BorderRadius.circular(50.0),
-                              hoverColor:
-                                  FlutterFlowTheme.of(context).alternate,
                             ),
                           ),
                         ),
+                        const SizedBox(height: 44),
                       ],
                     ),
                   ),
                 ),
-              ),
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 24.0),
-                child: FFButtonWidget(
-                  onPressed: () async {
-                    GoRouter.of(context).prepareAuthEvent();
-
-                    final user = await authManager.signInWithEmail(
-                      context,
-                      _model.emailAddressTextController.text,
-                      _model.passwordTextController.text,
-                    );
-                    if (user == null) {
-                      return;
-                    }
-
-                    context.goNamedAuth('HomePage', context.mounted);
-                  },
-                  text: FFLocalizations.of(context).getText(
-                    'fysqcdim' /* Login */,
-                  ),
-                  options: FFButtonOptions(
+                // Login button
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
+                  child: SizedBox(
                     width: double.infinity,
-                    height: 60.0,
-                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                    iconPadding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                    color: FlutterFlowTheme.of(context).primaryText,
-                    textStyle: FlutterFlowTheme.of(context)
-                        .titleMedium
-                        .override(
-                          font: GoogleFonts.manrope(),
-                          color:
-                              FlutterFlowTheme.of(context).secondaryBackground,
-                          letterSpacing: 0.0,
+                    height: 56,
+                    child: FilledButton(
+                      onPressed: () async {
+                        if (!_formKey.currentState!.validate()) return;
+                        GoRouter.of(context).prepareAuthEvent();
+                        final user = await authManager.signInWithEmail(
+                          context,
+                          _model.emailAddressTextController!.text,
+                          _model.passwordTextController!.text,
+                        );
+                        if (user == null) return;
+                        if (context.mounted) {
+                          context.goNamedAuth('HomePage', context.mounted);
+                        }
+                      },
+                      style: FilledButton.styleFrom(
+                        shape: const StadiumBorder(),
+                        elevation: 4,
+                      ),
+                      child: Text(
+                        'Login',
+                        style: GoogleFonts.manrope(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
                         ),
-                    elevation: 4.0,
-                    borderSide: BorderSide(
-                      color: Colors.transparent,
-                      width: 1.0,
+                      ),
                     ),
-                    borderRadius: BorderRadius.circular(50.0),
-                    hoverColor: FlutterFlowTheme.of(context).primaryText,
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

@@ -24,8 +24,11 @@ class SetReminderModel extends FlutterFlowModel<SetReminderWidget> {
   String? Function(BuildContext, String?)? textController2Validator;
   DateTime? datePicked;
 
+  @override
   final Map<String, DebugDataField> debugGeneratorVariables = {};
+  @override
   final Map<String, DebugDataField> debugBackendQueries = {};
+  @override
   final Map<String, FlutterFlowModel> widgetBuilderComponents = {};
   @override
   void initState(BuildContext context) {}

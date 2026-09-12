@@ -1,11 +1,6 @@
-import '/flutter_flow/flutter_flow_count_controller.dart';
-import '/flutter_flow/flutter_flow_drop_down.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
-import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/form_field_controller.dart';
-import 'dart:ui';
+import '/app_state.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'user_info_model.dart';
 export 'user_info_model.dart';
@@ -17,387 +12,148 @@ class UserInfoWidget extends StatefulWidget {
   State<UserInfoWidget> createState() => _UserInfoWidgetState();
 }
 
-class _UserInfoWidgetState extends State<UserInfoWidget> with RouteAware {
+class _UserInfoWidgetState extends State<UserInfoWidget> {
   late UserInfoModel _model;
-
-  @override
-  void setState(VoidCallback callback) {
-    super.setState(callback);
-    _model.onUpdate();
-  }
 
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => UserInfoModel());
+    _model = UserInfoModel();
+    _model.init(context);
   }
 
   @override
   void dispose() {
-    _model.maybeDispose();
-
+    _model.dispose();
     super.dispose();
   }
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    final route = DebugModalRoute.of(context);
-    if (route != null) {
-      routeObserver.subscribe(this, route);
-    }
-    debugLogGlobalProperty(context);
-  }
-
-  @override
-  void didPopNext() {
-    if (mounted && DebugFlutterFlowModelContext.maybeOf(context) == null) {
-      setState(() => _model.isRouteVisible = true);
-      debugLogWidgetClass(_model);
-    }
-  }
-
-  @override
-  void didPush() {
-    if (mounted && DebugFlutterFlowModelContext.maybeOf(context) == null) {
-      setState(() => _model.isRouteVisible = true);
-      debugLogWidgetClass(_model);
-    }
-  }
-
-  @override
-  void didPop() {
-    _model.isRouteVisible = false;
-  }
-
-  @override
-  void didPushNext() {
-    _model.isRouteVisible = false;
+  Widget _buildCounterRow({
+    required String label,
+    required int value,
+    required int min,
+    required int max,
+    required ValueChanged<int> onChanged,
+  }) {
+    final cs = Theme.of(context).colorScheme;
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(label, style: Theme.of(context).textTheme.bodyLarge),
+        Row(
+          children: [
+            IconButton(
+              onPressed: value > min ? () => onChanged(value - 1) : null,
+              icon: const Icon(Icons.remove_rounded),
+            ),
+            SizedBox(
+              width: 44,
+              child: Text(
+                value.toString(),
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+            ),
+            IconButton(
+              onPressed: value < max ? () => onChanged(value + 1) : null,
+              icon: const Icon(Icons.add_rounded),
+            ),
+          ],
+        ),
+      ],
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    DebugFlutterFlowModelContext.maybeOf(context)
-        ?.parentModelCallback
-        ?.call(_model);
-    context.watch<FFAppState>();
+    final appState = context.watch<AppState>();
+    final cs = Theme.of(context).colorScheme;
+
+    // Initialise local state from AppState on first build
+    _model.dropDownValue ??=
+        appState.genderValue.isNotEmpty ? appState.genderValue : null;
+    _model.countControllerValue1 ??= appState.ageValue;
+    _model.countControllerValue2 ??=
+        appState.heightValue > 0 ? appState.heightValue : 150;
+    _model.countControllerValue3 ??=
+        appState.weightValue > 0 ? appState.weightValue : 50;
 
     return Padding(
-      padding: EdgeInsets.all(24.0),
+      padding: const EdgeInsets.all(24),
       child: Column(
-        mainAxisSize: MainAxisSize.max,
         children: [
+          // Gender
           Row(
-            mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                FFLocalizations.of(context).getText(
-                  'hgmz2lj6' /* Gender */,
-                ),
-                style: FlutterFlowTheme.of(context).bodyMedium.override(
-                      font: GoogleFonts.manrope(),
-                      fontSize: 20.0,
-                      letterSpacing: 0.0,
-                    ),
-              ),
-              Column(
-                mainAxisSize: MainAxisSize.max,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  FlutterFlowDropDown<String>(
-                    controller: _model.dropDownValueController ??=
-                        FormFieldController<String>(
-                      _model.dropDownValue ??= valueOrDefault<String>(
-                        FFAppState().genderValue,
-                        'Gender',
-                      ),
-                    ),
-                    options: [
-                      FFLocalizations.of(context).getText(
-                        'ivregv59' /* Male */,
-                      ),
-                      FFLocalizations.of(context).getText(
-                        'a98knxxn' /* Female */,
-                      ),
-                      FFLocalizations.of(context).getText(
-                        '3o64no9t' /* Other */,
-                      )
-                    ],
-                    onChanged: (val) async {
-                      safeSetState(() => _model.dropDownValue = val);
-                      FFAppState().genderValue = _model.dropDownValue!;
-                      safeSetState(() {});
-                    },
-                    width: 114.0,
-                    height: 40.0,
-                    textStyle: FlutterFlowTheme.of(context).bodyMedium.override(
-                          font: GoogleFonts.manrope(),
-                          fontSize: 16.0,
-                          letterSpacing: 0.0,
-                        ),
-                    hintText: FFLocalizations.of(context).getText(
-                      'isawvu9w' /* Gender */,
-                    ),
-                    icon: Icon(
-                      Icons.keyboard_arrow_down_rounded,
-                      color: FlutterFlowTheme.of(context).secondaryText,
-                      size: 24.0,
-                    ),
-                    fillColor: FlutterFlowTheme.of(context).primaryBackground,
-                    elevation: 2.0,
-                    borderColor: Colors.transparent,
-                    borderWidth: 0.0,
-                    borderRadius: 8.0,
-                    margin:
-                        EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 12.0, 0.0),
-                    hidesUnderline: true,
-                    isOverButton: false,
-                    isSearchable: false,
-                    isMultiSelect: false,
-                  ),
+              Text('Gender', style: Theme.of(context).textTheme.bodyLarge),
+              DropdownButton<String>(
+                value: _model.dropDownValue,
+                hint: const Text('Gender'),
+                underline: const SizedBox.shrink(),
+                items: const [
+                  DropdownMenuItem(value: 'Male', child: Text('Male')),
+                  DropdownMenuItem(value: 'Female', child: Text('Female')),
+                  DropdownMenuItem(value: 'Other', child: Text('Other')),
                 ],
+                onChanged: (val) {
+                  setState(() => _model.dropDownValue = val);
+                  if (val != null) appState.genderValue = val;
+                },
               ),
             ],
           ),
-          Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                FFLocalizations.of(context).getText(
-                  'vv9lkdpc' /* Age */,
-                ),
-                style: FlutterFlowTheme.of(context).bodyMedium.override(
-                      font: GoogleFonts.manrope(),
-                      fontSize: 20.0,
-                      letterSpacing: 0.0,
-                    ),
-              ),
-              Column(
-                mainAxisSize: MainAxisSize.max,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Container(
-                    width: 120.0,
-                    height: 40.0,
-                    decoration: BoxDecoration(
-                      color: FlutterFlowTheme.of(context).secondaryBackground,
-                      borderRadius: BorderRadius.circular(8.0),
-                      shape: BoxShape.rectangle,
-                    ),
-                    child: FlutterFlowCountController(
-                      decrementIconBuilder: (enabled) => Icon(
-                        Icons.remove_rounded,
-                        color: enabled
-                            ? FlutterFlowTheme.of(context).primaryText
-                            : FlutterFlowTheme.of(context).alternate,
-                        size: 24.0,
-                      ),
-                      incrementIconBuilder: (enabled) => Icon(
-                        Icons.add_rounded,
-                        color: enabled
-                            ? FlutterFlowTheme.of(context).primaryText
-                            : FlutterFlowTheme.of(context).alternate,
-                        size: 24.0,
-                      ),
-                      countBuilder: (count) => Text(
-                        count.toString(),
-                        style: FlutterFlowTheme.of(context).titleLarge.override(
-                              font: GoogleFonts.outfit(),
-                              letterSpacing: 0.0,
-                            ),
-                      ),
-                      count: _model.countControllerValue1 ??=
-                          FFAppState().ageValue,
-                      updateCount: (count) async {
-                        safeSetState(
-                            () => _model.countControllerValue1 = count);
-                        FFAppState().ageValue = _model.countControllerValue1!;
-                        safeSetState(() {});
-                      },
-                      stepSize: 1,
-                      minimum: 1,
-                      maximum: 150,
-                      contentPadding:
-                          EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 12.0, 0.0),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                FFLocalizations.of(context).getText(
-                  'qzxnu4hf' /* Height(cm) */,
-                ),
-                style: FlutterFlowTheme.of(context).bodyMedium.override(
-                      font: GoogleFonts.manrope(),
-                      fontSize: 20.0,
-                      letterSpacing: 0.0,
-                    ),
-              ),
-              Column(
-                mainAxisSize: MainAxisSize.max,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Container(
-                    width: 120.0,
-                    height: 40.0,
-                    decoration: BoxDecoration(
-                      color: FlutterFlowTheme.of(context).secondaryBackground,
-                      borderRadius: BorderRadius.circular(8.0),
-                      shape: BoxShape.rectangle,
-                    ),
-                    child: FlutterFlowCountController(
-                      decrementIconBuilder: (enabled) => Icon(
-                        Icons.remove_rounded,
-                        color: enabled
-                            ? FlutterFlowTheme.of(context).primaryText
-                            : FlutterFlowTheme.of(context).alternate,
-                        size: 24.0,
-                      ),
-                      incrementIconBuilder: (enabled) => Icon(
-                        Icons.add_rounded,
-                        color: enabled
-                            ? FlutterFlowTheme.of(context).primaryText
-                            : FlutterFlowTheme.of(context).alternate,
-                        size: 24.0,
-                      ),
-                      countBuilder: (count) => Text(
-                        count.toString(),
-                        style: FlutterFlowTheme.of(context).titleLarge.override(
-                              font: GoogleFonts.outfit(),
-                              letterSpacing: 0.0,
-                            ),
-                      ),
-                      count: _model.countControllerValue2 ??=
-                          valueOrDefault<int>(
-                        FFAppState().heightValue,
-                        150,
-                      ),
-                      updateCount: (count) async {
-                        safeSetState(
-                            () => _model.countControllerValue2 = count);
-                        FFAppState().ageValue = _model.countControllerValue2!;
-                        safeSetState(() {});
-                      },
-                      stepSize: 1,
-                      minimum: 50,
-                      maximum: 250,
-                      contentPadding:
-                          EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 12.0, 0.0),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                FFLocalizations.of(context).getText(
-                  'x9th1dmu' /* Weight(kg) */,
-                ),
-                style: FlutterFlowTheme.of(context).bodyMedium.override(
-                      font: GoogleFonts.manrope(),
-                      fontSize: 20.0,
-                      letterSpacing: 0.0,
-                    ),
-              ),
-              Column(
-                mainAxisSize: MainAxisSize.max,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Container(
-                    width: 120.0,
-                    height: 40.0,
-                    decoration: BoxDecoration(
-                      color: FlutterFlowTheme.of(context).secondaryBackground,
-                      borderRadius: BorderRadius.circular(8.0),
-                      shape: BoxShape.rectangle,
-                    ),
-                    child: FlutterFlowCountController(
-                      decrementIconBuilder: (enabled) => Icon(
-                        Icons.remove_rounded,
-                        color: enabled
-                            ? FlutterFlowTheme.of(context).primaryText
-                            : FlutterFlowTheme.of(context).alternate,
-                        size: 24.0,
-                      ),
-                      incrementIconBuilder: (enabled) => Icon(
-                        Icons.add_rounded,
-                        color: enabled
-                            ? FlutterFlowTheme.of(context).primaryText
-                            : FlutterFlowTheme.of(context).alternate,
-                        size: 24.0,
-                      ),
-                      countBuilder: (count) => Text(
-                        count.toString(),
-                        style: FlutterFlowTheme.of(context).titleLarge.override(
-                              font: GoogleFonts.outfit(),
-                              letterSpacing: 0.0,
-                            ),
-                      ),
-                      count: _model.countControllerValue3 ??=
-                          valueOrDefault<int>(
-                        FFAppState().weightValue,
-                        50,
-                      ),
-                      updateCount: (count) async {
-                        safeSetState(
-                            () => _model.countControllerValue3 = count);
-                        FFAppState().ageValue = _model.countControllerValue3!;
-                        safeSetState(() {});
-                      },
-                      stepSize: 1,
-                      minimum: 30,
-                      maximum: 150,
-                      contentPadding:
-                          EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 12.0, 0.0),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          InkWell(
-            splashColor: Colors.transparent,
-            focusColor: Colors.transparent,
-            hoverColor: Colors.transparent,
-            highlightColor: Colors.transparent,
-            onTap: () async {
-              context.pushNamed('Allergies');
+          const SizedBox(height: 24),
+          // Age
+          _buildCounterRow(
+            label: 'Age',
+            value: _model.countControllerValue1!,
+            min: 1,
+            max: 150,
+            onChanged: (v) {
+              setState(() => _model.countControllerValue1 = v);
+              appState.ageValue = v;
             },
-            child: Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  FFLocalizations.of(context).getText(
-                    '5m34ql0z' /* Allergies(If any) */,
-                  ),
-                  style: FlutterFlowTheme.of(context).bodyMedium.override(
-                        font: GoogleFonts.manrope(),
-                        fontSize: 20.0,
-                        letterSpacing: 0.0,
-                      ),
-                ),
-                Icon(
-                  Icons.chevron_right,
-                  color: FlutterFlowTheme.of(context).primaryText,
-                  size: 24.0,
-                ),
-              ],
-            ),
           ),
-        ].divide(SizedBox(height: 24.0)),
+          const SizedBox(height: 24),
+          // Height
+          _buildCounterRow(
+            label: 'Height (cm)',
+            value: _model.countControllerValue2!,
+            min: 50,
+            max: 250,
+            onChanged: (v) {
+              setState(() => _model.countControllerValue2 = v);
+              appState.heightValue = v;
+            },
+          ),
+          const SizedBox(height: 24),
+          // Weight
+          _buildCounterRow(
+            label: 'Weight (kg)',
+            value: _model.countControllerValue3!,
+            min: 30,
+            max: 150,
+            onChanged: (v) {
+              setState(() => _model.countControllerValue3 = v);
+              appState.weightValue = v;
+            },
+          ),
+          const SizedBox(height: 24),
+          // Allergies
+          ListTile(
+            contentPadding: EdgeInsets.zero,
+            title: Text(
+              'Allergies (if any)',
+              style: Theme.of(context).textTheme.bodyLarge,
+            ),
+            trailing: Icon(
+              Icons.chevron_right,
+              color: cs.onSurface,
+            ),
+            onTap: () => context.pushNamed('Allergies'),
+          ),
+        ],
       ),
     );
   }

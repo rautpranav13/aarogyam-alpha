@@ -8,8 +8,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class FirstAidModel extends FlutterFlowModel<FirstAidWidget> {
+  @override
   final Map<String, DebugDataField> debugGeneratorVariables = {};
+  @override
   final Map<String, DebugDataField> debugBackendQueries = {};
+  @override
   final Map<String, FlutterFlowModel> widgetBuilderComponents = {};
   @override
   void initState(BuildContext context) {

@@ -1,17 +1,20 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-Future initFirebase() async {
+Future<void> initFirebase() async {
   if (kIsWeb) {
     await Firebase.initializeApp(
-        options: FirebaseOptions(
-            apiKey: "AIzaSyDS6q1B099eLZDq2gPAWx96FeUCq1Lf4Vg",
-            authDomain: "exam-baba-ux7hq8.firebaseapp.com",
-            projectId: "exam-baba-ux7hq8",
-            storageBucket: "exam-baba-ux7hq8.appspot.com",
-            messagingSenderId: "525398884433",
-            appId: "1:525398884433:web:d132b64d460883f3fa7870",
-            measurementId: "G-KZS8J00QRP"));
+      options: FirebaseOptions(
+        apiKey: dotenv.env['FIREBASE_API_KEY'] ?? '',
+        authDomain: dotenv.env['FIREBASE_AUTH_DOMAIN'] ?? '',
+        projectId: dotenv.env['FIREBASE_PROJECT_ID'] ?? '',
+        storageBucket: dotenv.env['FIREBASE_STORAGE_BUCKET'] ?? '',
+        messagingSenderId: dotenv.env['FIREBASE_MESSAGING_SENDER_ID'] ?? '',
+        appId: dotenv.env['FIREBASE_APP_ID'] ?? '',
+        measurementId: dotenv.env['FIREBASE_MEASUREMENT_ID'],
+      ),
+    );
   } else {
     await Firebase.initializeApp();
   }

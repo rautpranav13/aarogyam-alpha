@@ -88,7 +88,7 @@ class _HtmlWidget3State extends State<HtmlWidget3> {
       child: SingleChildScrollView(
         child: Html(
           data: _htmlContent ?? "<p>Loading...</p>",
-          extensions: [
+          extensions: const [
             // Enable the table support extension
             TableHtmlExtension(),
           ],

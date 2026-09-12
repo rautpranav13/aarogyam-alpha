@@ -86,7 +86,7 @@ class _ReminderListExpandedWidgetState extends State<ReminderListExpandedWidget>
       mainAxisSize: MainAxisSize.max,
       children: [
         Padding(
-          padding: EdgeInsets.all(20.0),
+          padding: const EdgeInsets.all(20.0),
           child: Text(
             FFLocalizations.of(context).getText(
               'bicnjszb' /* Reminders */,
@@ -141,7 +141,7 @@ class _ReminderListExpandedWidgetState extends State<ReminderListExpandedWidget>
                 final listViewReadmedicationsRow =
                     listViewReadmedicationsRowList[listViewIndex];
                 return Padding(
-                  padding: EdgeInsets.all(10.0),
+                  padding: const EdgeInsets.all(10.0),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -157,7 +157,7 @@ class _ReminderListExpandedWidgetState extends State<ReminderListExpandedWidget>
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
                                 12.0, 0.0, 0.0, 0.0),
                             child: Column(
                               mainAxisSize: MainAxisSize.max,
@@ -187,7 +187,7 @@ class _ReminderListExpandedWidgetState extends State<ReminderListExpandedWidget>
                                       .bodyMedium
                                       .override(
                                         font: GoogleFonts.manrope(),
-                                        color: Color(0xFF808080),
+                                        color: const Color(0xFF808080),
                                         fontSize: 16.0,
                                         letterSpacing: 0.0,
                                         fontWeight: FontWeight.normal,
@@ -214,12 +214,12 @@ class _ReminderListExpandedWidgetState extends State<ReminderListExpandedWidget>
                                           .primaryBackground,
                                       size: 24.0,
                                     ),
-                                  ].divide(SizedBox(width: 2.0)),
+                                  ].divide(const SizedBox(width: 2.0)),
                                 ),
-                              ].divide(SizedBox(height: 4.0)),
+                              ].divide(const SizedBox(height: 4.0)),
                             ),
                           ),
-                        ].divide(SizedBox(width: 4.0)),
+                        ].divide(const SizedBox(width: 4.0)),
                       ),
                       wrapWithModel(
                         model: _model.switchRemainderModels.getModel(
@@ -249,9 +249,9 @@ class _ReminderListExpandedWidgetState extends State<ReminderListExpandedWidget>
           },
         ),
       ]
-          .divide(SizedBox(height: 12.0))
-          .addToStart(SizedBox(height: 8.0))
-          .addToEnd(SizedBox(height: 8.0)),
+          .divide(const SizedBox(height: 12.0))
+          .addToStart(const SizedBox(height: 8.0))
+          .addToEnd(const SizedBox(height: 8.0)),
     );
   }
 }

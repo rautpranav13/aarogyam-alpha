@@ -1,154 +1,260 @@
-# Aarogyam IBM Project - README
+# Aarogyam
 
-## Project Overview
+[![Flutter](https://img.shields.io/badge/Flutter-3.x-02569B?logo=flutter)](https://flutter.dev)
+[![Python](https://img.shields.io/badge/Python-3.11-3776AB?logo=python)](https://python.org)
+[![Flask](https://img.shields.io/badge/Flask-3.1-000000?logo=flask)](https://flask.palletsprojects.com)
+[![IBM Watsonx](https://img.shields.io/badge/IBM-Watsonx.ai-052FAD?logo=ibm)](https://www.ibm.com/watsonx)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-**HealthCompanion AI** is a comprehensive AI-powered solution designed to assist individuals in managing their health and medical information. Using IBM [Watsonx.ai](http://Watsonx.ai) Studio, Watsonx.assistant, and other advanced IBM Cloud technologies, the solution provides personalized health insights, medication reminders, first-aid guidance, and medical report understanding. Delivered via a mobile application built on Flutter, HealthCompanion AI empowers users to take control of their health with tailored recommendations.
+**AI-powered health literacy app with Ayurvedic guidance, medical report scanning, and first-aid guides.**
 
-## Features
+Aarogyam is an open-source mobile application that bridges traditional Ayurvedic knowledge with modern AI. Users can chat with an AI trained on Ayurvedic datasets, upload medical reports for plain-language summaries, and browse guided first-aid procedures — all in a single Flutter app backed by three Python microservices running on IBM Watsonx.
 
-- **Conversational Intelligence**: Leverage IBM granite-chat-v2 modal along with watsonx.assistant for real-time, AI-driven conversations to help users with medical queries.
-- **Medication Reminders**: Stay on track with medication schedules using intelligent reminders and notifications.
-- **Medical Report Understanding**: AI tools help users understand complex medical reports, even from images, ensuring better clarity on health conditions.
-- **Personalized Health Insights**: Recommendations powered by AI/ML models, such as Pixtral-12B and IBM-Granite-12B, Pre-trained on [aayush aayurveda dataset](https://ayushportal.nic.in/default.aspx) based on user data.
-- **First-Aid Guidance**: Quick access to first-aid procedures through easily understandable visuals.
+---
 
-----
+## Architecture
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                     Flutter Mobile App                       │
+│  (Material 3 · Firebase Auth · flutter_dotenv · go_router)  │
+└───────────────────────┬─────────────────────────────────────┘
+                        │  HTTPS REST
+          ┌─────────────┼──────────────┐
+          │             │              │
+          ▼             ▼              ▼
+  ┌──────────────┐ ┌──────────┐ ┌─────────────────────┐
+  │  rag-chatBot │ │lvm-watsonx│ │firstaid-object-     │
+  │  (Flask 3.1) │ │(Flask 3.1)│ │storage (Flask 3.1)  │
+  └──────┬───────┘ └────┬─────┘ └──────────┬──────────┘
+         │              │                   │
+         ▼              ▼                   ▼
+  ┌─────────────────────────────┐  ┌────────────────────┐
+  │       IBM Watsonx.ai        │  │  IBM Cloud Object  │
+  │  Granite-13B + Slate-30M    │  │  Storage (COS)     │
+  │  Mistral Pixtral-12B        │  └────────────────────┘
+  └─────────────────────────────┘
+         │
+         ▼
+  ┌─────────────────────┐
+  │  IBM Watson TTS/STT │
+  │  (voice in/out)     │
+  └─────────────────────┘
+         │
+         ▼
+  ┌──────────────────────┐
+  │  Firebase (Auth +    │
+  │  Cloud Firestore)    │
+  └──────────────────────┘
+```
+
+---
 
 ## Tech Stack
 
-- **IBM Cloud Services**: Core platform for hosting AI models, databases, and integration services.
-- **Flutter**: Cross-platform mobile application development for iOS and Android.
-- **AI/ML Models**:
-   - **Pixtral-12B**: For advanced natural language processing tasks.
-   - **IBM-Granite-12B**: For in-depth healthcare recommendations and insights.
-- [**Watsonx.ai**](http://Watsonx.ai) **Studio**: For building and training the AI models and creating conversational experiences.
-- [**Watsonx Assistant**](https://www.ibm.com/products/watsonx-assistant): For AI-powered chat-based interaction with users.
-- **IBM Cloud** [**Object Storage Database**](https://cloud.ibm.com/objectstorage/create)**** : Store and retrieve data for "First Aid".
-- **IBM** [**Text-to-Speech**](https://www.ibm.com/products/text-to-speech)****: For converting text-based content into natural speech.
-- **IBM** [**Speech-to-Text**](https://www.ibm.com/products/speech-to-text)****: For converting voice inputs into text for easy user interaction.
+| Layer | Technology | Version |
+|---|---|---|
+| Mobile app | Flutter (iOS & Android) | 3.x |
+| App language | Dart | 3.x |
+| Backend framework | Flask | 3.1.0 |
+| Backend language | Python | 3.11 |
+| RAG LLM | IBM Granite-13B-Instruct-v2 | via Watsonx.ai |
+| RAG embeddings | IBM Slate-30M-English-RTRVR | via Watsonx.ai |
+| Medical image AI | Mistral Pixtral-12B | via Watsonx.ai |
+| Vector store | ChromaDB | 0.6.x |
+| RAG framework | LangChain + LangChain-IBM | 0.3.x |
+| Auth & database | Firebase Auth + Cloud Firestore | Firebase 3.x |
+| Voice input | IBM Watson Speech-to-Text | REST API |
+| Voice output | IBM Watson Text-to-Speech | REST API |
+| First-aid media | IBM Cloud Object Storage | ibm-cos-sdk 2.x |
+| Secret management | flutter_dotenv / python-dotenv | — |
+| Deployment | Render.com (pip-based) | — |
 
-----
+---
 
-## Setup Instructions
+## Repository Structure
 
-### Prerequisites
+```
+aarogyam/
+├── aarogyam-flutter/          # Flutter mobile application
+│   ├── lib/
+│   │   ├── authentication/    # Login, register, forgot-password screens
+│   │   ├── backend/           # Firebase + API call helpers
+│   │   ├── core/              # Router, base model, constants
+│   │   ├── custom_code/       # TTS/STT action wrappers
+│   │   ├── l10n/              # ARB translation files (en, hi, ar)
+│   │   ├── main_pages/        # Chat, report scanner, first-aid, etc.
+│   │   ├── theme/             # Material 3 AppTheme, AppColors
+│   │   └── widgets/           # Shared widgets
+│   ├── .env.example           # Required environment keys
+│   └── pubspec.yaml
+│
+├── rag-chatBot/               # RAG chatbot (Granite-13B + LangChain + Chroma)
+│   ├── flask_app/app.py
+│   ├── AarogyamDataset.pdf    # Ayurvedic knowledge base
+│   ├── .env.example
+│   ├── render.yaml
+│   └── requirements.txt
+│
+├── lvm-watsonx/               # Medical image analysis (Pixtral-12B)
+│   ├── flask_app/app.py
+│   ├── .env.example
+│   ├── render.yaml
+│   └── requirements.txt
+│
+├── firstaid-object-storage/   # IBM COS API for first-aid media
+│   ├── app.py
+│   ├── .env.example
+│   ├── render.yaml
+│   └── requirements.txt
+│
+├── CONTRIBUTING.md
+├── LICENSE
+└── README.md
+```
 
-1. **IBM Cloud Account**: Create an IBM Cloud account [here](https://cloud.ibm.com).
-2. **IBM Cloud Services**: Instantiate watsonx.studio, watsonx.runtime, watsonx.assistant, IBM Cloud Object Storage Database.
-3. **Flutter SDK**: Ensure you have Flutter SDK installed. Follow the installation guide [here](https://flutter.dev/).
-4. **Database Setup**:
-   - Create an IBM cloud object storage database and other services. (global regions are preferred)
-   - Configure database access credentials for the app.
+---
 
-----
+## Quick Start
 
-### Installation
+### 1 — RAG Chatbot (`rag-chatBot`)
 
-1. **Clone the Repository**:
+```bash
+cd rag-chatBot
+python -m venv venv && source venv/bin/activate
+pip install -r requirements.txt
+cp .env.example .env          # fill in your Watsonx credentials
+gunicorn flask_app.app:app --bind 0.0.0.0:5000 --workers 2
+```
 
-`git clone` [`https://github.com/rautpranav13/aarogyam-IBM.git`](https://github.com/yourusername/HealthCompanionAI.git)
+➡ API available at `http://localhost:5000`. See [`rag-chatBot/README.md`](rag-chatBot/README.md).
 
-`cd aarogyam-IBM`
+### 2 — LVM Image Analysis (`lvm-watsonx`)
 
-2. **Install Flutter Dependencies**:
+```bash
+cd lvm-watsonx
+python -m venv venv && source venv/bin/activate
+pip install -r requirements.txt
+cp .env.example .env
+gunicorn flask_app.app:app --bind 0.0.0.0:5001 --workers 2
+```
 
-`flutter pub get`
+➡ API available at `http://localhost:5001`. See [`lvm-watsonx/README.md`](lvm-watsonx/README.md).
 
-3. **IBM Cloud Service Configuration**:
-   - Deploy [Watsonx.ai](http://Watsonx.ai) Studio and Watsonx Assistant on IBM Cloud.
-   - Set up AutoAI models for personalized health insights.
-   - Ensure Watson services (Speech-to-Text, Text-to-Speech, etc.) are enabled on IBM Cloud and integrated into the app.
-4. **Configure Environment Variables**:
-   - Set up your API keys and service credentials (for Watsonx, Cloudant, DB2, etc.) in a `.env` file or your Flutter app’s configuration.
-   - Example:
+### 3 — First Aid Storage (`firstaid-object-storage`)
 
-`IBM_WATSONX_API_KEY=your_api_key_here`
+```bash
+cd firstaid-object-storage
+python -m venv venv && source venv/bin/activate
+pip install -r requirements.txt
+cp .env.example .env
+gunicorn -w 4 -b 0.0.0.0:5002 app:app
+```
 
-`IBM_CLOUDANT_URL=your_cloudant_url_here`
+➡ API available at `http://localhost:5002`. See [`firstaid-object-storage/README.md`](firstaid-object-storage/README.md).
 
-`IBM_DB2_URL=your_db2_url_here`
+### 4 — Flutter App (`aarogyam-flutter`)
 
-5. **Run the Application**:
+```bash
+cd aarogyam-flutter
+cp .env.example .env          # fill in all keys
+flutter pub get
+flutterfire configure         # links Firebase project
+flutter run
+```
 
-`flutter run`
+See [`aarogyam-flutter/README.md`](aarogyam-flutter/README.md) for full setup.
 
-----
+---
 
-## API Integration
+## Environment Variables
 
-The mobile app interacts with various IBM Cloud services via REST APIs. Here’s an overview of key endpoints:
+All services use `.env` files locally. On Render.com, set these via the dashboard. **Never commit real `.env` files** — only `.env.example` is tracked.
 
-- `/api/process-image (POST)`: Processes the image uploaded by user. image_url is required.
-- `/api/watsonchat (GET, POST)`: Chat with the ibm granite chat v2. user_query is required.
-- `/api/list_objects (GET)`: Fetch objects listed in the ibm cloud storage database.
+### Flutter App (`aarogyam-flutter/.env`)
 
-NOTE: All this APIs are set in Flutter App. If you have different API route, you need to either change it in deployment or in the flutter app. Not changing the API route, lead to null responses.
+| Name | Required | Description |
+|---|---|---|
+| `WATSON_TTS_API_KEY` | ✅ | IBM Watson Text-to-Speech API key |
+| `WATSON_TTS_ENDPOINT` | ✅ | Watson TTS instance endpoint URL |
+| `WATSON_STT_API_KEY` | ✅ | IBM Watson Speech-to-Text API key |
+| `WATSON_STT_ENDPOINT` | ✅ | Watson STT instance endpoint URL |
+| `RAG_API_URL` | ✅ | Base URL of the deployed `rag-chatBot` service |
+| `LVM_API_URL` | ✅ | Base URL of the deployed `lvm-watsonx` service |
+| `FIRSTAID_API_URL` | ✅ | Base URL of the deployed `firstaid-object-storage` service |
+| `FIREBASE_API_KEY` | ✅ | Firebase Web API key |
+| `FIREBASE_AUTH_DOMAIN` | ✅ | Firebase Auth domain |
+| `FIREBASE_PROJECT_ID` | ✅ | Firebase project ID |
+| `FIREBASE_STORAGE_BUCKET` | ✅ | Firebase Storage bucket |
+| `FIREBASE_MESSAGING_SENDER_ID` | ✅ | Firebase Cloud Messaging sender ID |
+| `FIREBASE_APP_ID` | ✅ | Firebase App ID |
+| `FIREBASE_MEASUREMENT_ID` | ✅ | Firebase Analytics measurement ID |
 
-----
+### RAG Chatbot (`rag-chatBot/.env`)
 
-## Key Functionalities
+| Name | Required | Description |
+|---|---|---|
+| `WATSONX_API_KEY` | ✅ | IBM Cloud API key with Watsonx.ai access |
+| `WATSONX_PROJECT_ID` | ✅ | Watsonx.ai project ID |
+| `WATSONX_URL` | ✅ | Watsonx.ai regional endpoint (e.g. `https://eu-gb.ml.cloud.ibm.com`) |
+| `CHROMA_DIR` | — | Chroma persistence path (default: `./chroma_db`) |
+| `CHUNK_SIZE` | — | PDF chunk size in tokens (default: `512`) |
+| `CHUNK_OVERLAP` | — | Chunk overlap (default: `50`) |
+| `CORS_ORIGINS` | — | Allowed CORS origins (default: `*`) |
 
-### 1. **Medical Query Handling**:
+### LVM Image Analysis (`lvm-watsonx/.env`)
 
-The app leverages Watsonx Assistant to respond to medical questions, provide information on symptoms, and assist with understanding health-related queries.
+| Name | Required | Description |
+|---|---|---|
+| `WATSONX_API_KEY` | ✅ | IBM Cloud API key with Watsonx.ai access |
+| `WATSONX_PROJECT_ID` | ✅ | Watsonx.ai project ID |
+| `WATSONX_URL` | ✅ | Watsonx.ai regional endpoint (e.g. `https://eu-de.ml.cloud.ibm.com`) |
+| `IMAGE_FETCH_TIMEOUT` | — | Timeout in seconds for upstream image fetch (default: `10`) |
+| `CORS_ORIGINS` | — | Allowed CORS origins (default: `*`) |
 
-### 2. **Medication Management**:
+### First Aid Storage (`firstaid-object-storage/.env`)
 
-Users can set reminders for medication schedules. The app will send notifications and keep a record of the user’s medications.
+| Name | Required | Description |
+|---|---|---|
+| `COS_API_KEY_ID` | ✅ | IBM Cloud Object Storage API key |
+| `COS_INSTANCE_CRN` | ✅ | COS service instance CRN |
+| `COS_ENDPOINT` | ✅ | COS regional endpoint URL |
+| `BUCKET_NAME` | ✅ | COS bucket containing first-aid media |
 
-### 3. **First-Aid Guidance**:
+---
 
-Using Easy to Understand Visuals from IBM Cloud Object Storage, users can get instant guidance on how to perform first-aid measures in emergency situations.
+## API Endpoints
 
-### 4. **Health Insights and Recommendations**:
+| Service | Method | Path | Description |
+|---|---|---|---|
+| rag-chatBot | `POST` | `/watsonchat` | Submit a health query; returns HTML-formatted Ayurvedic guidance |
+| rag-chatBot | `GET` | `/health` | Liveness check; reports vector store state |
+| lvm-watsonx | `POST` | `/process-image` | Analyze a medical report image; body: `{"image_url": "...", "user_query": "..."}` |
+| lvm-watsonx | `GET` | `/health` | Liveness check |
+| firstaid-object-storage | `GET` | `/list_objects?folder_name=<name>` | List first-aid media objects in a COS folder |
+| firstaid-object-storage | `GET` | `/health` | Liveness check |
 
-The app uses watsonx.ai and pixtral-12B to analyze user health data and provide personalized health recommendations. It can adapt to a user’s medical history and preferences to offer targeted advice.
+---
 
-### 5. **Medical Report Understanding**:
+## Screenshots
 
-Users can upload medical reports, and the app will process them using IBM Watson’s natural language processing tools, helping users better understand complex medical terminology and results.
+> 📸 Screenshots coming soon. Run the app locally to preview.
 
-----
-
-## Deployment
-
-1. **Mobile App Deployment**:
-   - Build the app using Flutter for iOS or Android.
-   - Ensure the app is connected to the IBM Cloud services for real-time interaction with watsonx.assistant, watsonx.runtime, etc.
-2. **Cloud Deployment**:
-   - Deploy AI models, databases, and Watson services to IBM Cloud.
-   - Ensure all endpoints are secured with API keys.
-
-----
+---
 
 ## Contributing
 
-Feel free to fork this repository and submit pull requests. Please ensure that your code adheres to the following guidelines:
+Contributions are welcome — see [CONTRIBUTING.md](CONTRIBUTING.md) for the fork → branch → PR workflow, code style guidelines, and issue template notes.
 
-- Follow standard Flutter code conventions.
-- Keep your commits well-documented and focused on one feature or bug fix.
-- Add unit and integration tests for any new features or changes.
+---
 
-----
+## License
 
-## Acknowledgments
+[MIT](LICENSE) © 2024 Aarogyam Contributors
 
-- **IBM Cloud** for providing the cloud infrastructure and Watson services.
-- **Flutter** for enabling cross-platform mobile app development.
-- **Pixtral-12B** and **IBM-Granite-12B** for cutting-edge AI/ML-powered health insights.
+---
 
-NOTE:
+## Authors
 
-1. API Keys provided in the project are distorted. You need to use your own.
-2. Head over to the given links to have proper understanding of the datasets, platforms and services .
-
-----
-
-## AUTHORS:
-
-Pranav Raut [rautpranav13](https://github.com/rautpranav13/)
-
-Prit Thombare [thombareprit](https://github.com/thombareprit/)
-
-----
-
+- Pranav Raut — [@rautpranav13](https://github.com/rautpranav13)
+- Prit Thombare — [@thombareprit](https://github.com/thombareprit)

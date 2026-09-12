@@ -86,7 +86,7 @@ class _ReminderListCollapsedWidgetState
       mainAxisSize: MainAxisSize.max,
       children: [
         Padding(
-          padding: EdgeInsets.all(20.0),
+          padding: const EdgeInsets.all(20.0),
           child: Text(
             FFLocalizations.of(context).getText(
               'ghu5h69e' /* Reminders */,
@@ -119,7 +119,7 @@ class _ReminderListCollapsedWidgetState
             }
             final listViewReadmedicationsRowList = snapshot.data!;
             if (listViewReadmedicationsRowList.isEmpty) {
-              return Center(
+              return const Center(
                 child: ReminderEmptyWidget(),
               );
             }
@@ -145,9 +145,9 @@ class _ReminderListCollapsedWidgetState
                 final listViewReadmedicationsRow =
                     listViewReadmedicationsRowList[listViewIndex];
                 return Container(
-                  decoration: BoxDecoration(),
+                  decoration: const BoxDecoration(),
                   child: Padding(
-                    padding: EdgeInsets.all(10.0),
+                    padding: const EdgeInsets.all(10.0),
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -177,7 +177,7 @@ class _ReminderListCollapsedWidgetState
                                     letterSpacing: 0.0,
                                   ),
                             ),
-                          ].divide(SizedBox(width: 4.0)),
+                          ].divide(const SizedBox(width: 4.0)),
                         ),
                         Row(
                           mainAxisSize: MainAxisSize.max,
@@ -203,7 +203,7 @@ class _ReminderListCollapsedWidgetState
                                     letterSpacing: 0.0,
                                   ),
                             ),
-                          ].divide(SizedBox(width: 2.0)),
+                          ].divide(const SizedBox(width: 2.0)),
                         ),
                       ],
                     ),
@@ -214,9 +214,9 @@ class _ReminderListCollapsedWidgetState
           },
         ),
       ]
-          .divide(SizedBox(height: 12.0))
-          .addToStart(SizedBox(height: 8.0))
-          .addToEnd(SizedBox(height: 8.0)),
+          .divide(const SizedBox(height: 12.0))
+          .addToStart(const SizedBox(height: 8.0))
+          .addToEnd(const SizedBox(height: 8.0)),
     );
   }
 }

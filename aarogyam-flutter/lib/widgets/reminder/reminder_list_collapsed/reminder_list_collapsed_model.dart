@@ -10,8 +10,11 @@ import 'package:provider/provider.dart';
 
 class ReminderListCollapsedModel
     extends FlutterFlowModel<ReminderListCollapsedWidget> {
+  @override
   final Map<String, DebugDataField> debugGeneratorVariables = {};
+  @override
   final Map<String, DebugDataField> debugBackendQueries = {};
+  @override
   final Map<String, FlutterFlowModel> widgetBuilderComponents = {};
   @override
   void initState(BuildContext context) {}

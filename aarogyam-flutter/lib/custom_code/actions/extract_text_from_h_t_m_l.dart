@@ -1,10 +1,5 @@
 // Automatic FlutterFlow imports
-import '/backend/backend.dart';
-import '/backend/sqlite/sqlite_manager.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
-import '/flutter_flow/flutter_flow_util.dart';
-import 'index.dart'; // Imports other custom actions
-import 'package:flutter/material.dart';
+// Imports other custom actions
 // Begin custom action code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
@@ -13,7 +8,6 @@ import 'package:flutter/material.dart';
 
 import 'package:html/parser.dart' as html_parser;
 
-import 'package:html/parser.dart' as html_parser;
 
 String extractTextFromHTML(String htmlString) {
   try {

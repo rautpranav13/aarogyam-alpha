@@ -82,19 +82,19 @@ class _AIDisclaimerWidgetState extends State<AIDisclaimerWidget>
         ?.call(_model);
 
     return Padding(
-      padding: EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 16.0),
+      padding: const EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 16.0),
       child: Container(
         width: double.infinity,
         decoration: BoxDecoration(
-          color: Color(0xFFFFF3CD),
+          color: const Color(0xFFFFF3CD),
           borderRadius: BorderRadius.circular(12.0),
           border: Border.all(
-            color: Color(0xFFFFEEBA),
+            color: const Color(0xFFFFEEBA),
             width: 1.0,
           ),
         ),
         child: Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(12.0, 12.0, 12.0, 12.0),
+          padding: const EdgeInsetsDirectional.fromSTEB(12.0, 12.0, 12.0, 12.0),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -102,7 +102,7 @@ class _AIDisclaimerWidgetState extends State<AIDisclaimerWidget>
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.warning_rounded,
                     color: Color(0xFF856404),
                     size: 24.0,
@@ -114,12 +114,12 @@ class _AIDisclaimerWidgetState extends State<AIDisclaimerWidget>
                       ),
                       style: FlutterFlowTheme.of(context).titleMedium.override(
                             font: GoogleFonts.manrope(),
-                            color: Color(0xFF856404),
+                            color: const Color(0xFF856404),
                             letterSpacing: 0.0,
                           ),
                     ),
                   ),
-                ].divide(SizedBox(width: 12.0)),
+                ].divide(const SizedBox(width: 12.0)),
               ),
               Text(
                 FFLocalizations.of(context).getText(
@@ -127,11 +127,11 @@ class _AIDisclaimerWidgetState extends State<AIDisclaimerWidget>
                 ),
                 style: FlutterFlowTheme.of(context).bodyMedium.override(
                       font: GoogleFonts.manrope(),
-                      color: Color(0xFF856404),
+                      color: const Color(0xFF856404),
                       letterSpacing: 0.0,
                     ),
               ),
-            ].divide(SizedBox(height: 12.0)),
+            ].divide(const SizedBox(height: 12.0)),
           ),
         ),
       ),

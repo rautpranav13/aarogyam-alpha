@@ -13,16 +13,19 @@ class ResponsePageModel extends FlutterFlowModel<ResponsePageWidget> {
   ///  State fields for stateful widgets in this page.
 
   // Stores action output result for [Custom Action - extractMedicationDetails] action in Button widget.
-  dynamic? _medicationjson;
-  set medicationjson(dynamic? value) {
+  dynamic _medicationjson;
+  set medicationjson(dynamic value) {
     _medicationjson = value;
     debugLogWidgetClass(this);
   }
 
-  dynamic? get medicationjson => _medicationjson;
+  dynamic get medicationjson => _medicationjson;
 
+  @override
   final Map<String, DebugDataField> debugGeneratorVariables = {};
+  @override
   final Map<String, DebugDataField> debugBackendQueries = {};
+  @override
   final Map<String, FlutterFlowModel> widgetBuilderComponents = {};
   @override
   void initState(BuildContext context) {

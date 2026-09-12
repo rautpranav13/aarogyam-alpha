@@ -100,14 +100,14 @@ class _ResponsePageWidgetState extends State<ResponsePageWidget>
                   letterSpacing: 0.0,
                 ),
           ),
-          actions: [],
+          actions: const [],
           centerTitle: false,
           elevation: 2.0,
         ),
         body: SafeArea(
           top: true,
           child: Align(
-            alignment: AlignmentDirectional(0.0, 0.0),
+            alignment: const AlignmentDirectional(0.0, 0.0),
             child: SingleChildScrollView(
               child: Column(
                 mainAxisSize: MainAxisSize.max,
@@ -125,9 +125,9 @@ class _ResponsePageWidgetState extends State<ResponsePageWidget>
                     options: FFButtonOptions(
                       height: 40.0,
                       padding:
-                          EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                          const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                       iconPadding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                       color: FlutterFlowTheme.of(context).primary,
                       textStyle:
                           FlutterFlowTheme.of(context).titleSmall.override(
@@ -152,9 +152,9 @@ class _ResponsePageWidgetState extends State<ResponsePageWidget>
                     options: FFButtonOptions(
                       height: 40.0,
                       padding:
-                          EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                          const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                       iconPadding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                       color: FlutterFlowTheme.of(context).primary,
                       textStyle:
                           FlutterFlowTheme.of(context).titleSmall.override(
@@ -176,9 +176,9 @@ class _ResponsePageWidgetState extends State<ResponsePageWidget>
                     options: FFButtonOptions(
                       height: 40.0,
                       padding:
-                          EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                          const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                       iconPadding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                       color: FlutterFlowTheme.of(context).primary,
                       textStyle:
                           FlutterFlowTheme.of(context).titleSmall.override(
@@ -207,9 +207,9 @@ class _ResponsePageWidgetState extends State<ResponsePageWidget>
                     options: FFButtonOptions(
                       height: 40.0,
                       padding:
-                          EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                          const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                       iconPadding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                       color: FlutterFlowTheme.of(context).primary,
                       textStyle:
                           FlutterFlowTheme.of(context).titleSmall.override(
@@ -236,9 +236,9 @@ class _ResponsePageWidgetState extends State<ResponsePageWidget>
                     options: FFButtonOptions(
                       height: 40.0,
                       padding:
-                          EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                          const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                       iconPadding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                       color: FlutterFlowTheme.of(context).primary,
                       textStyle:
                           FlutterFlowTheme.of(context).titleSmall.override(
@@ -288,9 +288,9 @@ class _ResponsePageWidgetState extends State<ResponsePageWidget>
                     options: FFButtonOptions(
                       height: 40.0,
                       padding:
-                          EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                          const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                       iconPadding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                       color: FlutterFlowTheme.of(context).primary,
                       textStyle:
                           FlutterFlowTheme.of(context).titleSmall.override(
@@ -314,9 +314,9 @@ class _ResponsePageWidgetState extends State<ResponsePageWidget>
                     options: FFButtonOptions(
                       height: 40.0,
                       padding:
-                          EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                          const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                       iconPadding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                       color: FlutterFlowTheme.of(context).primary,
                       textStyle:
                           FlutterFlowTheme.of(context).titleSmall.override(
@@ -328,7 +328,7 @@ class _ResponsePageWidgetState extends State<ResponsePageWidget>
                       borderRadius: BorderRadius.circular(8.0),
                     ),
                   ),
-                ].divide(SizedBox(height: 20.0)),
+                ].divide(const SizedBox(height: 20.0)),
               ),
             ),
           ),

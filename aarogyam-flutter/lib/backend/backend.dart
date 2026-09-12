@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../auth/firebase_auth/auth_util.dart';
 
-import '../flutter_flow/flutter_flow_util.dart';
+import '/core/core.dart';
 import 'schema/util/firestore_util.dart';
 
 import 'schema/users_record.dart';
@@ -14,7 +14,7 @@ export 'schema/index.dart';
 export 'schema/util/firestore_util.dart';
 export 'schema/util/schema_util.dart';
 
-export '../flutter_flow/debug_util.dart';
+export '/core/debug/debug_types.dart';
 export 'schema/users_record.dart';
 
 /// Functions to query UsersRecords (as a Stream and as a Future).
@@ -173,7 +173,7 @@ Future<FFFirestorePage<T>> queryCollectionPage<T>(
   } else {
     docSnapshot = await query.get();
   }
-  final getDocs = (QuerySnapshot s) => s.docs
+  List<T> getDocs(QuerySnapshot s) => s.docs
       .map(
         (d) => safeGet(
           () => recordBuilder(d),

@@ -1,11 +1,17 @@
 #API service
+import os
+from dotenv import load_dotenv
+load_dotenv()
+
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 import requests
 import base64
 from ibm_watsonx_ai import Credentials
 from ibm_watsonx_ai.foundation_models import ModelInference
 
 app = Flask(__name__)
+CORS(app, origins=os.getenv("CORS_ORIGINS", "*"))
 
 def augment_api_request_body(user_query, image):
     """
@@ -48,20 +54,23 @@ def process_image_with_query(image_url, user_query):
     """
     try:
         # Encode the image to base64
-        encoded_image = base64.b64encode(requests.get(image_url).content).decode("utf-8")
+        timeout = int(os.getenv("IMAGE_FETCH_TIMEOUT", "10"))
+        img_response = requests.get(image_url, timeout=timeout)
+        img_response.raise_for_status()
+        encoded_image = base64.b64encode(img_response.content).decode("utf-8")
     except Exception as e:
         return {"status": "error", "message": f"Failed to process image: {str(e)}"}
 
     # WatsonX AI credentials and model initialization
     credentials = Credentials(
-        url="https://eu-de.ml.cloud.ibm.com",  ############  URL  #############
-        api_key="ooUg7xGpand-1uX01b2X08vBw5cxaYs3iISwozrQ6T7q" ###################  API KEY  (account CHANGED)############
+        url=os.getenv("WATSONX_URL", "https://eu-de.ml.cloud.ibm.com"),
+        api_key=os.getenv("WATSONX_API_KEY")
     )
 
     model = ModelInference(
         model_id="mistralai/pixtral-12b",
         credentials=credentials,
-        project_id="c9ba001c-a34c-4796-8c35-d22ed4b2388e", ############  Projectid  ###########################
+        project_id=os.getenv("WATSONX_PROJECT_ID"),
         params={"max_tokens": 500}
     )
 
@@ -77,7 +86,13 @@ def process_image_with_query(image_url, user_query):
         return {"status": "success", "response": validate_html(content)}
 
     except Exception as e:
-        return {"status": "error", "message": str(e)}
+        print(f"error\nModel call failed: {e}")
+        return {"status": "error", "message": f"Model call failed: {str(e)}"}
+
+@app.route('/health', methods=['GET'])
+def health():
+    return jsonify({"status": "ok"})
+
 
 @app.route('/process-image', methods=['POST'])
 def process_image():
@@ -87,19 +102,23 @@ def process_image():
     try:
         # Parse the JSON body
         data = request.get_json()
+        if not data or not data.get('image_url') or not data.get('user_query'):
+            return jsonify({"error": "image_url and user_query are required"}), 400
+
         image_url = data.get('image_url')
         user_query = data.get('user_query')
 
-        # Validate input
-        if not image_url or not isinstance(image_url, str):
-            return jsonify({"status": "error", "message": "Invalid input: 'image_url' is required and must be a string."}), 400
+        # Validate input types
+        if not isinstance(image_url, str):
+            return jsonify({"status": "error", "message": "Invalid input: 'image_url' must be a string."}), 400
 
-        if not user_query or not isinstance(user_query, str):
-            return jsonify({"status": "error", "message": "Invalid input: 'user_query' is required and must be a string."}), 400
+        if not isinstance(user_query, str):
+            return jsonify({"status": "error", "message": "Invalid input: 'user_query' must be a string."}), 400
 
         # Process the image and query
         result = process_image_with_query(image_url, user_query)
-        return jsonify(result)
+        status_code = 500 if result.get("status") == "error" else 200
+        return jsonify(result), status_code
 
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)}), 500

@@ -1,0 +1,29 @@
+# Environment files — never commit real secrets
+**/.env
+!**/.env.example
+
+# macOS
+.DS_Store
+**/.DS_Store
+
+# Flutter
+aarogyam-flutter/.dart_tool/
+aarogyam-flutter/build/
+aarogyam-flutter/.flutter-plugins
+aarogyam-flutter/.flutter-plugins-dependencies
+aarogyam-flutter/.packages
+
+# Python
+**/__pycache__/
+**/*.pyc
+**/*.pyo
+**/venv/
+**/.venv/
+**/chroma_db/
+**/.chroma/
+
+# Editor
+.idea/
+.vscode/
+*.swp
+*.log

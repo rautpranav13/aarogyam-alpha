@@ -1,18 +1,10 @@
+import '/app_state.dart';
 import '/backend/api_requests/api_calls.dart';
-import '/flutter_flow/flutter_flow_animations.dart';
-import '/flutter_flow/flutter_flow_icon_button.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
-import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
-import 'dart:math';
-import 'dart:ui';
 import '/custom_code/actions/index.dart' as actions;
 import '/custom_code/widgets/index.dart' as custom_widgets;
-import '/flutter_flow/permissions_util.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:record/record.dart';
@@ -27,1137 +19,435 @@ class ChatBotWidget extends StatefulWidget {
 }
 
 class _ChatBotWidgetState extends State<ChatBotWidget>
-    with TickerProviderStateMixin, RouteAware {
+    with TickerProviderStateMixin {
   late ChatBotModel _model;
-
-  final scaffoldKey = GlobalKey<ScaffoldState>();
-
-  final animationsMap = <String, AnimationInfo>{};
+  bool _isLoading = false;
 
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => ChatBotModel());
-
-    // On page load action.
-    SchedulerBinding.instance.addPostFrameCallback((_) async {
-      await requestPermission(microphonePermission);
-    });
-
-    _model.textController ??= TextEditingController()
-      ..addListener(() {
-        debugLogWidgetClass(_model);
-      });
-    _model.textFieldFocusNode ??= FocusNode();
-
-    animationsMap.addAll({
-      'containerOnActionTriggerAnimation1': AnimationInfo(
-        trigger: AnimationTrigger.onActionTrigger,
-        applyInitialState: true,
-        effectsBuilder: () => [
-          ShimmerEffect(
-            curve: Curves.easeInOut,
-            delay: 0.0.ms,
-            duration: 1130.0.ms,
-            color: FlutterFlowTheme.of(context).primary,
-            angle: 0.524,
-          ),
-        ],
-      ),
-      'containerOnActionTriggerAnimation2': AnimationInfo(
-        trigger: AnimationTrigger.onActionTrigger,
-        applyInitialState: true,
-        effectsBuilder: () => [
-          ShimmerEffect(
-            curve: Curves.easeInOut,
-            delay: 0.0.ms,
-            duration: 1130.0.ms,
-            color: FlutterFlowTheme.of(context).primary,
-            angle: 0.524,
-          ),
-        ],
-      ),
-      'containerOnPageLoadAnimation': AnimationInfo(
-        trigger: AnimationTrigger.onPageLoad,
-        effectsBuilder: () => [
-          ShimmerEffect(
-            curve: Curves.easeInOut,
-            delay: 0.0.ms,
-            duration: 1130.0.ms,
-            color: FlutterFlowTheme.of(context).primary,
-            angle: 0.524,
-          ),
-        ],
-      ),
-      'containerOnActionTriggerAnimation3': AnimationInfo(
-        trigger: AnimationTrigger.onActionTrigger,
-        applyInitialState: true,
-        effectsBuilder: () => [
-          ScaleEffect(
-            curve: Curves.bounceOut,
-            delay: 0.0.ms,
-            duration: 1000.0.ms,
-            begin: Offset(1.0, 1.0),
-            end: Offset(3.0, 3.0),
-          ),
-        ],
-      ),
-    });
-    setupAnimations(
-      animationsMap.values.where((anim) =>
-          anim.trigger == AnimationTrigger.onActionTrigger ||
-          !anim.applyInitialState),
-      this,
-    );
+    _model = ChatBotModel();
+    _model.init(context);
+    // Microphone permission request deferred — handled lazily on long-press.
   }
 
   @override
   void dispose() {
     _model.dispose();
-
     super.dispose();
   }
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    final route = DebugModalRoute.of(context);
-    if (route != null) {
-      routeObserver.subscribe(this, route);
+  // ---- helpers ----
+
+  Future<void> _sendText() async {
+    final query = _model.textController?.text.trim() ?? '';
+    if (query.isEmpty) return;
+
+    context.read<AppState>().update(() {
+      context.read<AppState>().typedMessage = query;
+      context.read<AppState>().isTranslate = false;
+    });
+    _model.textController?.clear();
+    setState(() => _isLoading = true);
+
+    try {
+      _model.ragAPIresponse = await RagAPICall.call(query: query);
+      if (mounted && (_model.ragAPIresponse?.succeeded ?? false)) {
+        await actions.saveTXT(
+          RagAPICall.ragResponsePath(_model.ragAPIresponse!.jsonBody).toString(),
+          'ragresponse.txt',
+        );
+      }
+    } finally {
+      if (mounted) setState(() => _isLoading = false);
     }
-    debugLogGlobalProperty(context);
   }
 
-  @override
-  void didPopNext() {
-    if (mounted && DebugFlutterFlowModelContext.maybeOf(context) == null) {
-      setState(() => _model.isRouteVisible = true);
-      debugLogWidgetClass(_model);
+  Future<void> _startRecording() async {
+    _model.audioRecorder ??= AudioRecorder();
+    final hasPermission = await _model.audioRecorder!.hasPermission();
+    if (!hasPermission) return;
+    await _model.audioRecorder!.start(
+      const RecordConfig(encoder: AudioEncoder.wav),
+      path: '', // record to temp file
+    );
+    if (mounted) {
+      setState(() {
+        _model.textController?.text = 'RECORDING...';
+        context.read<AppState>().isRecording = true;
+      });
     }
   }
 
-  @override
-  void didPush() {
-    if (mounted && DebugFlutterFlowModelContext.maybeOf(context) == null) {
-      setState(() => _model.isRouteVisible = true);
-      debugLogWidgetClass(_model);
+  Future<void> _stopRecording() async {
+    final path = await _model.audioRecorder?.stop();
+    if (mounted) {
+      context.read<AppState>().update(() {
+        context.read<AppState>().isRecording = false;
+      });
+      _model.textController?.clear();
+    }
+    if (path != null) {
+      _model.recordedFilePath = path;
+      final text = await actions.transcribeAudio(
+        dotenv.env['WATSON_STT_API_KEY'] ?? '',
+        dotenv.env['WATSON_STT_ENDPOINT'] ?? '',
+        _model.recordedFilePath,
+      );
+      if (mounted) setState(() => _model.rspeechText = text);
     }
   }
 
-  @override
-  void didPop() {
-    _model.isRouteVisible = false;
+  Widget _buildUserBubble(String text) {
+    final cs = Theme.of(context).colorScheme;
+    return Align(
+      alignment: Alignment.centerRight,
+      child: Padding(
+        padding: const EdgeInsets.all(12),
+        child: Container(
+          constraints: const BoxConstraints(minHeight: 40, maxWidth: 300),
+          decoration: BoxDecoration(
+            color: cs.primaryContainer,
+            borderRadius: const BorderRadius.only(
+              bottomLeft: Radius.circular(24),
+              bottomRight: Radius.circular(0),
+              topLeft: Radius.circular(24),
+              topRight: Radius.circular(24),
+            ),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(14),
+            child: Text(
+              text,
+              style: GoogleFonts.poppins(
+                fontSize: 14,
+                color: cs.onPrimaryContainer,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 
-  @override
-  void didPushNext() {
-    _model.isRouteVisible = false;
+  Widget _buildAIResponse(String txtFileName, {bool animate = false}) {
+    final cs = Theme.of(context).colorScheme;
+    Widget content = Container(
+      width: 287,
+      decoration: BoxDecoration(
+        color: cs.surfaceContainerHigh,
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Column(
+        children: [
+          SizedBox(
+            width: double.infinity,
+            height: 300,
+            child: custom_widgets.HtmlWidget3(
+              width: double.infinity,
+              height: 300,
+              txtFileName: txtFileName,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Row(
+            children: [
+              IconButton(
+                onPressed: () async {
+                  _model.ragResponseWithoutHtml =
+                      await actions.extractTextFromHTMLFile('ragresponse.txt');
+                  if (_model.ragResponseWithoutHtml != null) {
+                    _model.ttsaudioPath = await actions.textAudio(
+                      dotenv.env['WATSON_TTS_API_KEY'] ?? '',
+                      dotenv.env['WATSON_TTS_ENDPOINT'] ?? '',
+                      _model.ragResponseWithoutHtml!,
+                      'speech.mp3',
+                    );
+                    if (_model.ttsaudioPath != null) {
+                      await actions.playMusic(_model.ttsaudioPath!);
+                    }
+                  }
+                  if (mounted) setState(() {});
+                },
+                icon: const Icon(Icons.volume_up, size: 16),
+                style: IconButton.styleFrom(
+                  backgroundColor: cs.onSurface,
+                  foregroundColor: cs.surface,
+                  minimumSize: const Size(32, 32),
+                  padding: EdgeInsets.zero,
+                ),
+              ),
+              const SizedBox(width: 16),
+              IconButton(
+                onPressed: () async {
+                  await actions.translateHtmlFile(
+                      'ragresponse.txt', 'ragtranslate.txt');
+                  if (mounted) {
+                    context.read<AppState>().update(
+                        () => context.read<AppState>().isTranslate = true);
+                    setState(() {});
+                  }
+                },
+                icon: const Icon(Icons.translate_rounded, size: 16),
+                style: IconButton.styleFrom(
+                  backgroundColor: cs.onSurface,
+                  foregroundColor: cs.surface,
+                  minimumSize: const Size(32, 32),
+                  padding: EdgeInsets.zero,
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+
+    if (animate) {
+      content = content
+          .animate()
+          .shimmer(duration: 1130.ms, color: Theme.of(context).colorScheme.primary);
+    }
+
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.fromLTRB(10, 10, 0, 10),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(24),
+            child: Image.asset(
+              'assets/images/Apple-iOS11-Siri-visual-effect-unscreen.gif',
+              width: 50,
+              height: 50,
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(0, 10, 10, 10),
+          child: content,
+        ),
+      ],
+    );
+  }
+
+  Widget _buildTypingIndicator() {
+    final cs = Theme.of(context).colorScheme;
+    return Row(
+      children: [
+        Padding(
+          padding: const EdgeInsets.fromLTRB(10, 10, 0, 10),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(24),
+            child: Image.asset(
+              'assets/images/Apple-iOS11-Siri-visual-effect-unscreen.gif',
+              width: 50,
+              height: 50,
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
+        const SizedBox(width: 8),
+        Row(
+          children: List.generate(
+            3,
+            (i) => Container(
+              margin: const EdgeInsets.symmetric(horizontal: 3),
+              width: 8,
+              height: 8,
+              decoration: BoxDecoration(
+                color: cs.primary,
+                shape: BoxShape.circle,
+              ),
+            )
+                .animate(onPlay: (c) => c.repeat())
+                .fadeIn(delay: (200 * i).ms, duration: 400.ms)
+                .then()
+                .fadeOut(duration: 400.ms),
+          ),
+        ),
+      ],
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    DebugFlutterFlowModelContext.maybeOf(context)
-        ?.parentModelCallback
-        ?.call(_model);
-    context.watch<FFAppState>();
+    final appState = context.watch<AppState>();
+    final cs = Theme.of(context).colorScheme;
+    final tt = Theme.of(context).textTheme;
+    final txtFileName =
+        appState.isTranslate ? 'ragtranslate.txt' : 'ragresponse.txt';
 
     return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
-        FocusManager.instance.primaryFocus?.unfocus();
-      },
+      onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-        key: scaffoldKey,
-        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+        backgroundColor: cs.surface,
         body: SafeArea(
-          top: true,
-          child: Align(
-            alignment: AlignmentDirectional(0.0, 0.0),
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Padding(
-                  padding:
-                      EdgeInsetsDirectional.fromSTEB(12.0, 30.0, 12.0, 12.0),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      FlutterFlowIconButton(
-                        borderRadius: 30.0,
-                        buttonSize: 60.0,
-                        fillColor:
-                            FlutterFlowTheme.of(context).secondaryBackground,
-                        icon: Icon(
-                          Icons.arrow_back,
-                          color: FlutterFlowTheme.of(context).primaryText,
-                          size: 24.0,
-                        ),
-                        onPressed: () async {
-                          context.safePop();
-                        },
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              // App bar row
+              Padding(
+                padding: const EdgeInsets.fromLTRB(12, 30, 12, 12),
+                child: Row(
+                  children: [
+                    IconButton.filled(
+                      onPressed: () => Navigator.of(context).maybePop(),
+                      icon: const Icon(Icons.arrow_back),
+                      style: IconButton.styleFrom(
+                        backgroundColor: cs.surfaceContainerHighest,
+                        foregroundColor: cs.onSurface,
                       ),
-                      Column(
-                        mainAxisSize: MainAxisSize.max,
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                    ),
+                    const SizedBox(width: 6),
+                    Text(
+                      'संजीवनी',
+                      style: tt.bodyMedium?.copyWith(
+                        fontFamily: 'KCS',
+                        fontSize: 22,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              // Chat messages
+              Flexible(
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      if (appState.typedMessage.isNotEmpty) ...[
+                        _buildUserBubble(appState.typedMessage),
+                        if (_isLoading)
+                          _buildTypingIndicator()
+                        else
+                          _buildAIResponse(txtFileName, animate: false),
+                      ],
+                      if (_model.rspeechText != null &&
+                          _model.rspeechText!.isNotEmpty) ...[
+                        _buildUserBubble(_model.rspeechText!),
+                        if (_isLoading)
+                          _buildTypingIndicator()
+                        else
+                          _buildAIResponse(txtFileName, animate: true),
+                      ],
+                    ],
+                  ),
+                ),
+              ),
+              // Input row
+              Padding(
+                padding: const EdgeInsets.all(12),
+                child: SizedBox(
+                  height: 100,
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      Row(
                         children: [
-                          Text(
-                            FFLocalizations.of(context).getText(
-                              'y00n3w78' /* संजीवनी */,
-                            ),
-                            style: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .override(
-                                  fontFamily: 'KCS',
-                                  fontSize: 22.0,
-                                  letterSpacing: 0.0,
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.all(4),
+                              child: Container(
+                                width: double.infinity,
+                                height: double.infinity,
+                                decoration: BoxDecoration(
+                                  color: cs.surfaceContainerHighest,
+                                  borderRadius: BorderRadius.circular(24),
                                 ),
+                                child: Row(
+                                  children: [
+                                    Flexible(
+                                      child: TextFormField(
+                                        controller: _model.textController,
+                                        focusNode: _model.textFieldFocusNode,
+                                        textCapitalization:
+                                            TextCapitalization.sentences,
+                                        textInputAction: TextInputAction.done,
+                                        maxLines: 10,
+                                        maxLength: 100,
+                                        decoration: InputDecoration(
+                                          isDense: true,
+                                          hintText: 'Ask Sanjeevani...',
+                                          hintStyle: tt.labelMedium?.copyWith(
+                                            fontFamily:
+                                                GoogleFonts.manrope().fontFamily,
+                                          ),
+                                          border: OutlineInputBorder(
+                                            borderSide: BorderSide.none,
+                                            borderRadius:
+                                                BorderRadius.circular(24),
+                                          ),
+                                          filled: true,
+                                          fillColor: cs.surfaceContainerHighest,
+                                          counterText: '',
+                                        ),
+                                        style: tt.bodyMedium?.copyWith(
+                                          fontFamily:
+                                              GoogleFonts.manrope().fontFamily,
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(6),
+                                      child: IconButton(
+                                        onPressed: _sendText,
+                                        icon: Icon(Icons.send_rounded,
+                                            color: cs.onSurface, size: 24),
+                                        style: IconButton.styleFrom(
+                                          backgroundColor:
+                                              cs.surfaceContainerHighest,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 10),
+                          // Voice button — hold to record
+                          GestureDetector(
+                            onLongPressStart: (_) => _startRecording(),
+                            onLongPressEnd: (_) => _stopRecording(),
+                            child: AnimatedContainer(
+                              duration: const Duration(milliseconds: 300),
+                              width: appState.isRecording ? 60 : 50,
+                              height: appState.isRecording ? 70 : 60,
+                              decoration: BoxDecoration(
+                                color: appState.isRecording
+                                    ? cs.error
+                                    : cs.onSurface,
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                              child: Icon(
+                                appState.isRecording ? Icons.mic : Icons.mic,
+                                color: cs.surface,
+                                size: 24,
+                              ),
+                            ),
                           ),
                         ],
                       ),
-                    ].divide(SizedBox(width: 6.0)),
-                  ),
-                ),
-                Flexible(
-                  child: SingleChildScrollView(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        if (FFAppState().typedMessage != null &&
-                            FFAppState().typedMessage != '')
-                          Container(
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              color: FlutterFlowTheme.of(context)
-                                  .primaryBackground,
-                            ),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Align(
-                                  alignment: AlignmentDirectional(1.0, 0.0),
-                                  child: Padding(
-                                    padding: EdgeInsets.all(12.0),
-                                    child: Container(
-                                      constraints: BoxConstraints(
-                                        minHeight: 40.0,
-                                        maxWidth: 300.0,
-                                      ),
-                                      decoration: BoxDecoration(
-                                        color: FlutterFlowTheme.of(context)
-                                            .secondaryBackground,
-                                        borderRadius: BorderRadius.only(
-                                          bottomLeft: Radius.circular(24.0),
-                                          bottomRight: Radius.circular(0.0),
-                                          topLeft: Radius.circular(24.0),
-                                          topRight: Radius.circular(24.0),
-                                        ),
-                                      ),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.min,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.end,
-                                        children: [
-                                          Align(
-                                            alignment:
-                                                AlignmentDirectional(0.0, 0.0),
-                                            child: Padding(
-                                              padding: EdgeInsets.all(14.0),
-                                              child: Text(
-                                                FFAppState().typedMessage,
-                                                textAlign: TextAlign.start,
-                                                style: FlutterFlowTheme.of(
-                                                        context)
-                                                    .bodyMedium
-                                                    .override(
-                                                      font:
-                                                          GoogleFonts.poppins(),
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .primaryText,
-                                                      fontSize: 14.0,
-                                                      letterSpacing: 0.0,
-                                                      fontWeight:
-                                                          FontWeight.normal,
-                                                    ),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Align(
-                                      alignment:
-                                          AlignmentDirectional(-1.0, 0.0),
-                                      child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            10.0, 10.0, 0.0, 10.0),
-                                        child: ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(24.0),
-                                          child: Image.asset(
-                                            'assets/images/Apple-iOS11-Siri-visual-effect-unscreen.gif',
-                                            width: 50.0,
-                                            height: 50.0,
-                                            fit: BoxFit.cover,
-                                            alignment: Alignment(0.0, 0.0),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Align(
-                                      alignment:
-                                          AlignmentDirectional(-1.0, 0.0),
-                                      child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 10.0, 10.0, 10.0),
-                                        child: Material(
-                                          color: Colors.transparent,
-                                          elevation: 0.0,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(8.0),
-                                          ),
-                                          child: Container(
-                                            width: 287.0,
-                                            decoration: BoxDecoration(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primaryBackground,
-                                              borderRadius:
-                                                  BorderRadius.circular(8.0),
-                                            ),
-                                            child: Column(
-                                              mainAxisSize: MainAxisSize.max,
-                                              children: [
-                                                Container(
-                                                  width: double.infinity,
-                                                  height: 300.0,
-                                                  child: custom_widgets
-                                                      .HtmlWidget3(
-                                                    width: double.infinity,
-                                                    height: 300.0,
-                                                    txtFileName:
-                                                        FFAppState().isTranslate
-                                                            ? 'ragtranslate.txt'
-                                                            : 'ragresponse.txt',
-                                                  ),
-                                                ),
-                                                Align(
-                                                  alignment:
-                                                      AlignmentDirectional(
-                                                          0.0, 0.0),
-                                                  child: Row(
-                                                    mainAxisSize:
-                                                        MainAxisSize.max,
-                                                    children: [
-                                                      Align(
-                                                        alignment:
-                                                            AlignmentDirectional(
-                                                                -1.0, 0.0),
-                                                        child:
-                                                            FlutterFlowIconButton(
-                                                          borderRadius: 25.0,
-                                                          buttonSize: 32.0,
-                                                          fillColor:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .primaryText,
-                                                          icon: Icon(
-                                                            Icons.volume_up,
-                                                            color: Colors.white,
-                                                            size: 16.0,
-                                                          ),
-                                                          onPressed: () async {
-                                                            await Future.wait([
-                                                              Future(() async {
-                                                                _model.ragResponseWithoutHtml =
-                                                                    await actions
-                                                                        .extractTextFromHTMLFile(
-                                                                  'ragresponse.txt',
-                                                                );
-                                                                _model.ttsaudioPath =
-                                                                    await actions
-                                                                        .textAudio(
-                                                                  'gLk2p4Hk6BTIhKLeTgtrtdLU1CbHFI_vekMD-d_XD_Jw',
-                                                                  'https://api.eu-gb.text-to-speech.watson.cloud.ibm.com/instances/dc7f65b4-3f3b-464d-9d31-cfeefe0f6d3d',
-                                                                  _model
-                                                                      .ragResponseWithoutHtml!,
-                                                                  'speech.mp3',
-                                                                );
-                                                                await actions
-                                                                    .playMusic(
-                                                                  _model
-                                                                      .ttsaudioPath!,
-                                                                );
-                                                              }),
-                                                              Future(() async {
-                                                                if (animationsMap[
-                                                                        'containerOnActionTriggerAnimation3'] !=
-                                                                    null) {
-                                                                  await animationsMap[
-                                                                          'containerOnActionTriggerAnimation3']!
-                                                                      .controller
-                                                                    ..reset()
-                                                                    ..repeat();
-                                                                }
-                                                              }),
-                                                            ]);
-                                                            if (animationsMap[
-                                                                    'containerOnActionTriggerAnimation3'] !=
-                                                                null) {
-                                                              animationsMap[
-                                                                      'containerOnActionTriggerAnimation3']!
-                                                                  .controller
-                                                                  .reset();
-                                                            }
-
-                                                            safeSetState(() {});
-                                                          },
-                                                        ),
-                                                      ),
-                                                      Align(
-                                                        alignment:
-                                                            AlignmentDirectional(
-                                                                -1.0, 0.0),
-                                                        child:
-                                                            FlutterFlowIconButton(
-                                                          borderRadius: 25.0,
-                                                          buttonSize: 32.0,
-                                                          fillColor:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .primaryText,
-                                                          icon: Icon(
-                                                            Icons
-                                                                .translate_rounded,
-                                                            color: Colors.white,
-                                                            size: 16.0,
-                                                          ),
-                                                          onPressed: () async {
-                                                            await Future.wait([
-                                                              Future(() async {
-                                                                await actions
-                                                                    .translateHtmlFile(
-                                                                  'ragresponse.txt',
-                                                                  'ragtranslate.txt',
-                                                                );
-                                                                FFAppState()
-                                                                        .isTranslate =
-                                                                    true;
-                                                                safeSetState(
-                                                                    () {});
-                                                              }),
-                                                              Future(() async {
-                                                                if (animationsMap[
-                                                                        'containerOnActionTriggerAnimation3'] !=
-                                                                    null) {
-                                                                  await animationsMap[
-                                                                          'containerOnActionTriggerAnimation3']!
-                                                                      .controller
-                                                                      .forward(
-                                                                          from:
-                                                                              0.0);
-                                                                }
-                                                              }),
-                                                            ]);
-                                                            if (animationsMap[
-                                                                    'containerOnActionTriggerAnimation3'] !=
-                                                                null) {
-                                                              animationsMap[
-                                                                      'containerOnActionTriggerAnimation3']!
-                                                                  .controller
-                                                                  .reset();
-                                                            }
-                                                          },
-                                                        ),
-                                                      ),
-                                                    ].divide(
-                                                        SizedBox(width: 16.0)),
-                                                  ),
-                                                ),
-                                              ].divide(SizedBox(height: 8.0)),
-                                            ),
-                                          ),
-                                        ).animateOnActionTrigger(
-                                          animationsMap[
-                                              'containerOnActionTriggerAnimation1']!,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
+                      // Recording wave overlay
+                      if (appState.isRecording)
+                        Align(
+                          alignment: const Alignment(-1.02, 0),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(50),
+                            child: Image.asset(
+                              'assets/images/voice_wave_(1).gif',
+                              width: 313,
+                              height: 200,
+                              fit: BoxFit.cover,
                             ),
                           ),
-                        if (_model.rspeechText != null &&
-                            _model.rspeechText != '')
-                          Container(
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              color: FlutterFlowTheme.of(context)
-                                  .primaryBackground,
-                            ),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Align(
-                                  alignment: AlignmentDirectional(1.0, 0.0),
-                                  child: Padding(
-                                    padding: EdgeInsets.all(12.0),
-                                    child: Container(
-                                      constraints: BoxConstraints(
-                                        minHeight: 40.0,
-                                        maxWidth: 300.0,
-                                      ),
-                                      decoration: BoxDecoration(
-                                        color: FlutterFlowTheme.of(context)
-                                            .secondaryBackground,
-                                        borderRadius: BorderRadius.only(
-                                          bottomLeft: Radius.circular(24.0),
-                                          bottomRight: Radius.circular(0.0),
-                                          topLeft: Radius.circular(24.0),
-                                          topRight: Radius.circular(24.0),
-                                        ),
-                                      ),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.min,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.end,
-                                        children: [
-                                          Align(
-                                            alignment:
-                                                AlignmentDirectional(0.0, 0.0),
-                                            child: Padding(
-                                              padding: EdgeInsets.all(14.0),
-                                              child: Text(
-                                                valueOrDefault<String>(
-                                                  _model.rspeechText,
-                                                  'rspeechtext',
-                                                ),
-                                                textAlign: TextAlign.start,
-                                                style: FlutterFlowTheme.of(
-                                                        context)
-                                                    .bodyMedium
-                                                    .override(
-                                                      font:
-                                                          GoogleFonts.poppins(),
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .primaryText,
-                                                      fontSize: 14.0,
-                                                      letterSpacing: 0.0,
-                                                      fontWeight:
-                                                          FontWeight.normal,
-                                                    ),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Align(
-                                      alignment:
-                                          AlignmentDirectional(-1.0, -1.0),
-                                      child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            10.0, 10.0, 0.0, 10.0),
-                                        child: ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(24.0),
-                                          child: Image.asset(
-                                            'assets/images/Apple-iOS11-Siri-visual-effect-unscreen.gif',
-                                            width: 50.0,
-                                            height: 50.0,
-                                            fit: BoxFit.cover,
-                                            alignment: Alignment(0.0, 0.0),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Align(
-                                      alignment:
-                                          AlignmentDirectional(-1.0, 0.0),
-                                      child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 10.0, 10.0, 10.0),
-                                        child: Material(
-                                          color: Colors.transparent,
-                                          elevation: 0.0,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(8.0),
-                                          ),
-                                          child: Container(
-                                            width: 287.0,
-                                            decoration: BoxDecoration(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primaryBackground,
-                                              borderRadius:
-                                                  BorderRadius.circular(8.0),
-                                            ),
-                                            child: Column(
-                                              mainAxisSize: MainAxisSize.max,
-                                              children: [
-                                                Container(
-                                                  width: double.infinity,
-                                                  height: 300.0,
-                                                  child: custom_widgets
-                                                      .HtmlWidget3(
-                                                    width: double.infinity,
-                                                    height: 300.0,
-                                                    txtFileName:
-                                                        FFAppState().isTranslate
-                                                            ? 'ragtranslate.txt'
-                                                            : 'ragresponse.txt',
-                                                  ),
-                                                ).animateOnPageLoad(animationsMap[
-                                                    'containerOnPageLoadAnimation']!),
-                                                Align(
-                                                  alignment:
-                                                      AlignmentDirectional(
-                                                          0.0, 0.0),
-                                                  child: Row(
-                                                    mainAxisSize:
-                                                        MainAxisSize.max,
-                                                    children: [
-                                                      Align(
-                                                        alignment:
-                                                            AlignmentDirectional(
-                                                                -1.0, 0.0),
-                                                        child:
-                                                            FlutterFlowIconButton(
-                                                          borderRadius: 25.0,
-                                                          buttonSize: 32.0,
-                                                          fillColor:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .primaryText,
-                                                          icon: Icon(
-                                                            Icons.volume_up,
-                                                            color: Colors.white,
-                                                            size: 16.0,
-                                                          ),
-                                                          onPressed: () async {
-                                                            await Future.wait([
-                                                              Future(() async {
-                                                                _model.ragresponsewithouthtml2 =
-                                                                    await actions
-                                                                        .extractTextFromHTMLFile(
-                                                                  'ragresponse.txt',
-                                                                );
-                                                                _model.ttsaudioPath2 =
-                                                                    await actions
-                                                                        .textAudio(
-                                                                  'gLk2p4Hk6BTIhKLeTgtrtdLU1CbHFI_vekMD-d_XD_Jw',
-                                                                  'https://api.eu-gb.text-to-speech.watson.cloud.ibm.com/instances/dc7f65b4-3f3b-464d-9d31-cfeefe0f6d3d',
-                                                                  _model
-                                                                      .ragresponsewithouthtml2!,
-                                                                  'speech.mp3',
-                                                                );
-                                                                await actions
-                                                                    .playMusic(
-                                                                  _model
-                                                                      .ttsaudioPath2!,
-                                                                );
-                                                              }),
-                                                              Future(() async {
-                                                                if (animationsMap[
-                                                                        'containerOnActionTriggerAnimation3'] !=
-                                                                    null) {
-                                                                  await animationsMap[
-                                                                          'containerOnActionTriggerAnimation3']!
-                                                                      .controller
-                                                                      .forward(
-                                                                          from:
-                                                                              0.0);
-                                                                }
-                                                              }),
-                                                            ]);
-                                                            if (animationsMap[
-                                                                    'containerOnActionTriggerAnimation3'] !=
-                                                                null) {
-                                                              animationsMap[
-                                                                      'containerOnActionTriggerAnimation3']!
-                                                                  .controller
-                                                                  .reset();
-                                                            }
-
-                                                            safeSetState(() {});
-                                                          },
-                                                        ),
-                                                      ),
-                                                      Align(
-                                                        alignment:
-                                                            AlignmentDirectional(
-                                                                -1.0, 0.0),
-                                                        child:
-                                                            FlutterFlowIconButton(
-                                                          borderRadius: 25.0,
-                                                          buttonSize: 32.0,
-                                                          fillColor:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .primaryText,
-                                                          icon: Icon(
-                                                            Icons
-                                                                .translate_rounded,
-                                                            color: Colors.white,
-                                                            size: 16.0,
-                                                          ),
-                                                          onPressed: () async {
-                                                            await Future.wait([
-                                                              Future(() async {
-                                                                await actions
-                                                                    .translateHtmlFile(
-                                                                  'ragresponse.txt',
-                                                                  'ragtranslate.txt',
-                                                                );
-                                                                FFAppState()
-                                                                        .isTranslate =
-                                                                    true;
-                                                                safeSetState(
-                                                                    () {});
-                                                              }),
-                                                              Future(() async {
-                                                                if (animationsMap[
-                                                                        'containerOnActionTriggerAnimation3'] !=
-                                                                    null) {
-                                                                  await animationsMap[
-                                                                          'containerOnActionTriggerAnimation3']!
-                                                                      .controller
-                                                                      .forward(
-                                                                          from:
-                                                                              0.0);
-                                                                }
-                                                              }),
-                                                            ]);
-                                                            if (animationsMap[
-                                                                    'containerOnActionTriggerAnimation3'] !=
-                                                                null) {
-                                                              animationsMap[
-                                                                      'containerOnActionTriggerAnimation3']!
-                                                                  .controller
-                                                                  .reset();
-                                                            }
-                                                          },
-                                                        ),
-                                                      ),
-                                                    ].divide(
-                                                        SizedBox(width: 16.0)),
-                                                  ),
-                                                ),
-                                              ].divide(SizedBox(height: 8.0)),
-                                            ),
-                                          ),
-                                        ).animateOnActionTrigger(
-                                          animationsMap[
-                                              'containerOnActionTriggerAnimation2']!,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                      ],
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(12.0),
-                  child: Container(
-                    width: double.infinity,
-                    height: 100.0,
-                    child: Stack(
-                      alignment: AlignmentDirectional(0.0, 0.0),
-                      children: [
-                        Row(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Expanded(
-                              child: Padding(
-                                padding: EdgeInsets.all(4.0),
-                                child: Container(
-                                  width: double.infinity,
-                                  height: double.infinity,
-                                  decoration: BoxDecoration(
-                                    color: FlutterFlowTheme.of(context)
-                                        .secondaryBackground,
-                                    borderRadius: BorderRadius.circular(24.0),
-                                  ),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      Flexible(
-                                        child: Container(
-                                          width: 300.0,
-                                          child: TextFormField(
-                                            controller: _model.textController,
-                                            focusNode:
-                                                _model.textFieldFocusNode,
-                                            autofocus: true,
-                                            textCapitalization:
-                                                TextCapitalization.sentences,
-                                            textInputAction:
-                                                TextInputAction.done,
-                                            obscureText: false,
-                                            decoration: InputDecoration(
-                                              isDense: true,
-                                              labelStyle: FlutterFlowTheme.of(
-                                                      context)
-                                                  .labelMedium
-                                                  .override(
-                                                    font: GoogleFonts.manrope(),
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .primaryText,
-                                                    letterSpacing: 0.0,
-                                                  ),
-                                              hintText:
-                                                  FFLocalizations.of(context)
-                                                      .getText(
-                                                '3z3jpqa9' /* Ask Sanjeevani... */,
-                                              ),
-                                              hintStyle: FlutterFlowTheme.of(
-                                                      context)
-                                                  .labelMedium
-                                                  .override(
-                                                    font: GoogleFonts.manrope(),
-                                                    letterSpacing: 0.0,
-                                                  ),
-                                              enabledBorder: OutlineInputBorder(
-                                                borderSide: BorderSide(
-                                                  color: Color(0x00000000),
-                                                  width: 1.0,
-                                                ),
-                                                borderRadius:
-                                                    BorderRadius.circular(24.0),
-                                              ),
-                                              focusedBorder: OutlineInputBorder(
-                                                borderSide: BorderSide(
-                                                  color: Color(0x00000000),
-                                                  width: 1.0,
-                                                ),
-                                                borderRadius:
-                                                    BorderRadius.circular(24.0),
-                                              ),
-                                              errorBorder: OutlineInputBorder(
-                                                borderSide: BorderSide(
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .error,
-                                                  width: 1.0,
-                                                ),
-                                                borderRadius:
-                                                    BorderRadius.circular(24.0),
-                                              ),
-                                              focusedErrorBorder:
-                                                  OutlineInputBorder(
-                                                borderSide: BorderSide(
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .error,
-                                                  width: 1.0,
-                                                ),
-                                                borderRadius:
-                                                    BorderRadius.circular(24.0),
-                                              ),
-                                              filled: true,
-                                              fillColor:
-                                                  FlutterFlowTheme.of(context)
-                                                      .secondaryBackground,
-                                            ),
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  font: GoogleFonts.manrope(),
-                                                  letterSpacing: 0.0,
-                                                  lineHeight: 1.5,
-                                                ),
-                                            textAlign: TextAlign.start,
-                                            maxLines: 10,
-                                            maxLength: 100,
-                                            buildCounter: (context,
-                                                    {required currentLength,
-                                                    required isFocused,
-                                                    maxLength}) =>
-                                                null,
-                                            cursorColor:
-                                                FlutterFlowTheme.of(context)
-                                                    .primaryText,
-                                            validator: _model
-                                                .textControllerValidator
-                                                .asValidator(context),
-                                          ),
-                                        ),
-                                      ),
-                                      Align(
-                                        alignment:
-                                            AlignmentDirectional(-1.0, 0.0),
-                                        child: Padding(
-                                          padding: EdgeInsets.all(6.0),
-                                          child: FlutterFlowIconButton(
-                                            borderColor: Colors.transparent,
-                                            borderRadius: 24.0,
-                                            buttonSize: 40.0,
-                                            fillColor:
-                                                FlutterFlowTheme.of(context)
-                                                    .secondaryBackground,
-                                            icon: Icon(
-                                              Icons.send_rounded,
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primaryText,
-                                              size: 24.0,
-                                            ),
-                                            onPressed: () async {
-                                              FFAppState().typedMessage =
-                                                  _model.textController.text;
-                                              safeSetState(() {});
-                                              await Future.wait([
-                                                Future(() async {
-                                                  _model.ragAPIresponse =
-                                                      await RagAPICall.call(
-                                                    query: FFAppState()
-                                                        .typedMessage,
-                                                  );
-
-                                                  if ((_model.ragAPIresponse
-                                                          ?.succeeded ??
-                                                      true)) {
-                                                    ScaffoldMessenger.of(
-                                                            context)
-                                                        .showSnackBar(
-                                                      SnackBar(
-                                                        content: Text(
-                                                          (_model.ragAPIresponse
-                                                                      ?.statusCode ??
-                                                                  200)
-                                                              .toString(),
-                                                          style: TextStyle(
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .primaryText,
-                                                          ),
-                                                        ),
-                                                        duration: Duration(
-                                                            milliseconds: 4000),
-                                                        backgroundColor:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .secondary,
-                                                      ),
-                                                    );
-                                                    await actions.saveTXT(
-                                                      RagAPICall
-                                                          .ragResponsePath(
-                                                        (_model.ragAPIresponse
-                                                                ?.jsonBody ??
-                                                            ''),
-                                                      ).toString(),
-                                                      'ragresponse.txt',
-                                                    );
-                                                  } else {
-                                                    ScaffoldMessenger.of(
-                                                            context)
-                                                        .showSnackBar(
-                                                      SnackBar(
-                                                        content: Text(
-                                                          (_model.ragAPIresponse
-                                                                      ?.statusCode ??
-                                                                  200)
-                                                              .toString(),
-                                                          style: TextStyle(
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .primaryText,
-                                                          ),
-                                                        ),
-                                                        duration: Duration(
-                                                            milliseconds: 4000),
-                                                        backgroundColor:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .secondary,
-                                                      ),
-                                                    );
-                                                  }
-                                                }),
-                                                Future(() async {
-                                                  safeSetState(() {
-                                                    _model.textController
-                                                        ?.clear();
-                                                  });
-                                                  if (animationsMap[
-                                                          'containerOnActionTriggerAnimation1'] !=
-                                                      null) {
-                                                    await animationsMap[
-                                                            'containerOnActionTriggerAnimation1']!
-                                                        .controller
-                                                      ..reset()
-                                                      ..repeat();
-                                                  }
-                                                }),
-                                              ]);
-                                              if (animationsMap[
-                                                      'containerOnActionTriggerAnimation1'] !=
-                                                  null) {
-                                                animationsMap[
-                                                        'containerOnActionTriggerAnimation1']!
-                                                    .controller
-                                                    .stop();
-                                              }
-
-                                              safeSetState(() {});
-                                            },
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Container(
-                              decoration: BoxDecoration(),
-                              child: GestureDetector(
-                                onLongPressEnd: (details) async {
-                                  await Future.wait([
-                                    Future(() async {
-                                      await stopAudioRecording(
-                                        audioRecorder: _model.audioRecorder,
-                                        audioName: 'recordedFileBytes',
-                                        onRecordingComplete:
-                                            (audioFilePath, audioBytes) {
-                                          _model.recordedAudio = audioFilePath;
-                                          _model.recordedFileBytes = audioBytes;
-                                        },
-                                      );
-
-                                      _model.recordedFilePath =
-                                          await actions.downloadRecordedAudio(
-                                        _model.recordedFileBytes,
-                                      );
-                                      _model.rspeechText =
-                                          await actions.transcribeAudio(
-                                        '6ZXwMVTnT4A38daO89IRv9TEG4n_a3qLhOn30skZA29Q',
-                                        'https://api.eu-gb.speech-to-text.watson.cloud.ibm.com/instances/a704f190-7977-4e56-a8a1-ba84bf8dca45',
-                                        _model.recordedFilePath,
-                                      );
-                                    }),
-                                    Future(() async {
-                                      if (animationsMap[
-                                              'containerOnActionTriggerAnimation3'] !=
-                                          null) {
-                                        animationsMap[
-                                                'containerOnActionTriggerAnimation3']!
-                                            .controller
-                                            .reset();
-                                      }
-                                      FFAppState().isRecording = false;
-                                      safeSetState(() {});
-                                      safeSetState(() {
-                                        _model.textController?.clear();
-                                      });
-                                    }),
-                                  ]);
-
-                                  safeSetState(() {});
-                                },
-                                onLongPressStart: (details) async {
-                                  await Future.wait([
-                                    Future(() async {
-                                      await requestPermission(
-                                          microphonePermission);
-                                      await startAudioRecording(
-                                        context,
-                                        audioRecorder: _model.audioRecorder ??=
-                                            AudioRecorder(),
-                                      );
-                                    }),
-                                    Future(() async {
-                                      if (animationsMap[
-                                              'containerOnActionTriggerAnimation3'] !=
-                                          null) {
-                                        await animationsMap[
-                                                'containerOnActionTriggerAnimation3']!
-                                            .controller
-                                            .forward(from: 0.0);
-                                      }
-                                      FFAppState().isRecording = true;
-                                      safeSetState(() {});
-                                      safeSetState(() {
-                                        _model.textController?.text =
-                                            'RECORDING...';
-                                      });
-                                    }),
-                                  ]);
-                                },
-                                child: Container(
-                                  width: 50.0,
-                                  height: 60.0,
-                                  decoration: BoxDecoration(
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryText,
-                                    borderRadius: BorderRadius.circular(30.0),
-                                  ),
-                                  child: Icon(
-                                    Icons.mic,
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryBackground,
-                                    size: 24.0,
-                                  ),
-                                ),
-                              ).animateOnActionTrigger(
-                                animationsMap[
-                                    'containerOnActionTriggerAnimation3']!,
-                              ),
-                            ),
-                          ].divide(SizedBox(width: 10.0)),
                         ),
-                        if (valueOrDefault<bool>(
-                          FFAppState().isRecording == true,
-                          false,
-                        ))
-                          Align(
-                            alignment: AlignmentDirectional(-1.02, 0.0),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(50.0),
-                              child: Image.asset(
-                                'assets/images/voice_wave_(1).gif',
-                                width: 313.0,
-                                height: 200.0,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                      ],
-                    ),
+                    ],
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

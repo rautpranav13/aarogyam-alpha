@@ -15,8 +15,11 @@ class ReminderListExpandedModel
   // Models for switchRemainder dynamic component.
   late FlutterFlowDynamicModels<SwitchRemainderModel> switchRemainderModels;
 
+  @override
   final Map<String, DebugDataField> debugGeneratorVariables = {};
+  @override
   final Map<String, DebugDataField> debugBackendQueries = {};
+  @override
   final Map<String, FlutterFlowModel> widgetBuilderComponents = {};
   @override
   void initState(BuildContext context) {
@@ -43,7 +46,7 @@ class ReminderListExpandedModel
         }.withoutNulls,
         dynamicComponentStates: {
           'switchRemainderModels (List<switchRemainder>)':
-              switchRemainderModels?.toDynamicWidgetClassDebugData(),
+              switchRemainderModels.toDynamicWidgetClassDebugData(),
         }.withoutNulls,
         link:
             'https://app.flutterflow.io/project/health-literacy-c97mzb/tab=uiBuilder&page=ReminderListExpanded',

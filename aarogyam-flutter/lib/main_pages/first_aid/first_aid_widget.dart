@@ -97,18 +97,18 @@ class _FirstAidWidgetState extends State<FirstAidWidget> with RouteAware {
                   letterSpacing: 0.0,
                 ),
           ),
-          actions: [],
+          actions: const [],
           centerTitle: false,
           elevation: 2.0,
         ),
         body: SafeArea(
           top: true,
           child: Align(
-            alignment: AlignmentDirectional(0.0, 0.0),
-            child: Container(
+            alignment: const AlignmentDirectional(0.0, 0.0),
+            child: SizedBox(
               width: double.infinity,
               height: double.infinity,
-              child: custom_widgets.HtmlContentWidget(
+              child: const custom_widgets.HtmlContentWidget(
                 width: double.infinity,
                 height: double.infinity,
                 htmlContent:

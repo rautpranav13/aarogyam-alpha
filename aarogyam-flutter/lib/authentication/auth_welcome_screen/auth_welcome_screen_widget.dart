@@ -1,10 +1,6 @@
-import '/flutter_flow/flutter_flow_theme.dart';
-import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
-import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 import 'auth_welcome_screen_model.dart';
 export 'auth_welcome_screen_model.dart';
 
@@ -16,216 +12,138 @@ class AuthWelcomeScreenWidget extends StatefulWidget {
       _AuthWelcomeScreenWidgetState();
 }
 
-class _AuthWelcomeScreenWidgetState extends State<AuthWelcomeScreenWidget>
-    with RouteAware {
+class _AuthWelcomeScreenWidgetState extends State<AuthWelcomeScreenWidget> {
   late AuthWelcomeScreenModel _model;
-
-  final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => AuthWelcomeScreenModel());
+    _model = AuthWelcomeScreenModel();
+    _model.init(context);
   }
 
   @override
   void dispose() {
     _model.dispose();
-
     super.dispose();
   }
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    final route = DebugModalRoute.of(context);
-    if (route != null) {
-      routeObserver.subscribe(this, route);
-    }
-    debugLogGlobalProperty(context);
-  }
-
-  @override
-  void didPopNext() {
-    if (mounted && DebugFlutterFlowModelContext.maybeOf(context) == null) {
-      setState(() => _model.isRouteVisible = true);
-      debugLogWidgetClass(_model);
-    }
-  }
-
-  @override
-  void didPush() {
-    if (mounted && DebugFlutterFlowModelContext.maybeOf(context) == null) {
-      setState(() => _model.isRouteVisible = true);
-      debugLogWidgetClass(_model);
-    }
-  }
-
-  @override
-  void didPop() {
-    _model.isRouteVisible = false;
-  }
-
-  @override
-  void didPushNext() {
-    _model.isRouteVisible = false;
-  }
-
-  @override
   Widget build(BuildContext context) {
-    DebugFlutterFlowModelContext.maybeOf(context)
-        ?.parentModelCallback
-        ?.call(_model);
-
+    final cs = Theme.of(context).colorScheme;
     return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
-        FocusManager.instance.primaryFocus?.unfocus();
-      },
+      onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-        key: scaffoldKey,
-        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-        body: Column(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              FFLocalizations.of(context).getText(
-                'g7fdv4c8' /* Health Made Easy 
-Because You ... */
-                ,
-              ),
-              textAlign: TextAlign.center,
-              style: FlutterFlowTheme.of(context).bodyMedium.override(
-                    font: GoogleFonts.montserrat(),
-                    fontSize: 15.0,
-                    letterSpacing: 0.0,
-                  ),
+        body: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                Color(0xFF00897B), // teal 600
+                Color(0xFF3949AB), // indigo 600
+              ],
             ),
-            Column(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.center,
+          ),
+          child: SafeArea(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Align(
-                  alignment: AlignmentDirectional(0.0, 0.0),
-                  child: Padding(
-                    padding: EdgeInsets.all(18.0),
-                    child: Container(
-                      width: 200.0,
-                      height: 200.0,
+                const SizedBox(height: 8),
+                Text(
+                  'Health Made Easy\nBecause You Matter',
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.montserrat(
+                    fontSize: 15,
+                    color: Colors.white.withValues(alpha: 0.85),
+                    letterSpacing: 0.3,
+                  ),
+                ),
+                // Logo + name section
+                Column(
+                  children: [
+                    Container(
+                      width: 200,
+                      height: 200,
                       clipBehavior: Clip.antiAlias,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                      ),
+                      decoration: const BoxDecoration(shape: BoxShape.circle),
                       child: Image.asset(
                         'assets/images/Sanjivani.jpg',
                         fit: BoxFit.fill,
                       ),
                     ),
-                  ),
-                ),
-                Text(
-                  FFLocalizations.of(context).getText(
-                    'lwdbwfhi' /* aarogyam */,
-                  ),
-                  style: FlutterFlowTheme.of(context).bodyMedium.override(
+                    const SizedBox(height: 16),
+                    const Text(
+                      'aarogyam',
+                      style: TextStyle(
                         fontFamily: 'Samarkan',
-                        fontSize: 40.0,
-                        letterSpacing: 0.0,
+                        fontSize: 40,
                         fontWeight: FontWeight.bold,
+                        color: Colors.white,
                       ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      'Welcomes You!',
+                      style: GoogleFonts.playfairDisplay(
+                        fontSize: 32,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white.withValues(alpha: 0.9),
+                      ),
+                    ),
+                  ],
                 ),
-                Text(
-                  FFLocalizations.of(context).getText(
-                    'gbj6qm3r' /* Welcomes You! */,
-                  ),
-                  style: FlutterFlowTheme.of(context).bodyMedium.override(
-                        font: GoogleFonts.playfairDisplay(),
-                        fontSize: 40.0,
-                        letterSpacing: 0.0,
-                        fontWeight: FontWeight.bold,
+                // Buttons
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 44),
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        width: double.infinity,
+                        height: 56,
+                        child: FilledButton(
+                          onPressed: () => context.pushNamed('auth_Login'),
+                          style: FilledButton.styleFrom(
+                            backgroundColor: Colors.white,
+                            foregroundColor: const Color(0xFF00897B),
+                            shape: const StadiumBorder(),
+                            elevation: 4,
+                          ),
+                          child: Text(
+                            'Login',
+                            style: GoogleFonts.manrope(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
                       ),
+                      const SizedBox(height: 12),
+                      SizedBox(
+                        width: double.infinity,
+                        height: 56,
+                        child: OutlinedButton(
+                          onPressed: () => context.pushNamed('auth_Create'),
+                          style: OutlinedButton.styleFrom(
+                            foregroundColor: Colors.white,
+                            side: const BorderSide(color: Colors.white, width: 1.5),
+                            shape: const StadiumBorder(),
+                          ),
+                          child: Text(
+                            'Create an Account',
+                            style: GoogleFonts.outfit(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
-            Align(
-              alignment: AlignmentDirectional(0.0, 1.0),
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 0.0),
-                    child: FFButtonWidget(
-                      onPressed: () async {
-                        context.pushNamed('auth_Login');
-                      },
-                      text: FFLocalizations.of(context).getText(
-                        'a1vqxw0a' /* Login */,
-                      ),
-                      options: FFButtonOptions(
-                        width: double.infinity,
-                        height: 60.0,
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                        iconPadding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                        color: FlutterFlowTheme.of(context).primaryText,
-                        textStyle:
-                            FlutterFlowTheme.of(context).titleMedium.override(
-                                  font: GoogleFonts.manrope(),
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryBackground,
-                                  letterSpacing: 0.0,
-                                ),
-                        elevation: 4.0,
-                        borderSide: BorderSide(
-                          color: Colors.transparent,
-                          width: 1.0,
-                        ),
-                        borderRadius: BorderRadius.circular(50.0),
-                        hoverColor: FlutterFlowTheme.of(context).primaryText,
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 44.0),
-                    child: FFButtonWidget(
-                      onPressed: () async {
-                        context.pushNamed('auth_Create');
-                      },
-                      text: FFLocalizations.of(context).getText(
-                        'vgnnd9rk' /* Create an Account */,
-                      ),
-                      options: FFButtonOptions(
-                        width: double.infinity,
-                        height: 60.0,
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                        iconPadding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                        color: FlutterFlowTheme.of(context).secondaryBackground,
-                        textStyle:
-                            FlutterFlowTheme.of(context).titleLarge.override(
-                                  font: GoogleFonts.outfit(),
-                                  letterSpacing: 0.0,
-                                ),
-                        elevation: 0.0,
-                        borderSide: BorderSide(
-                          color: Colors.transparent,
-                          width: 1.0,
-                        ),
-                        borderRadius: BorderRadius.circular(50.0),
-                        hoverColor: FlutterFlowTheme.of(context).alternate,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ].addToStart(SizedBox(height: 50.0)),
+          ),
         ),
       ),
     );

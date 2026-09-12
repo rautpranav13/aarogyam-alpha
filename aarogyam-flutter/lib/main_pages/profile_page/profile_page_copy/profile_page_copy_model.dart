@@ -19,8 +19,11 @@ class ProfilePageCopyModel extends FlutterFlowModel<ProfilePageCopyWidget> {
   // Model for UserInfo component.
   late UserInfoModel userInfoModel;
 
+  @override
   final Map<String, DebugDataField> debugGeneratorVariables = {};
+  @override
   final Map<String, DebugDataField> debugBackendQueries = {};
+  @override
   final Map<String, FlutterFlowModel> widgetBuilderComponents = {};
   @override
   void initState(BuildContext context) {
@@ -39,7 +42,7 @@ class ProfilePageCopyModel extends FlutterFlowModel<ProfilePageCopyWidget> {
         generatorVariables: debugGeneratorVariables,
         backendQueries: debugBackendQueries,
         componentStates: {
-          'userInfoModel (UserInfo)': userInfoModel?.toWidgetClassDebugData(),
+          'userInfoModel (UserInfo)': userInfoModel.toWidgetClassDebugData(),
           ...widgetBuilderComponents.map(
             (key, value) => MapEntry(
               key,

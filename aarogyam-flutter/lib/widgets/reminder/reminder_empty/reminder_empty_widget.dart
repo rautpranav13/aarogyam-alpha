@@ -81,7 +81,7 @@ class _ReminderEmptyWidgetState extends State<ReminderEmptyWidget>
         ?.call(_model);
 
     return Padding(
-      padding: EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(8.0),
       child: Column(
         mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -107,8 +107,8 @@ class _ReminderEmptyWidgetState extends State<ReminderEmptyWidget>
             ),
             options: FFButtonOptions(
               height: 40.0,
-              padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
-              iconPadding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+              padding: const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+              iconPadding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
               color: FlutterFlowTheme.of(context).primary,
               textStyle: FlutterFlowTheme.of(context).titleSmall.override(
                     font: GoogleFonts.manrope(),
@@ -120,9 +120,9 @@ class _ReminderEmptyWidgetState extends State<ReminderEmptyWidget>
             ),
           ),
         ]
-            .divide(SizedBox(height: 8.0))
-            .addToStart(SizedBox(height: 8.0))
-            .addToEnd(SizedBox(height: 8.0)),
+            .divide(const SizedBox(height: 8.0))
+            .addToStart(const SizedBox(height: 8.0))
+            .addToEnd(const SizedBox(height: 8.0)),
       ),
     );
   }

@@ -1,51 +1,34 @@
-import 'dart:math';
+// random_data_util.dart — compatibility shim.
+// Provides random data generators used by FF-generated code.
 
-import 'package:flutter/material.dart';
+import 'dart:math';
 
 final _random = Random();
 
-int randomInteger(int min, int max) {
-  return _random.nextInt(max - min + 1) + min;
-}
+/// Returns a random integer between [min] and [max] (inclusive).
+int randomInteger(int min, int max) =>
+    min + _random.nextInt(max - min + 1);
 
-double randomDouble(double min, double max) {
-  return _random.nextDouble() * (max - min) + min;
-}
+/// Returns a random double between [min] and [max].
+double randomDouble(double min, double max) =>
+    min + _random.nextDouble() * (max - min);
 
-String randomString(
-  int minLength,
-  int maxLength,
-  bool lowercaseAz,
-  bool uppercaseAz,
-  bool digits,
-) {
-  var chars = '';
-  if (lowercaseAz) {
-    chars += 'abcdefghijklmnopqrstuvwxyz';
-  }
-  if (uppercaseAz) {
-    chars += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-  }
-  if (digits) {
-    chars += '0123456789';
-  }
-  return List.generate(randomInteger(minLength, maxLength),
-      (index) => chars[_random.nextInt(chars.length)]).join();
-}
+/// Returns a random boolean.
+bool randomBool() => _random.nextBool();
 
-// Random date between 1970 and 2025.
-DateTime randomDate() {
-  // Random max must be in range 0 < max <= 2^32.
-  // So we have to generate the time in seconds and then convert to milliseconds.
-  return DateTime.fromMillisecondsSinceEpoch(
-      randomInteger(0, 1735689600) * 1000);
-}
-
-String randomImageUrl(int width, int height) {
-  return 'https://picsum.photos/seed/${_random.nextInt(1000)}/$width/$height';
-}
-
-Color randomColor() {
-  return Color.fromARGB(
-      255, _random.nextInt(255), _random.nextInt(255), _random.nextInt(255));
+/// Returns a random string of [length] characters.
+String randomString(int min, int max,
+    {bool lowercaseActive = true,
+    bool uppercaseActive = false,
+    bool numbersActive = false}) {
+  final length = randomInteger(min, max);
+  const lower = 'abcdefghijklmnopqrstuvwxyz';
+  const upper = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  const numbers = '0123456789';
+  var chars = lowercaseActive ? lower : '';
+  if (uppercaseActive) chars += upper;
+  if (numbersActive) chars += numbers;
+  if (chars.isEmpty) chars = lower;
+  return List.generate(length, (_) => chars[_random.nextInt(chars.length)])
+      .join();
 }

@@ -1,27 +1,36 @@
 # Import necessary libraries
 import os
+from dotenv import load_dotenv
+load_dotenv()
+
 from flask import Flask, request, jsonify
 from flask_cors import CORS  # To handle cross-origin requests
 from ibm_watsonx_ai import Credentials, APIClient
-import PyPDF2
+from pypdf import PdfReader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.docstore.document import Document
 from langchain_ibm import WatsonxEmbeddings, WatsonxLLM
 from langchain.chains import RetrievalQA
-from langchain_community.vectorstores import Chroma
+from langchain_chroma import Chroma
 from ibm_watsonx_ai.metanames import GenTextParamsMetaNames as GenParams
 from ibm_watsonx_ai.foundation_models.utils.enums import DecodingMethods
 
 # Flask app setup
 app = Flask(__name__)
-CORS(app)  # Allow cross-origin requests for API access
+CORS_ORIGINS = os.getenv("CORS_ORIGINS", "*")
+CORS(app, origins=CORS_ORIGINS)
 
 # Watsonx AI credentials setup
 credentials = Credentials(
-    url="https://eu-gb.ml.cloud.ibm.com",  # URL
-    api_key="J20dl40q2btf8tZyit1oJhObVce0ExLxdgagkYm0mRC3"  # API key
+    url=os.getenv("WATSONX_URL", "https://eu-gb.ml.cloud.ibm.com"),
+    api_key=os.getenv("WATSONX_API_KEY")
 )
-project_id = os.getenv("PROJECT_ID", "14da1718-fbab-4d1c-88b6-074168ff1f87")  # Project ID
+project_id = os.getenv("WATSONX_PROJECT_ID")
+
+# Env-driven chunk config
+CHUNK_SIZE = int(os.getenv("CHUNK_SIZE", "512"))
+CHUNK_OVERLAP = int(os.getenv("CHUNK_OVERLAP", "50"))
+CHROMA_DIR = os.getenv("CHROMA_DIR", "./chroma_db")
 
 # Initialize Watsonx Granite model
 model_id = "ibm/granite-13b-instruct-v2"
@@ -46,9 +55,9 @@ pdf_file_path = "AarogyamDataset.pdf"  # PDF path
 pdf_text = ""
 try:
     with open(pdf_file_path, "rb") as f:
-        pdf_reader = PyPDF2.PdfReader(f)
+        pdf_reader = PdfReader(f)
         for page in pdf_reader.pages:
-            pdf_text += page.extract_text()
+            pdf_text += page.extract_text() or ""
     print("info\nPDF successfully processed.")
 except Exception as e:
     print(f"error\nFailed to process PDF: {e}")
@@ -57,8 +66,8 @@ except Exception as e:
 # Split PDF text into chunks
 try:
     text_splitter = RecursiveCharacterTextSplitter(
-        chunk_size=512,
-        chunk_overlap=50,
+        chunk_size=CHUNK_SIZE,
+        chunk_overlap=CHUNK_OVERLAP,
         length_function=len
     )
     chunks = text_splitter.split_text(pdf_text)
@@ -68,7 +77,7 @@ except Exception as e:
     print(f"error\nFailed to split PDF text: {e}")
     documents = []
 
-# Create vector store for document retrieval
+# Create or load vector store for document retrieval
 try:
     embeddings = WatsonxEmbeddings(
         model_id="ibm/slate-30m-english-rtrvr",
@@ -76,11 +85,28 @@ try:
         apikey=credentials["apikey"],
         project_id=project_id
     )
-    docsearch = Chroma.from_documents(documents, embeddings)
-    print("info\nVector store successfully created.")
+
+    if os.path.exists(CHROMA_DIR) and len(os.listdir(CHROMA_DIR)) > 0:
+        # Load existing vector store from disk
+        docsearch = Chroma(persist_directory=CHROMA_DIR, embedding_function=embeddings)
+        print("Loaded existing vector store from disk")
+    else:
+        # Build from PDF and persist to disk
+        docsearch = Chroma.from_documents(documents, embeddings, persist_directory=CHROMA_DIR)
+        print("Built and persisted new vector store")
+
 except Exception as e:
-    print(f"error\nFailed to create vector store: {e}")
+    print(f"error\nFailed to create/load vector store: {e}")
     docsearch = None
+
+# In-process query cache
+_query_cache: dict = {}
+
+
+@app.route('/health', methods=['GET'])
+def health():
+    return jsonify({"status": "ok", "vectorstore": "ready" if docsearch else "unavailable"})
+
 
 @app.route('/watsonchat', methods=['POST'])
 def watsonchat():
@@ -94,6 +120,11 @@ def watsonchat():
             return jsonify({"error": "No query provided"}), 400
 
         print(f"info\nUser Query: {user_query}")
+
+        # Check in-process cache first
+        cache_key = user_query.strip().lower()
+        if cache_key in _query_cache:
+            return jsonify({"response": _query_cache[cache_key]})
 
         # Format the query with additional instructions
         formatted_query = (
@@ -112,7 +143,12 @@ def watsonchat():
         qa = RetrievalQA.from_chain_type(llm=watsonx_granite, chain_type="stuff", retriever=docsearch.as_retriever())
 
         # Get the response from Watson AI
-        aiResponse = qa.invoke(formatted_query)
+        try:
+            aiResponse = qa.invoke(formatted_query)
+        except Exception as e:
+            print(f"error\nModel invocation failed: {e}")
+            return jsonify({"error": "Model invocation failed", "detail": str(e)}), 500
+
         print(f"critical\nAI Response: {aiResponse}")
 
         ai_response_result = aiResponse.get("result")
@@ -120,10 +156,14 @@ def watsonchat():
             print("error\nAI did not return a valid result.")
             return jsonify({"error": "AI did not return a valid result."}), 500
 
+        # Cache the result
+        _query_cache[cache_key] = ai_response_result
+
         return jsonify({"response": ai_response_result})
     except Exception as e:
         print(f"error\nException: {e}")
         return jsonify({"error": str(e)}), 500
+
 
 @app.route('/')
 def index():

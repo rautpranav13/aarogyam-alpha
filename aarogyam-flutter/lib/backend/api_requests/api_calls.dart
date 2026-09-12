@@ -1,8 +1,9 @@
 import 'dart:convert';
-import 'dart:typed_data';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '/flutter_flow/flutter_flow_util.dart';
+import '/core/utils/firestore_helpers.dart';
 import 'api_manager.dart';
 
 export 'api_manager.dart' show ApiCallResponse;
@@ -24,7 +25,7 @@ class ProcessImageAPICall {
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'processImageAPI',
-      apiUrl: 'https://ibmaarogyam.onrender.com/process-image',
+      apiUrl: dotenv.env['LVM_API_URL'] ?? 'https://ibmaarogyam.onrender.com/process-image',
       callType: ApiCallType.POST,
       headers: {
         'Content-Type': 'application/json',
@@ -59,7 +60,7 @@ class RagAPICall {
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'ragAPI',
-      apiUrl: 'https://aarogyam.onrender.com/watsonchat',
+      apiUrl: dotenv.env['RAG_API_URL'] ?? 'https://aarogyam.onrender.com/watsonchat',
       callType: ApiCallType.POST,
       headers: {
         'Content-Type': 'application/json',

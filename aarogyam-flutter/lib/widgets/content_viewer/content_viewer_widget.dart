@@ -90,7 +90,7 @@ class _ContentViewerWidgetState extends State<ContentViewerWidget>
         mainAxisSize: MainAxisSize.max,
         children: [
           Padding(
-            padding: EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(8.0),
             child: Container(
               width: 365.0,
               height: 500.0,
@@ -98,10 +98,10 @@ class _ContentViewerWidgetState extends State<ContentViewerWidget>
                 color: FlutterFlowTheme.of(context).primaryBackground,
                 borderRadius: BorderRadius.circular(12.0),
               ),
-              child: Container(
+              child: SizedBox(
                 width: double.infinity,
                 height: 500.0,
-                child: custom_widgets.HtmlContentWidget(
+                child: const custom_widgets.HtmlContentWidget(
                   width: double.infinity,
                   height: 500.0,
                   htmlContent: '',

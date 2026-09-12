@@ -11,7 +11,7 @@ Future performUpdateremainder(
 }) {
   final query = '''
 INSERT OR REPLACE INTO medications (id, title, message, hour, minute)
-VALUES (${id}, ${title}, ${message}, ${hour}, ${minute});
+VALUES ($id, $title, $message, $hour, $minute);
 ''';
   return database.rawQuery(query);
 }
@@ -26,8 +26,8 @@ Future performUpdateturnedon(
 }) {
   final query = '''
 UPDATE medications
-SET turnedon = CASE WHEN ${caseonoff} THEN 1 ELSE 0 END
-WHERE id = ${id};
+SET turnedon = CASE WHEN $caseonoff THEN 1 ELSE 0 END
+WHERE id = $id;
 ''';
   return database.rawQuery(query);
 }
@@ -45,7 +45,7 @@ Future performInsertReminder(
 }) {
   final query = '''
 INSERT INTO medications (id, title, message, hour, minute)
-VALUES (${id}, ${title}, ${message}, ${hour}, ${minute});
+VALUES ($id, $title, $message, $hour, $minute);
 ''';
   return database.rawQuery(query);
 }

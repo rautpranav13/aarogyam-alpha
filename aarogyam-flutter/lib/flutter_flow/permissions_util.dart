@@ -1,35 +1,17 @@
-import 'package:flutter/foundation.dart';
+// permissions_util.dart — compatibility shim.
+// Wraps permission_handler for FF-style permission helpers.
+
 import 'package:permission_handler/permission_handler.dart';
-import 'package:device_info_plus/device_info_plus.dart';
 
-import '/flutter_flow/flutter_flow_util.dart';
+export 'package:permission_handler/permission_handler.dart';
 
-const kPermissionStateToBool = {
-  PermissionStatus.granted: true,
-  PermissionStatus.limited: true,
-  PermissionStatus.denied: false,
-  PermissionStatus.restricted: false,
-  PermissionStatus.permanentlyDenied: false,
-};
-
-final cameraPermission = Permission.camera;
-final photoLibraryPermission = Permission.photos;
-final microphonePermission = Permission.microphone;
-final notificationsPermission = Permission.notification;
-
-Future<bool> getPermissionStatus(Permission setting) async {
-  final status = await setting.status;
-  return kPermissionStateToBool[status]!;
+/// Request a permission and return whether it was granted.
+Future<bool> requestPermission(Permission permission) async {
+  final status = await permission.request();
+  return status.isGranted;
 }
 
-Future<void> requestPermission(Permission setting) async {
-  if (setting == Permission.photos && isAndroid) {
-    final androidInfo = await DeviceInfoPlugin().androidInfo;
-    if (androidInfo.version.sdkInt <= 32) {
-      await Permission.storage.request();
-    } else {
-      await Permission.photos.request();
-    }
-  }
-  await setting.request();
+/// Check if a permission is granted.
+Future<bool> checkPermission(Permission permission) async {
+  return (await permission.status).isGranted;
 }

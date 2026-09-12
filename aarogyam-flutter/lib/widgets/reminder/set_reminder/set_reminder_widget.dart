@@ -18,7 +18,7 @@ class SetReminderWidget extends StatefulWidget {
     this.title,
     this.description,
     int? id,
-  }) : this.id = id ?? 49;
+  }) : id = id ?? 49;
 
   final String? title;
   final String? description;
@@ -42,13 +42,13 @@ class _SetReminderWidgetState extends State<SetReminderWidget> with RouteAware {
     super.initState();
     _model = createModel(context, () => SetReminderModel());
 
-    _model.textController1 ??= TextEditingController(text: widget!.title)
+    _model.textController1 ??= TextEditingController(text: widget.title)
       ..addListener(() {
         debugLogWidgetClass(_model);
       });
     _model.textFieldFocusNode1 ??= FocusNode();
 
-    _model.textController2 ??= TextEditingController(text: widget!.description)
+    _model.textController2 ??= TextEditingController(text: widget.description)
       ..addListener(() {
         debugLogWidgetClass(_model);
       });
@@ -111,7 +111,7 @@ class _SetReminderWidgetState extends State<SetReminderWidget> with RouteAware {
         borderRadius: BorderRadius.circular(30.0),
       ),
       child: Padding(
-        padding: EdgeInsets.all(24.0),
+        padding: const EdgeInsets.all(24.0),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -120,7 +120,7 @@ class _SetReminderWidgetState extends State<SetReminderWidget> with RouteAware {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Padding(
-                  padding: EdgeInsets.all(12.0),
+                  padding: const EdgeInsets.all(12.0),
                   child: Text(
                     FFLocalizations.of(context).getText(
                       'hlok3i89' /* Set Reminder */,
@@ -144,19 +144,19 @@ class _SetReminderWidgetState extends State<SetReminderWidget> with RouteAware {
                   ),
                   onPressed: () async {
                     await actions.awesomeNotification(
-                      widget!.id,
-                      _model.textController1.text,
-                      _model.textController2.text,
+                      widget.id,
+                      _model.textController1!.text,
+                      _model.textController2!.text,
                       (int var1) {
                         return DateTime.fromMillisecondsSinceEpoch(var1 * 1000,
                                 isUtc: true)
-                            .add(Duration(hours: 5, minutes: 30))
+                            .add(const Duration(hours: 5, minutes: 30))
                             .hour;
                       }(_model.datePicked!.secondsSinceEpoch),
                       (int var1) {
                         return DateTime.fromMillisecondsSinceEpoch(var1 * 1000,
                                 isUtc: true)
-                            .add(Duration(hours: 5, minutes: 30))
+                            .add(const Duration(hours: 5, minutes: 30))
                             .minute;
                       }(_model.datePicked!.secondsSinceEpoch),
                       true,
@@ -165,25 +165,25 @@ class _SetReminderWidgetState extends State<SetReminderWidget> with RouteAware {
                     await actions.immediateNotification(
                       0,
                       'Reminder set successfully.',
-                      'You will be notified for ${_model.textController1.text}',
+                      'You will be notified for ${_model.textController1!.text}',
                     );
                     await SQLiteManager.instance.updateremainder(
                       id: valueOrDefault<int>(
                         random_data.randomInteger(20, 30),
                         25,
                       ),
-                      title: _model.textController1.text,
-                      message: _model.textController2.text,
+                      title: _model.textController1!.text,
+                      message: _model.textController2!.text,
                       hour: (int var1) {
                         return DateTime.fromMillisecondsSinceEpoch(var1 * 1000,
                                 isUtc: true)
-                            .add(Duration(hours: 5, minutes: 30))
+                            .add(const Duration(hours: 5, minutes: 30))
                             .hour;
                       }(_model.datePicked!.secondsSinceEpoch),
                       minute: (int var1) {
                         return DateTime.fromMillisecondsSinceEpoch(var1 * 1000,
                                 isUtc: true)
-                            .add(Duration(hours: 5, minutes: 30))
+                            .add(const Duration(hours: 5, minutes: 30))
                             .minute;
                       }(_model.datePicked!.secondsSinceEpoch),
                     );
@@ -204,13 +204,13 @@ class _SetReminderWidgetState extends State<SetReminderWidget> with RouteAware {
                   borderRadius: BorderRadius.circular(30.0),
                 ),
                 child: Padding(
-                  padding: EdgeInsets.all(12.0),
+                  padding: const EdgeInsets.all(12.0),
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(
+                        padding: const EdgeInsetsDirectional.fromSTEB(
                             12.0, 0.0, 12.0, 0.0),
                         child: Text(
                           FFLocalizations.of(context).getText(
@@ -226,8 +226,8 @@ class _SetReminderWidgetState extends State<SetReminderWidget> with RouteAware {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.all(10.0),
-                        child: Container(
+                        padding: const EdgeInsets.all(10.0),
+                        child: SizedBox(
                           width: double.infinity,
                           child: TextFormField(
                             controller: _model.textController1,
@@ -254,14 +254,14 @@ class _SetReminderWidgetState extends State<SetReminderWidget> with RouteAware {
                                     letterSpacing: 0.0,
                                   ),
                               enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                   color: Color(0x00000000),
                                   width: 1.0,
                                 ),
                                 borderRadius: BorderRadius.circular(8.0),
                               ),
                               focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                   color: Color(0x00000000),
                                   width: 1.0,
                                 ),
@@ -294,12 +294,12 @@ class _SetReminderWidgetState extends State<SetReminderWidget> with RouteAware {
                             cursorColor:
                                 FlutterFlowTheme.of(context).primaryText,
                             validator: _model.textController1Validator
-                                .asValidator(context),
+                                !.asValidator(context),
                           ),
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(
+                        padding: const EdgeInsetsDirectional.fromSTEB(
                             12.0, 12.0, 12.0, 0.0),
                         child: Text(
                           FFLocalizations.of(context).getText(
@@ -315,8 +315,8 @@ class _SetReminderWidgetState extends State<SetReminderWidget> with RouteAware {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.all(10.0),
-                        child: Container(
+                        padding: const EdgeInsets.all(10.0),
+                        child: SizedBox(
                           width: double.infinity,
                           child: TextFormField(
                             controller: _model.textController2,
@@ -343,14 +343,14 @@ class _SetReminderWidgetState extends State<SetReminderWidget> with RouteAware {
                                     letterSpacing: 0.0,
                                   ),
                               enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                   color: Color(0x00000000),
                                   width: 1.0,
                                 ),
                                 borderRadius: BorderRadius.circular(8.0),
                               ),
                               focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                   color: Color(0x00000000),
                                   width: 1.0,
                                 ),
@@ -383,19 +383,19 @@ class _SetReminderWidgetState extends State<SetReminderWidget> with RouteAware {
                             cursorColor:
                                 FlutterFlowTheme.of(context).primaryText,
                             validator: _model.textController2Validator
-                                .asValidator(context),
+                                !.asValidator(context),
                           ),
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(
+                        padding: const EdgeInsetsDirectional.fromSTEB(
                             12.0, 24.0, 12.0, 12.0),
                         child: Container(
                           height: 50.0,
                           decoration: BoxDecoration(
                             color: FlutterFlowTheme.of(context)
                                 .secondaryBackground,
-                            boxShadow: [
+                            boxShadow: const [
                               BoxShadow(
                                 blurRadius: 4.0,
                                 color: Color(0x33000000),
@@ -413,19 +413,19 @@ class _SetReminderWidgetState extends State<SetReminderWidget> with RouteAware {
                             hoverColor: Colors.transparent,
                             highlightColor: Colors.transparent,
                             onTap: () async {
-                              final _datePickedTime = await showTimePicker(
+                              final datePickedTime = await showTimePicker(
                                 context: context,
                                 initialTime:
                                     TimeOfDay.fromDateTime(getCurrentTimestamp),
                               );
-                              if (_datePickedTime != null) {
+                              if (datePickedTime != null) {
                                 safeSetState(() {
                                   _model.datePicked = DateTime(
                                     getCurrentTimestamp.year,
                                     getCurrentTimestamp.month,
                                     getCurrentTimestamp.day,
-                                    _datePickedTime.hour,
-                                    _datePickedTime.minute,
+                                    datePickedTime.hour,
+                                    datePickedTime.minute,
                                   );
                                 });
                               }
@@ -435,7 +435,7 @@ class _SetReminderWidgetState extends State<SetReminderWidget> with RouteAware {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       12.0, 12.0, 12.0, 12.0),
                                   child: Text(
                                     FFLocalizations.of(context).getText(
@@ -452,7 +452,7 @@ class _SetReminderWidgetState extends State<SetReminderWidget> with RouteAware {
                                   ),
                                 ),
                                 Padding(
-                                  padding: EdgeInsets.all(12.0),
+                                  padding: const EdgeInsets.all(12.0),
                                   child: Icon(
                                     Icons.chevron_right,
                                     color: FlutterFlowTheme.of(context)

@@ -18,8 +18,11 @@ class SwitchRemainderModel extends FlutterFlowModel<SwitchRemainderWidget> {
 
   bool? get switchValue => _switchValue;
 
+  @override
   final Map<String, DebugDataField> debugGeneratorVariables = {};
+  @override
   final Map<String, DebugDataField> debugBackendQueries = {};
+  @override
   final Map<String, FlutterFlowModel> widgetBuilderComponents = {};
   @override
   void initState(BuildContext context) {}

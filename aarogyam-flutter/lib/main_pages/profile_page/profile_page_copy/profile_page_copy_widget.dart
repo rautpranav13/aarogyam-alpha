@@ -43,8 +43,8 @@ class _ProfilePageCopyWidgetState extends State<ProfilePageCopyWidget>
             curve: Curves.easeInOut,
             delay: 0.0.ms,
             duration: 300.0.ms,
-            begin: Offset(-40.0, 0.0),
-            end: Offset(0.0, 0.0),
+            begin: const Offset(-40.0, 0.0),
+            end: const Offset(0.0, 0.0),
           ),
         ],
       ),
@@ -121,7 +121,7 @@ class _ProfilePageCopyWidgetState extends State<ProfilePageCopyWidget>
               Material(
                 color: Colors.transparent,
                 elevation: 8.0,
-                shape: RoundedRectangleBorder(
+                shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(60.0),
                     bottomRight: Radius.circular(60.0),
@@ -132,7 +132,7 @@ class _ProfilePageCopyWidgetState extends State<ProfilePageCopyWidget>
                 child: Container(
                   width: 630.0,
                   height: 223.0,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color: Color(0xFFDEBCF1),
                     borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(60.0),
@@ -147,7 +147,7 @@ class _ProfilePageCopyWidgetState extends State<ProfilePageCopyWidget>
               Material(
                 color: Colors.transparent,
                 elevation: 8.0,
-                shape: RoundedRectangleBorder(
+                shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(60.0),
                     bottomRight: Radius.circular(60.0),
@@ -158,7 +158,7 @@ class _ProfilePageCopyWidgetState extends State<ProfilePageCopyWidget>
                 child: Container(
                   width: 600.0,
                   height: 211.0,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color: Color(0xFFE8CDF6),
                     borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(60.0),
@@ -173,7 +173,7 @@ class _ProfilePageCopyWidgetState extends State<ProfilePageCopyWidget>
               Material(
                 color: Colors.transparent,
                 elevation: 8.0,
-                shape: RoundedRectangleBorder(
+                shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(60.0),
                     bottomRight: Radius.circular(60.0),
@@ -186,7 +186,7 @@ class _ProfilePageCopyWidgetState extends State<ProfilePageCopyWidget>
                   height: 199.0,
                   decoration: BoxDecoration(
                     color: FlutterFlowTheme.of(context).primary,
-                    borderRadius: BorderRadius.only(
+                    borderRadius: const BorderRadius.only(
                       bottomLeft: Radius.circular(60.0),
                       bottomRight: Radius.circular(60.0),
                       topLeft: Radius.circular(0.0),
@@ -201,7 +201,7 @@ class _ProfilePageCopyWidgetState extends State<ProfilePageCopyWidget>
                 children: [
                   Padding(
                     padding:
-                        EdgeInsetsDirectional.fromSTEB(12.0, 30.0, 12.0, 12.0),
+                        const EdgeInsetsDirectional.fromSTEB(12.0, 30.0, 12.0, 12.0),
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -236,7 +236,7 @@ class _ProfilePageCopyWidgetState extends State<ProfilePageCopyWidget>
                                 animationsMap[
                                         'containerOnActionTriggerAnimation']!
                                     .controller
-                                    .forward(from: 0.0);
+                                    ?.forward(from: 0.0);
                               }
                             } else {
                               setDarkModeSetting(context, ThemeMode.light);
@@ -246,7 +246,7 @@ class _ProfilePageCopyWidgetState extends State<ProfilePageCopyWidget>
                                 animationsMap[
                                         'containerOnActionTriggerAnimation']!
                                     .controller
-                                    .reverse();
+                                    ?.reverse();
                               }
                             }
                           },
@@ -259,14 +259,14 @@ class _ProfilePageCopyWidgetState extends State<ProfilePageCopyWidget>
                               borderRadius: BorderRadius.circular(20.0),
                             ),
                             child: Padding(
-                              padding: EdgeInsets.all(2.0),
+                              padding: const EdgeInsets.all(2.0),
                               child: Stack(
-                                alignment: AlignmentDirectional(0.0, 0.0),
+                                alignment: const AlignmentDirectional(0.0, 0.0),
                                 children: [
                                   Align(
-                                    alignment: AlignmentDirectional(-0.9, 0.0),
+                                    alignment: const AlignmentDirectional(-0.9, 0.0),
                                     child: Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
                                           6.0, 0.0, 0.0, 0.0),
                                       child: Icon(
                                         Icons.wb_sunny_rounded,
@@ -277,9 +277,9 @@ class _ProfilePageCopyWidgetState extends State<ProfilePageCopyWidget>
                                     ),
                                   ),
                                   Align(
-                                    alignment: AlignmentDirectional(1.0, 0.0),
+                                    alignment: const AlignmentDirectional(1.0, 0.0),
                                     child: Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                      padding: const EdgeInsetsDirectional.fromSTEB(
                                           0.0, 0.0, 6.0, 0.0),
                                       child: Icon(
                                         Icons.mode_night_rounded,
@@ -290,14 +290,14 @@ class _ProfilePageCopyWidgetState extends State<ProfilePageCopyWidget>
                                     ),
                                   ),
                                   Align(
-                                    alignment: AlignmentDirectional(1.0, 0.0),
+                                    alignment: const AlignmentDirectional(1.0, 0.0),
                                     child: Container(
                                       width: 36.0,
                                       height: 36.0,
                                       decoration: BoxDecoration(
                                         color: FlutterFlowTheme.of(context)
                                             .secondaryBackground,
-                                        boxShadow: [
+                                        boxShadow: const [
                                           BoxShadow(
                                             blurRadius: 4.0,
                                             color: Color(0x430B0D0F),
@@ -326,12 +326,12 @@ class _ProfilePageCopyWidgetState extends State<ProfilePageCopyWidget>
                   ),
                   Padding(
                     padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 40.0),
+                        const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 40.0),
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Padding(
-                          padding: EdgeInsets.all(18.0),
+                          padding: const EdgeInsets.all(18.0),
                           child: Container(
                             width: 180.0,
                             height: 180.0,
@@ -341,14 +341,14 @@ class _ProfilePageCopyWidgetState extends State<ProfilePageCopyWidget>
                                   FlutterFlowTheme.of(context).tertiary,
                                   FlutterFlowTheme.of(context).secondary
                                 ],
-                                stops: [0.0, 1.0],
-                                begin: AlignmentDirectional(0.0, -1.0),
-                                end: AlignmentDirectional(0, 1.0),
+                                stops: const [0.0, 1.0],
+                                begin: const AlignmentDirectional(0.0, -1.0),
+                                end: const AlignmentDirectional(0, 1.0),
                               ),
                               shape: BoxShape.circle,
                             ),
                             child: Padding(
-                              padding: EdgeInsets.all(4.0),
+                              padding: const EdgeInsets.all(4.0),
                               child: Hero(
                                 tag: 'ProfileImage',
                                 transitionOnUserGestures: true,
@@ -356,7 +356,7 @@ class _ProfilePageCopyWidgetState extends State<ProfilePageCopyWidget>
                                   width: 200.0,
                                   height: 200.0,
                                   clipBehavior: Clip.antiAlias,
-                                  decoration: BoxDecoration(
+                                  decoration: const BoxDecoration(
                                     shape: BoxShape.circle,
                                   ),
                                   child: Image.asset(
@@ -369,7 +369,7 @@ class _ProfilePageCopyWidgetState extends State<ProfilePageCopyWidget>
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsets.all(8.0),
+                          padding: const EdgeInsets.all(8.0),
                           child: Text(
                             FFLocalizations.of(context).getText(
                               'ikcmg4a2' /* [Display name] */,
@@ -404,7 +404,7 @@ class _ProfilePageCopyWidgetState extends State<ProfilePageCopyWidget>
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.all(12.0),
+                    padding: const EdgeInsets.all(12.0),
                     child: Container(
                       decoration: BoxDecoration(
                         color: FlutterFlowTheme.of(context).secondaryBackground,
@@ -416,7 +416,7 @@ class _ProfilePageCopyWidgetState extends State<ProfilePageCopyWidget>
                         child: Builder(builder: (_) {
                           return DebugFlutterFlowModelContext(
                             rootModel: _model.rootModel,
-                            child: UserInfoWidget(),
+                            child: const UserInfoWidget(),
                           );
                         }),
                       ),

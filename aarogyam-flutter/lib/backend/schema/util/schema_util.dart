@@ -3,7 +3,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:from_css_color/from_css_color.dart';
 
-import '/flutter_flow/flutter_flow_util.dart';
+import '/core/debug/debug_types.dart';
+import '/core/utils/firestore_helpers.dart' show castToType;
+import '/core/utils/list_extensions.dart';
 
 export 'package:collection/collection.dart' show ListEquality;
 export 'package:flutter/material.dart' show Color, Colors;
@@ -24,7 +26,7 @@ List<T>? getStructList<T>(
     value is! List
         ? null
         : value
-            .where((e) => e is Map<String, dynamic>)
+            .whereType<Map<String, dynamic>>()
             .map((e) => structBuilder(e as Map<String, dynamic>))
             .toList();
 

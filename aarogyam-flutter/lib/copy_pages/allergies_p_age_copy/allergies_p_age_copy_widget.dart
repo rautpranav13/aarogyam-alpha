@@ -113,7 +113,7 @@ class _AllergiesPAgeCopyWidgetState extends State<AllergiesPAgeCopyWidget>
             mainAxisSize: MainAxisSize.min,
             children: [
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(12.0, 30.0, 12.0, 12.0),
+                padding: const EdgeInsetsDirectional.fromSTEB(12.0, 30.0, 12.0, 12.0),
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -132,11 +132,11 @@ class _AllergiesPAgeCopyWidgetState extends State<AllergiesPAgeCopyWidget>
                         context.safePop();
                       },
                     ),
-                  ].divide(SizedBox(width: 6.0)),
+                  ].divide(const SizedBox(width: 6.0)),
                 ),
               ),
               Padding(
-                padding: EdgeInsets.all(24.0),
+                padding: const EdgeInsets.all(24.0),
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -172,7 +172,7 @@ class _AllergiesPAgeCopyWidgetState extends State<AllergiesPAgeCopyWidget>
                 children: [
                   Padding(
                     padding:
-                        EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
+                        const EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
                     child: Text(
                       FFLocalizations.of(context).getText(
                         'dggjq2m4' /* Select Your Allergies */,
@@ -187,7 +187,7 @@ class _AllergiesPAgeCopyWidgetState extends State<AllergiesPAgeCopyWidget>
                   ),
                   Expanded(
                     child: Padding(
-                      padding: EdgeInsets.all(12.0),
+                      padding: const EdgeInsets.all(12.0),
                       child: Container(
                         width: double.infinity,
                         height: 100.0,
@@ -196,10 +196,10 @@ class _AllergiesPAgeCopyWidgetState extends State<AllergiesPAgeCopyWidget>
                           borderRadius: BorderRadius.circular(30.0),
                         ),
                         child: Padding(
-                          padding: EdgeInsets.all(16.0),
+                          padding: const EdgeInsets.all(16.0),
                           child: Container(
                             width: double.infinity,
-                            color: Color(0x00000000),
+                            color: const Color(0x00000000),
                             child: ExpandableNotifier(
                               controller:
                                   _model.expandableExpandableController1,
@@ -281,7 +281,7 @@ class _AllergiesPAgeCopyWidgetState extends State<AllergiesPAgeCopyWidget>
                                   initialized:
                                       _model.checkboxGroupValues1 != null,
                                 ),
-                                theme: ExpandableThemeData(
+                                theme: const ExpandableThemeData(
                                   tapHeaderToExpand: true,
                                   tapBodyToExpand: true,
                                   tapBodyToCollapse: true,
@@ -298,7 +298,7 @@ class _AllergiesPAgeCopyWidgetState extends State<AllergiesPAgeCopyWidget>
                   ),
                   Expanded(
                     child: Padding(
-                      padding: EdgeInsets.all(12.0),
+                      padding: const EdgeInsets.all(12.0),
                       child: Container(
                         width: double.infinity,
                         height: 100.0,
@@ -307,10 +307,10 @@ class _AllergiesPAgeCopyWidgetState extends State<AllergiesPAgeCopyWidget>
                           borderRadius: BorderRadius.circular(30.0),
                         ),
                         child: Padding(
-                          padding: EdgeInsets.all(16.0),
+                          padding: const EdgeInsets.all(16.0),
                           child: Container(
                             width: double.infinity,
-                            color: Color(0x00000000),
+                            color: const Color(0x00000000),
                             child: ExpandableNotifier(
                               controller:
                                   _model.expandableExpandableController2,
@@ -386,7 +386,7 @@ class _AllergiesPAgeCopyWidgetState extends State<AllergiesPAgeCopyWidget>
                                   initialized:
                                       _model.checkboxGroupValues2 != null,
                                 ),
-                                theme: ExpandableThemeData(
+                                theme: const ExpandableThemeData(
                                   tapHeaderToExpand: true,
                                   tapBodyToExpand: true,
                                   tapBodyToCollapse: true,
@@ -403,7 +403,7 @@ class _AllergiesPAgeCopyWidgetState extends State<AllergiesPAgeCopyWidget>
                   ),
                   Expanded(
                     child: Padding(
-                      padding: EdgeInsets.all(12.0),
+                      padding: const EdgeInsets.all(12.0),
                       child: Container(
                         width: double.infinity,
                         height: 100.0,
@@ -412,10 +412,10 @@ class _AllergiesPAgeCopyWidgetState extends State<AllergiesPAgeCopyWidget>
                           borderRadius: BorderRadius.circular(30.0),
                         ),
                         child: Padding(
-                          padding: EdgeInsets.all(16.0),
+                          padding: const EdgeInsets.all(16.0),
                           child: Container(
                             width: double.infinity,
-                            color: Color(0x00000000),
+                            color: const Color(0x00000000),
                             child: ExpandableNotifier(
                               controller:
                                   _model.expandableExpandableController3,
@@ -495,7 +495,7 @@ class _AllergiesPAgeCopyWidgetState extends State<AllergiesPAgeCopyWidget>
                                   initialized:
                                       _model.checkboxGroupValues3 != null,
                                 ),
-                                theme: ExpandableThemeData(
+                                theme: const ExpandableThemeData(
                                   tapHeaderToExpand: true,
                                   tapBodyToExpand: true,
                                   tapBodyToCollapse: true,
@@ -512,7 +512,7 @@ class _AllergiesPAgeCopyWidgetState extends State<AllergiesPAgeCopyWidget>
                   ),
                   Expanded(
                     child: Padding(
-                      padding: EdgeInsets.all(12.0),
+                      padding: const EdgeInsets.all(12.0),
                       child: Container(
                         width: double.infinity,
                         height: 100.0,
@@ -521,10 +521,10 @@ class _AllergiesPAgeCopyWidgetState extends State<AllergiesPAgeCopyWidget>
                           borderRadius: BorderRadius.circular(30.0),
                         ),
                         child: Padding(
-                          padding: EdgeInsets.all(16.0),
+                          padding: const EdgeInsets.all(16.0),
                           child: Container(
                             width: double.infinity,
-                            color: Color(0x00000000),
+                            color: const Color(0x00000000),
                             child: ExpandableNotifier(
                               controller:
                                   _model.expandableExpandableController4,
@@ -601,7 +601,7 @@ class _AllergiesPAgeCopyWidgetState extends State<AllergiesPAgeCopyWidget>
                                   initialized:
                                       _model.checkboxGroupValues4 != null,
                                 ),
-                                theme: ExpandableThemeData(
+                                theme: const ExpandableThemeData(
                                   tapHeaderToExpand: true,
                                   tapBodyToExpand: true,
                                   tapBodyToCollapse: true,
@@ -618,7 +618,7 @@ class _AllergiesPAgeCopyWidgetState extends State<AllergiesPAgeCopyWidget>
                   ),
                   Expanded(
                     child: Padding(
-                      padding: EdgeInsets.all(12.0),
+                      padding: const EdgeInsets.all(12.0),
                       child: Container(
                         width: double.infinity,
                         height: 100.0,
@@ -627,10 +627,10 @@ class _AllergiesPAgeCopyWidgetState extends State<AllergiesPAgeCopyWidget>
                           borderRadius: BorderRadius.circular(30.0),
                         ),
                         child: Padding(
-                          padding: EdgeInsets.all(16.0),
+                          padding: const EdgeInsets.all(16.0),
                           child: Container(
                             width: double.infinity,
-                            color: Color(0x00000000),
+                            color: const Color(0x00000000),
                             child: ExpandableNotifier(
                               controller:
                                   _model.expandableExpandableController5,
@@ -713,7 +713,7 @@ class _AllergiesPAgeCopyWidgetState extends State<AllergiesPAgeCopyWidget>
                                   initialized:
                                       _model.checkboxGroupValues5 != null,
                                 ),
-                                theme: ExpandableThemeData(
+                                theme: const ExpandableThemeData(
                                   tapHeaderToExpand: true,
                                   tapBodyToExpand: true,
                                   tapBodyToCollapse: true,
@@ -730,7 +730,7 @@ class _AllergiesPAgeCopyWidgetState extends State<AllergiesPAgeCopyWidget>
                   ),
                   Expanded(
                     child: Padding(
-                      padding: EdgeInsets.all(12.0),
+                      padding: const EdgeInsets.all(12.0),
                       child: Container(
                         width: double.infinity,
                         height: 100.0,
@@ -739,10 +739,10 @@ class _AllergiesPAgeCopyWidgetState extends State<AllergiesPAgeCopyWidget>
                           borderRadius: BorderRadius.circular(30.0),
                         ),
                         child: Padding(
-                          padding: EdgeInsets.all(16.0),
+                          padding: const EdgeInsets.all(16.0),
                           child: Container(
                             width: double.infinity,
-                            color: Color(0x00000000),
+                            color: const Color(0x00000000),
                             child: ExpandableNotifier(
                               controller:
                                   _model.expandableExpandableController6,
@@ -819,7 +819,7 @@ class _AllergiesPAgeCopyWidgetState extends State<AllergiesPAgeCopyWidget>
                                   initialized:
                                       _model.checkboxGroupValues6 != null,
                                 ),
-                                theme: ExpandableThemeData(
+                                theme: const ExpandableThemeData(
                                   tapHeaderToExpand: true,
                                   tapBodyToExpand: true,
                                   tapBodyToCollapse: true,
@@ -835,9 +835,9 @@ class _AllergiesPAgeCopyWidgetState extends State<AllergiesPAgeCopyWidget>
                     ),
                   ),
                   Align(
-                    alignment: AlignmentDirectional(1.0, 1.0),
+                    alignment: const AlignmentDirectional(1.0, 1.0),
                     child: Padding(
-                      padding: EdgeInsets.all(24.0),
+                      padding: const EdgeInsets.all(24.0),
                       child: FFButtonWidget(
                         onPressed: () {
                           print('Button pressed ...');
@@ -845,16 +845,16 @@ class _AllergiesPAgeCopyWidgetState extends State<AllergiesPAgeCopyWidget>
                         text: FFLocalizations.of(context).getText(
                           'wl8lcb2e' /* Save */,
                         ),
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.done,
                           size: 15.0,
                         ),
                         options: FFButtonOptions(
                           height: 40.0,
-                          padding: EdgeInsetsDirectional.fromSTEB(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
                               16.0, 0.0, 16.0, 0.0),
                           iconAlignment: IconAlignment.end,
-                          iconPadding: EdgeInsetsDirectional.fromSTEB(
+                          iconPadding: const EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 0.0, 0.0),
                           color: FlutterFlowTheme.of(context).primary,
                           textStyle:
@@ -872,7 +872,7 @@ class _AllergiesPAgeCopyWidgetState extends State<AllergiesPAgeCopyWidget>
                   ),
                   Expanded(
                     child: Padding(
-                      padding: EdgeInsets.all(24.0),
+                      padding: const EdgeInsets.all(24.0),
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -920,7 +920,7 @@ class _AllergiesPAgeCopyWidgetState extends State<AllergiesPAgeCopyWidget>
                                 borderRadius: BorderRadius.circular(8.0),
                               ),
                               focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                   color: Color(0x00000000),
                                   width: 2.0,
                                 ),
@@ -953,15 +953,15 @@ class _AllergiesPAgeCopyWidgetState extends State<AllergiesPAgeCopyWidget>
                             cursorColor:
                                 FlutterFlowTheme.of(context).primaryText,
                             validator: _model.textControllerValidator
-                                .asValidator(context),
+                                !.asValidator(context),
                           ),
-                        ].divide(SizedBox(height: 4.0)),
+                        ].divide(const SizedBox(height: 4.0)),
                       ),
                     ),
                   ),
                 ],
               ),
-            ].divide(SizedBox(height: 10.0)),
+            ].divide(const SizedBox(height: 10.0)),
           ),
         ),
       ),

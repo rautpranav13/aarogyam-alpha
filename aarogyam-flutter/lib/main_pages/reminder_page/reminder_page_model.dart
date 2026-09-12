@@ -17,8 +17,11 @@ class ReminderPageModel extends FlutterFlowModel<ReminderPageWidget> {
   // Model for ReminderListExpanded component.
   late ReminderListExpandedModel reminderListExpandedModel;
 
+  @override
   final Map<String, DebugDataField> debugGeneratorVariables = {};
+  @override
   final Map<String, DebugDataField> debugBackendQueries = {};
+  @override
   final Map<String, FlutterFlowModel> widgetBuilderComponents = {};
   @override
   void initState(BuildContext context) {
@@ -39,7 +42,7 @@ class ReminderPageModel extends FlutterFlowModel<ReminderPageWidget> {
         backendQueries: debugBackendQueries,
         componentStates: {
           'reminderListExpandedModel (ReminderListExpanded)':
-              reminderListExpandedModel?.toWidgetClassDebugData(),
+              reminderListExpandedModel.toWidgetClassDebugData(),
           ...widgetBuilderComponents.map(
             (key, value) => MapEntry(
               key,

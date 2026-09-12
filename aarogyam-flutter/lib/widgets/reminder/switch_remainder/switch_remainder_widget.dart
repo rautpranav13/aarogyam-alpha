@@ -94,8 +94,8 @@ class _SwitchRemainderWidgetState extends State<SwitchRemainderWidget>
       builder: (context) => Switch.adaptive(
         value: _model.switchValue!,
         onChanged: (newValue) async {
-          safeSetState(() => _model.switchValue = newValue!);
-          if (newValue!) {
+          safeSetState(() => _model.switchValue = newValue);
+          if (newValue) {
             await showDialog(
               context: context,
               builder: (dialogContext) {
@@ -103,11 +103,11 @@ class _SwitchRemainderWidgetState extends State<SwitchRemainderWidget>
                   elevation: 0,
                   insetPadding: EdgeInsets.zero,
                   backgroundColor: Colors.transparent,
-                  alignment: AlignmentDirectional(0.0, 0.0)
+                  alignment: const AlignmentDirectional(0.0, 0.0)
                       .resolve(Directionality.of(context)),
                   child: SetReminderWidget(
-                    title: widget!.title,
-                    description: widget!.message,
+                    title: widget.title,
+                    description: widget.message,
                   ),
                 );
               },
@@ -115,7 +115,7 @@ class _SwitchRemainderWidgetState extends State<SwitchRemainderWidget>
           }
         },
         activeColor: FlutterFlowTheme.of(context).primaryBackground,
-        activeTrackColor: Color(0xFF86D1C7),
+        activeTrackColor: const Color(0xFF86D1C7),
         inactiveTrackColor: FlutterFlowTheme.of(context).secondaryText,
         inactiveThumbColor: FlutterFlowTheme.of(context).secondaryBackground,
       ),

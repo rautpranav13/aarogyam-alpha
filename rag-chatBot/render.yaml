@@ -1,7 +1,21 @@
 services:
   - type: web
-    name: watson-flask-api
+    name: aarogyam-rag-api
     env: python
     plan: free
+    region: oregon
     buildCommand: pip install -r requirements.txt
-    startCommand: python flask_server.py
+    startCommand: gunicorn flask_app.app:app --bind 0.0.0.0:$PORT --workers 2 --timeout 120
+    envVars:
+      - key: WATSONX_API_KEY
+        sync: false
+      - key: WATSONX_PROJECT_ID
+        sync: false
+      - key: WATSONX_URL
+        value: https://eu-gb.ml.cloud.ibm.com
+      - key: CHROMA_DIR
+        value: ./chroma_db
+      - key: CHUNK_SIZE
+        value: "512"
+      - key: CHUNK_OVERLAP
+        value: "50"

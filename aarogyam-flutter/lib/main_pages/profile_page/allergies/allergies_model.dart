@@ -80,8 +80,11 @@ class AllergiesModel extends FlutterFlowModel<AllergiesWidget> {
   TextEditingController? textController;
   String? Function(BuildContext, String?)? textControllerValidator;
 
+  @override
   final Map<String, DebugDataField> debugGeneratorVariables = {};
+  @override
   final Map<String, DebugDataField> debugBackendQueries = {};
+  @override
   final Map<String, FlutterFlowModel> widgetBuilderComponents = {};
   @override
   void initState(BuildContext context) {

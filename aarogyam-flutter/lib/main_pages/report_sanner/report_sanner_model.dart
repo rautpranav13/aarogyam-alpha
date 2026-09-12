@@ -5,7 +5,7 @@ import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import '/flutter_flow/upload_data.dart';
+import '/flutter_flow/upload_data.dart' hide uploadData;
 import 'dart:math';
 import 'dart:ui';
 import '/custom_code/actions/index.dart' as actions;
@@ -72,8 +72,11 @@ class ReportSannerModel extends FlutterFlowModel<ReportSannerWidget> {
 
   String? get ttsaudioPath => _ttsaudioPath;
 
+  @override
   final Map<String, DebugDataField> debugGeneratorVariables = {};
+  @override
   final Map<String, DebugDataField> debugBackendQueries = {};
+  @override
   final Map<String, FlutterFlowModel> widgetBuilderComponents = {};
   @override
   void initState(BuildContext context) {

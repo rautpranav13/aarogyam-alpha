@@ -4,7 +4,7 @@ import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import '/flutter_flow/upload_data.dart';
+import '/flutter_flow/upload_data.dart' hide uploadData;
 import 'dart:ui';
 import '/custom_code/actions/index.dart' as actions;
 import '/custom_code/widgets/index.dart' as custom_widgets;
@@ -20,8 +20,7 @@ class ProfileModel extends FlutterFlowModel<ProfileWidget> {
 
   AudioRecorder? audioRecorder;
   String? recordedAudio;
-  FFUploadedFile recordedFileBytes =
-      FFUploadedFile(bytes: Uint8List.fromList([]));
+  Uint8List? recordedFileBytes;
   // Stores action output result for [Custom Action - downloadRecordedAudio] action in IconButton widget.
   String? _recordedFilePath;
   set recordedFilePath(String? value) {
@@ -82,8 +81,11 @@ class ProfileModel extends FlutterFlowModel<ProfileWidget> {
 
   ApiCallResponse? get imageapiResponseinsights => _imageapiResponseinsights;
 
+  @override
   final Map<String, DebugDataField> debugGeneratorVariables = {};
+  @override
   final Map<String, DebugDataField> debugBackendQueries = {};
+  @override
   final Map<String, FlutterFlowModel> widgetBuilderComponents = {};
   @override
   void initState(BuildContext context) {

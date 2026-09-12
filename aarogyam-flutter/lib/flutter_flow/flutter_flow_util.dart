@@ -1,520 +1,414 @@
-import 'dart:io';
+// flutter_flow_util.dart — compatibility shim.
+//
+// The original flutter_flow/ directory was removed during the ST-1
+// modernisation step. This file provides compatibility for all remaining
+// code that still imports from here, mapping to new pure-Flutter equivalents.
+//
+// New code should import from '/core/core.dart' directly.
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:collection/collection.dart';
-import 'package:from_css_color/from_css_color.dart';
-import 'dart:math' show pow, pi, sin;
-import 'package:intl/intl.dart';
-import 'package:json_path/json_path.dart';
-import 'package:timeago/timeago.dart' as timeago;
-import 'package:url_launcher/url_launcher.dart';
-import 'package:cross_file/cross_file.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:record/record.dart';
-import 'uploaded_file.dart';
+// ignore_for_file: unused_element, unused_import, duplicate_ignore
 
-import 'debug_util.dart';
-
-export 'debug_util.dart';
-
-export 'package:debug_panel_proto/debug_panel_proto.dart';
-
-export 'nav/serialization_util.dart';
-
-import '../main.dart';
-
-import 'lat_lng.dart';
-
-export 'lat_lng.dart';
-export 'place.dart';
-export 'uploaded_file.dart';
-export '../app_state.dart';
-export 'flutter_flow_model.dart';
-export 'dart:math' show min, max;
+// ---------------------------------------------------------------------------
+// Exports (must come before any declarations)
+// ---------------------------------------------------------------------------
 export 'dart:typed_data' show Uint8List;
-export 'dart:convert' show jsonEncode, jsonDecode;
-export 'package:intl/intl.dart';
-export 'package:cloud_firestore/cloud_firestore.dart'
-    show DocumentReference, FirebaseFirestore;
-export 'package:page_transition/page_transition.dart';
-export 'internationalization.dart' show FFLocalizations;
-export 'nav/nav.dart';
+export '/core/core.dart';
+export 'package:flutter/material.dart';
+export 'package:cloud_firestore/cloud_firestore.dart' hide Order;
+export 'package:go_router/go_router.dart';
+export '/core/router/app_router.dart'
+    show
+        GoRouterExtensions,
+        NavigationExtensions,
+        GoRouterLocationExtension,
+        AppStateNotifier,
+        RootPageContext,
+        routeObserver,
+        appNavigatorKey;
 
-final RouteObserver<ModalRoute> routeObserver = RouteObserver<ModalRoute>();
+// ---------------------------------------------------------------------------
+// Imports
+// ---------------------------------------------------------------------------
+import 'dart:typed_data';
+import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
+import '/app_state.dart';
+import '/core/base_model.dart';
+import '/core/debug/debug_types.dart';
+import '/core/types/uploaded_file.dart';
+import '/theme/app_theme.dart';
+import '/flutter_flow/flutter_flow_animations.dart' show AnimationInfo;
+import '/flutter_flow/upload_data.dart' show selectMedia, SelectedMedia, selectMediaWithSourceBottomSheet;
 
-T valueOrDefault<T>(T? value, T defaultValue) =>
-    (value is String && value.isEmpty) || value == null ? defaultValue : value;
+// ---------------------------------------------------------------------------
+// FlutterFlowModel — alias to BaseModel for backward compat
+// ---------------------------------------------------------------------------
+typedef FlutterFlowModel<T extends StatefulWidget> = BaseModel<T>;
 
-void _setTimeagoLocales() {
-  timeago.setLocaleMessages('en', timeago.EnMessages());
-  timeago.setLocaleMessages('en_short', timeago.EnShortMessages());
-  timeago.setLocaleMessages('hi', timeago.HiMessages());
-  timeago.setLocaleMessages('hi_short', timeago.HiShortMessages());
+// ---------------------------------------------------------------------------
+// createModel — FF helper to instantiate and initialize a model
+// ---------------------------------------------------------------------------
+T createModel<T extends BaseModel>(BuildContext context, T Function() creator) {
+  final model = creator();
+  model.init(context);
+  return model;
 }
 
-String dateTimeFormat(String format, DateTime? dateTime, {String? locale}) {
-  if (dateTime == null) {
-    return '';
-  }
-  if (format == 'relative') {
-    _setTimeagoLocales();
-    return timeago.format(dateTime, locale: locale, allowFromNow: true);
-  }
-  return DateFormat(format, locale).format(dateTime);
-}
-
-Future launchURL(String url) async {
-  var uri = Uri.parse(url);
-  try {
-    await launchUrl(uri);
-  } catch (e) {
-    throw 'Could not launch $uri: $e';
-  }
-}
-
-Color colorFromCssString(String color, {Color? defaultColor}) {
-  try {
-    return fromCssColor(color);
-  } catch (_) {}
-  return defaultColor ?? Colors.black;
-}
-
-enum FormatType {
-  decimal,
-  percent,
-  scientific,
-  compact,
-  compactLong,
-  custom,
-}
-
-enum DecimalType {
-  automatic,
-  periodDecimal,
-  commaDecimal,
-}
-
-String formatNumber(
-  num? value, {
-  required FormatType formatType,
-  DecimalType? decimalType,
-  String? currency,
-  bool toLowerCase = false,
-  String? format,
-  String? locale,
-}) {
-  if (value == null) {
-    return '';
-  }
-  var formattedValue = '';
-  switch (formatType) {
-    case FormatType.decimal:
-      switch (decimalType!) {
-        case DecimalType.automatic:
-          formattedValue = NumberFormat.decimalPattern().format(value);
-          break;
-        case DecimalType.periodDecimal:
-          if (currency != null) {
-            formattedValue = NumberFormat('#,##0.00', 'en_US').format(value);
-          } else {
-            formattedValue = NumberFormat.decimalPattern('en_US').format(value);
-          }
-          break;
-        case DecimalType.commaDecimal:
-          if (currency != null) {
-            formattedValue = NumberFormat('#,##0.00', 'es_PA').format(value);
-          } else {
-            formattedValue = NumberFormat.decimalPattern('es_PA').format(value);
-          }
-          break;
-      }
-      break;
-    case FormatType.percent:
-      formattedValue = NumberFormat.percentPattern().format(value);
-      break;
-    case FormatType.scientific:
-      formattedValue = NumberFormat.scientificPattern().format(value);
-      if (toLowerCase) {
-        formattedValue = formattedValue.toLowerCase();
-      }
-      break;
-    case FormatType.compact:
-      formattedValue = NumberFormat.compact().format(value);
-      break;
-    case FormatType.compactLong:
-      formattedValue = NumberFormat.compactLong().format(value);
-      break;
-    case FormatType.custom:
-      final hasLocale = locale != null && locale.isNotEmpty;
-      formattedValue =
-          NumberFormat(format, hasLocale ? locale : null).format(value);
-  }
-
-  if (formattedValue.isEmpty) {
-    return value.toString();
-  }
-
-  if (currency != null) {
-    final currencySymbol = currency.isNotEmpty
-        ? currency
-        : NumberFormat.simpleCurrency().format(0.0).substring(0, 1);
-    formattedValue = '$currencySymbol$formattedValue';
-  }
-
-  return formattedValue;
-}
-
-DateTime get getCurrentTimestamp => DateTime.now();
-DateTime dateTimeFromSecondsSinceEpoch(int seconds) {
-  return DateTime.fromMillisecondsSinceEpoch(seconds * 1000);
-}
-
-extension DateTimeConversionExtension on DateTime {
-  int get secondsSinceEpoch => (millisecondsSinceEpoch / 1000).round();
-}
-
-extension DateTimeComparisonOperators on DateTime {
-  bool operator <(DateTime other) => isBefore(other);
-  bool operator >(DateTime other) => isAfter(other);
-  bool operator <=(DateTime other) => this < other || isAtSameMomentAs(other);
-  bool operator >=(DateTime other) => this > other || isAtSameMomentAs(other);
-}
-
-T? castToType<T>(dynamic value) {
-  if (value == null) {
-    return null;
-  }
-  switch (T) {
-    case double:
-      // Doubles may be stored as ints in some cases.
-      return value.toDouble() as T;
-    case int:
-      // Likewise, ints may be stored as doubles. If this is the case
-      // (i.e. no decimal value), return the value as an int.
-      if (value is num && value.toInt() == value) {
-        return value.toInt() as T;
-      }
-      break;
-    default:
-      break;
-  }
-  return value as T;
-}
-
-dynamic getJsonField(
-  dynamic response,
-  String jsonPath, [
-  bool isForList = false,
-]) {
-  final field = JsonPath(jsonPath).read(response);
-  if (field.isEmpty) {
-    return null;
-  }
-  if (field.length > 1) {
-    return field.map((f) => f.value).toList();
-  }
-  final value = field.first.value;
-  if (isForList) {
-    return value is! Iterable
-        ? [value]
-        : (value is List ? value : value.toList());
-  }
-  return value;
-}
-
-Rect? getWidgetBoundingBox(BuildContext context) {
-  try {
-    final renderBox = context.findRenderObject() as RenderBox?;
-    return renderBox!.localToGlobal(Offset.zero) & renderBox.size;
-  } catch (_) {
-    return null;
-  }
-}
-
-bool get isAndroid => !kIsWeb && Platform.isAndroid;
-bool get isiOS => !kIsWeb && Platform.isIOS;
-bool get isWeb => kIsWeb;
-
-const kBreakpointSmall = 479.0;
-const kBreakpointMedium = 767.0;
-const kBreakpointLarge = 991.0;
-bool isMobileWidth(BuildContext context) =>
-    MediaQuery.sizeOf(context).width < kBreakpointSmall;
-bool responsiveVisibility({
-  required BuildContext context,
-  bool phone = true,
-  bool tablet = true,
-  bool tabletLandscape = true,
-  bool desktop = true,
-}) {
-  final width = MediaQuery.sizeOf(context).width;
-  if (width < kBreakpointSmall) {
-    return phone;
-  } else if (width < kBreakpointMedium) {
-    return tablet;
-  } else if (width < kBreakpointLarge) {
-    return tabletLandscape;
-  } else {
-    return desktop;
-  }
-}
-
-const kTextValidatorUsernameRegex = r'^[a-zA-Z][a-zA-Z0-9_-]{2,16}$';
-// https://stackoverflow.com/a/201378
-const kTextValidatorEmailRegex =
-    "^(?:[a-zA-Z0-9!#\$%&\'*+/=?^_`{|}~-]+(?:\\.[a-zA-Z0-9!#\$%&\'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?|\\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-zA-Z0-9-]*[a-zA-Z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])\$";
-const kTextValidatorWebsiteRegex =
-    r'(https?:\/\/)?(www\.)[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,10}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)|(https?:\/\/)?(www\.)?(?!ww)[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,10}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)';
-
-extension FFTextEditingControllerExt on TextEditingController? {
-  String get text => this == null ? '' : this!.text;
-  set text(String newText) => this?.text = newText;
-}
-
-extension IterableExt<T> on Iterable<T> {
-  List<T> sortedList<S extends Comparable>(
-      {S Function(T)? keyOf, bool desc = false}) {
-    final sortedAscending = toList()
-      ..sort(keyOf == null ? null : ((a, b) => keyOf(a).compareTo(keyOf(b))));
-    if (desc) {
-      return sortedAscending.reversed.toList();
-    }
-    return sortedAscending;
-  }
-
-  List<S> mapIndexed<S>(S Function(int, T) func) => toList()
-      .asMap()
-      .map((index, value) => MapEntry(index, func(index, value)))
-      .values
-      .toList();
-}
-
-extension StringDocRef on String {
-  DocumentReference get ref => FirebaseFirestore.instance.doc(this);
-}
-
-void setAppLanguage(BuildContext context, String language) =>
-    MyApp.of(context).setLocale(language);
-
-void setDarkModeSetting(BuildContext context, ThemeMode themeMode) =>
-    MyApp.of(context).setThemeMode(themeMode);
-
-void showSnackbar(
-  BuildContext context,
-  String message, {
-  bool loading = false,
-  int duration = 4,
-}) {
-  ScaffoldMessenger.of(context).hideCurrentSnackBar();
-  ScaffoldMessenger.of(context).showSnackBar(
-    SnackBar(
-      content: Row(
-        children: [
-          if (loading)
-            Padding(
-              padding: EdgeInsetsDirectional.only(end: 10.0),
-              child: Container(
-                height: 20,
-                width: 20,
-                child: const CircularProgressIndicator(
-                  color: Colors.white,
-                ),
-              ),
-            ),
-          Text(message),
-        ],
-      ),
-      duration: Duration(seconds: duration),
-    ),
-  );
-}
-
-extension FFStringExt on String {
-  String maybeHandleOverflow({int? maxChars, String replacement = ''}) =>
-      maxChars != null && length > maxChars
-          ? replaceRange(maxChars, null, replacement)
-          : this;
-}
-
-extension ListFilterExt<T> on Iterable<T?> {
-  List<T> get withoutNulls => where((s) => s != null).map((e) => e!).toList();
-}
-
-extension MapFilterExtensions<T> on Map<String, T?> {
-  Map<String, T> get withoutNulls => Map.fromEntries(
-        entries
-            .where((e) => e.value != null)
-            .map((e) => MapEntry(e.key, e.value as T)),
-      );
-}
-
-extension MapListContainsExt on List<dynamic> {
-  bool containsMap(dynamic map) => map is Map
-      ? any((e) => e is Map && const DeepCollectionEquality().equals(e, map))
-      : contains(map);
-}
-
-extension ListDivideExt<T extends Widget> on Iterable<T> {
-  Iterable<MapEntry<int, Widget>> get enumerate => toList().asMap().entries;
-
-  List<Widget> divide(Widget t, {bool Function(int)? filterFn}) => isEmpty
-      ? []
-      : (enumerate
-          .map((e) => [e.value, if (filterFn == null || filterFn(e.key)) t])
-          .expand((i) => i)
-          .toList()
-        ..removeLast());
-
-  List<Widget> around(Widget t) => addToStart(t).addToEnd(t);
-
-  List<Widget> addToStart(Widget t) =>
-      enumerate.map((e) => e.value).toList()..insert(0, t);
-
-  List<Widget> addToEnd(Widget t) =>
-      enumerate.map((e) => e.value).toList()..add(t);
-
-  List<Padding> paddingTopEach(double val) =>
-      map((w) => Padding(padding: EdgeInsets.only(top: val), child: w))
-          .toList();
-}
-
-extension StatefulWidgetExtensions on State<StatefulWidget> {
-  /// Check if the widget exist before safely setting state.
+// ---------------------------------------------------------------------------
+// safeSetState — FF helper that calls setState only if mounted
+// ---------------------------------------------------------------------------
+extension SafeSetStateExtension on State {
   void safeSetState(VoidCallback fn) {
-    if (mounted) {
-      // ignore: invalid_use_of_protected_member
-      setState(fn);
-    }
+    if (mounted) setState(fn);
   }
 }
 
+// ---------------------------------------------------------------------------
+// FFLocalizations — shim that returns the key unchanged.
+// Production i18n is handled via ARB / AppLocalizations.
+// ---------------------------------------------------------------------------
+class FFLocalizations {
+  FFLocalizations._(this._locale);
+  final Locale _locale;
+
+  static FFLocalizations of(BuildContext context) =>
+      FFLocalizations._(Localizations.localeOf(context));
+
+  static Future<void> initialize() async {}
+  static Locale? getStoredLocale() => null;
+  static Future<void> storeLocale(String language) async {}
+
+  Locale get locale => _locale;
+
+  String getText(String key) => key;
+  String getVariableText({String? enText = '', String? hiText, String? mrText}) {
+    final code = _locale.languageCode;
+    if (code == 'hi' && hiText != null) return hiText;
+    if (code == 'mr' && mrText != null) return mrText;
+    return enText ?? '';
+  }
+}
+
+Locale createLocale(String language) => Locale(language);
+
+// ---------------------------------------------------------------------------
+// DebugModalRoute — delegates to real ModalRoute.of for routeObserver.subscribe
+// ---------------------------------------------------------------------------
+class DebugModalRoute {
+  static ModalRoute? of(BuildContext context) => ModalRoute.of(context);
+}
+
+// ---------------------------------------------------------------------------
+// DebugFlutterFlowModelContext — no-op Widget wrapper + static helper
+// ---------------------------------------------------------------------------
+class DebugFlutterFlowModelContext extends StatelessWidget {
+  const DebugFlutterFlowModelContext({
+    super.key,
+    required this.child,
+    this.rootModel,
+    this.parentModelCallback,
+  });
+  final Widget child;
+  final dynamic rootModel;
+  final Function? parentModelCallback;
+
+  static DebugFlutterFlowModelContext? maybeOf(BuildContext context) => null;
+
+  @override
+  Widget build(BuildContext context) => child;
+}
+
+// ---------------------------------------------------------------------------
+// wrapWithModel — wraps a child widget, passing through as-is
+// ---------------------------------------------------------------------------
+Widget wrapWithModel<T extends BaseModel>({
+  required T model,
+  required VoidCallback updateCallback,
+  required Widget child,
+  bool updateOnChange = false,
+}) {
+  if (updateOnChange) {
+    model.addListener(updateCallback);
+  }
+  return child;
+}
+
+// ---------------------------------------------------------------------------
+// divide() — FF helper for ListView dividers
+// ---------------------------------------------------------------------------
+extension ListDivideExtension<T extends Widget> on Iterable<T> {
+  List<Widget> divide(Widget t) {
+    final result = <Widget>[];
+    for (final widget in this) {
+      if (result.isNotEmpty) result.add(t);
+      result.add(widget);
+    }
+    return result;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// TextStyle.override — FF extension for easy text style customization
+// ---------------------------------------------------------------------------
+extension TextStyleOverride on TextStyle {
+  TextStyle override({
+    TextStyle? font,
+    String? fontFamily,
+    Color? color,
+    double? fontSize,
+    FontWeight? fontWeight,
+    double? letterSpacing,
+    FontStyle? fontStyle,
+    TextDecoration? decoration,
+    double? lineHeight,
+    List<Shadow>? shadows,
+    bool useGoogleFonts = false,
+  }) {
+    final base = font ?? this;
+    return base.copyWith(
+      fontFamily: fontFamily ?? base.fontFamily,
+      color: color,
+      fontSize: fontSize,
+      fontWeight: fontWeight,
+      letterSpacing: letterSpacing,
+      fontStyle: fontStyle,
+      decoration: decoration,
+      height: lineHeight,
+      shadows: shadows,
+    );
+  }
+}
+
+// ---------------------------------------------------------------------------
+// FFAppState shim — returns the AppState singleton
+// ---------------------------------------------------------------------------
+AppState FFAppState() => AppState();
+
+// ---------------------------------------------------------------------------
+// FFButtonOptions / FFButtonWidget
+// ---------------------------------------------------------------------------
+class FFButtonOptions {
+  const FFButtonOptions({
+    this.width,
+    this.height,
+    this.padding,
+    this.iconPadding,
+    this.color,
+    this.textStyle,
+    this.elevation,
+    this.borderSide,
+    this.borderRadius,
+    this.disabledColor,
+    this.disabledTextColor,
+    this.splashColor,
+    this.iconColor,
+    this.iconSize,
+    this.iconAlignment,
+    this.hoverColor,
+    this.hoverTextColor,
+    this.hoverBorderSide,
+  });
+  final double? width;
+  final double? height;
+  final EdgeInsetsGeometry? padding;
+  final EdgeInsetsGeometry? iconPadding;
+  final Color? color;
+  final TextStyle? textStyle;
+  final double? elevation;
+  final BorderSide? borderSide;
+  final BorderRadius? borderRadius;
+  final Color? disabledColor;
+  final Color? disabledTextColor;
+  final Color? splashColor;
+  final Color? iconColor;
+  final double? iconSize;
+  final dynamic iconAlignment;
+  final Color? hoverColor;
+  final Color? hoverTextColor;
+  final BorderSide? hoverBorderSide;
+}
+
+class FFButtonWidget extends StatelessWidget {
+  const FFButtonWidget({
+    super.key,
+    required this.onPressed,
+    required this.text,
+    required this.options,
+    this.icon,
+    this.iconData,
+    this.showLoadingIndicator = true,
+  });
+  final VoidCallback? onPressed;
+  final String text;
+  final FFButtonOptions options;
+  final Widget? icon;
+  final IconData? iconData;
+  final bool showLoadingIndicator;
+
+  @override
+  Widget build(BuildContext context) {
+    Widget label = Text(text, style: options.textStyle);
+    if (icon != null || iconData != null) {
+      label = Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          icon ?? Icon(iconData, size: options.iconSize ?? 20, color: options.iconColor),
+          const SizedBox(width: 8),
+          Text(text, style: options.textStyle),
+        ],
+      );
+    }
+    return SizedBox(
+      width: options.width,
+      height: options.height ?? 44,
+      child: ElevatedButton(
+        onPressed: onPressed,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: options.color,
+          elevation: options.elevation,
+          padding: options.padding,
+          shape: options.borderRadius != null
+              ? RoundedRectangleBorder(
+                  borderRadius: options.borderRadius!,
+                  side: options.borderSide ?? BorderSide.none,
+                )
+              : null,
+          disabledBackgroundColor: options.disabledColor,
+          disabledForegroundColor: options.disabledTextColor,
+        ),
+        child: label,
+      ),
+    );
+  }
+}
+
+// ---------------------------------------------------------------------------
+// valueOrDefault — returns value if non-null/non-empty, else defaultValue
+// ---------------------------------------------------------------------------
+T valueOrDefault<T>(T? value, T defaultValue) =>
+    (value is String && (value as String).isEmpty) || value == null
+        ? defaultValue
+        : value;
+
+// ---------------------------------------------------------------------------
+// DateTime.secondsSinceEpoch
+// ---------------------------------------------------------------------------
+extension DateTimeExtension on DateTime {
+  int get secondsSinceEpoch => millisecondsSinceEpoch ~/ 1000;
+}
+
+// ---------------------------------------------------------------------------
+// Permission constants
+// ---------------------------------------------------------------------------
+const Permission notificationsPermission = Permission.notification;
+const Permission microphonePermission = Permission.microphone;
+
+// ---------------------------------------------------------------------------
+// FlutterFlowDynamicModels — dynamic sub-model collection
+// ---------------------------------------------------------------------------
+class FlutterFlowDynamicModels<T extends BaseModel> {
+  FlutterFlowDynamicModels(this._creator);
+  final T Function() _creator;
+  final Map<String, T> _models = {};
+
+  T getModel(String uid, int index) =>
+      _models.putIfAbsent(uid, _creator);
+
+  T? get(String uid) => _models[uid];
+
+  void dispose() {
+    for (final m in _models.values) {
+      m.dispose();
+    }
+    _models.clear();
+  }
+}
+
+// ---------------------------------------------------------------------------
+// validateFileFormat — stub
+// ---------------------------------------------------------------------------
+bool validateFileFormat(String filePath, BuildContext context) => true;
+
+// ---------------------------------------------------------------------------
+// animateOnActionTrigger — flutter_animate stub extension
+// ---------------------------------------------------------------------------
+extension AnimateOnActionTriggerExtension on Widget {
+  Widget animateOnActionTrigger(
+    AnimationInfo? info, {
+    bool hasBeenTriggered = false,
+  }) =>
+      this;
+}
+
+// ---------------------------------------------------------------------------
+// setDarkModeSetting — theme mode toggle
+// ---------------------------------------------------------------------------
+Future<void> setDarkModeSetting(BuildContext context, ThemeMode mode) async {
+  AppTheme.saveThemeMode(mode);
+}
+
+// ---------------------------------------------------------------------------
+// startAudioRecording / stopAudioRecording — stubs for legacy profile page
+// ---------------------------------------------------------------------------
 Future<void> startAudioRecording(
   BuildContext context, {
-  required AudioRecorder audioRecorder,
+  dynamic audioRecorder,
+  dynamic onRecordingComplete,
+  String? audioName,
+}) async {}
+
+Future<String?> stopAudioRecording({
+  dynamic audioRecorder,
+  String? audioName,
+  void Function(String?, Uint8List?)? onRecordingComplete,
 }) async {
-  if (await audioRecorder.hasPermission()) {
-    final String path;
-    final AudioEncoder encoder;
-    if (kIsWeb) {
-      path = '';
-      encoder = AudioEncoder.opus;
-    } else {
-      final dir = await getApplicationDocumentsDirectory();
-      path = '${dir.path}/audio_${DateTime.now().millisecondsSinceEpoch}.m4a';
-      encoder = AudioEncoder.aacLc;
-    }
-    await audioRecorder.start(
-      RecordConfig(encoder: encoder),
-      path: path,
-    );
-  } else {
-    if (!context.mounted) {
-      return;
-    }
-    showSnackbar(
-      context,
-      'You have not provided permission to record audio.',
-    );
+  onRecordingComplete?.call(null, null);
+  return null;
+}
+
+// ---------------------------------------------------------------------------
+// addToEnd / addToStart — chainable list append/prepend
+// ---------------------------------------------------------------------------
+extension ListAddExtension<T> on List<T> {
+  List<T> addToEnd(T element) {
+    add(element);
+    return this;
+  }
+
+  List<T> addToStart(T element) {
+    insert(0, element);
+    return this;
   }
 }
 
-Future<void> stopAudioRecording({
-  required AudioRecorder? audioRecorder,
-  required String audioName,
-  required Function(String?, FFUploadedFile) onRecordingComplete,
-}) async {
-  if (audioRecorder == null) {
-    return;
-  }
-  final recordedPath = await audioRecorder.stop();
-  final recordedFilePath = !kIsWeb && (Platform.isIOS || Platform.isMacOS)
-      ? 'file://$recordedPath'
-      : recordedPath;
-  if (recordedFilePath == null) {
-    return;
-  }
 
-  final recordedFileBytes = FFUploadedFile(
-    name: '$audioName.m4a',
-    bytes: await XFile(recordedPath!).readAsBytes(),
-  );
-  onRecordingComplete(
-    recordedFilePath,
-    recordedFileBytes,
-  );
+// ---------------------------------------------------------------------------
+// asValidator — extension on Function? to use as a FormFieldValidator
+// ---------------------------------------------------------------------------
+typedef ValidatorFn<T> = String? Function(T?);
+
+extension FunctionValidatorExtension<T> on ValidatorFn<T>? {
+  ValidatorFn<T>? asValidator(BuildContext context) => this;
 }
 
-// For iOS 16 and below, set the status bar color to match the app's theme.
-// https://github.com/flutter/flutter/issues/41067
-Brightness? _lastBrightness;
-void fixStatusBarOniOS16AndBelow(BuildContext context) {
-  if (!isiOS) {
-    return;
-  }
-  final brightness = Theme.of(context).brightness;
-  if (_lastBrightness != brightness) {
-    _lastBrightness = brightness;
-    SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle(
-        statusBarBrightness: brightness,
-        systemStatusBarContrastEnforced: true,
-      ),
-    );
-  }
+// Also on generic Function for FF-generated code that uses `Function?`
+extension GenericFunctionValidatorExtension on Function {
+  String? Function(String?)? asValidator(BuildContext context) =>
+      (value) => this(value) as String?;
 }
 
-extension ListUniqueExt<T> on Iterable<T> {
-  List<T> unique(dynamic Function(T) getKey) {
-    var distinctSet = <dynamic>{};
-    var distinctList = <T>[];
-    for (var item in this) {
-      if (distinctSet.add(getKey(item))) {
-        distinctList.add(item);
-      }
-    }
-    return distinctList;
-  }
+// ---------------------------------------------------------------------------
+// toDynamicWidgetClassDebugData — stub for FlutterFlowDynamicModels
+// ---------------------------------------------------------------------------
+extension FlutterFlowDynamicModelsDebugExtension<T extends BaseModel>
+    on FlutterFlowDynamicModels<T> {
+  Map<String, dynamic> toDynamicWidgetClassDebugData() => {};
 }
 
-String roundTo(double value, int decimalPoints) {
-  final power = pow(10, decimalPoints);
-  return ((value * power).round() / power).toString();
-}
 
-double computeGradientAlignmentX(double evaluatedAngle) {
-  evaluatedAngle %= 360;
-  final rads = evaluatedAngle * pi / 180;
-  double x;
-  if (evaluatedAngle < 45 || evaluatedAngle > 315) {
-    x = sin(2 * rads);
-  } else if (45 <= evaluatedAngle && evaluatedAngle <= 135) {
-    x = 1;
-  } else if (135 <= evaluatedAngle && evaluatedAngle <= 225) {
-    x = sin(-2 * rads);
-  } else {
-    x = -1;
-  }
-  return double.parse(roundTo(x, 2));
-}
+// ---------------------------------------------------------------------------
+// serializeParam — stub for FF route serialization
+// ---------------------------------------------------------------------------
+String? serializeParam(dynamic param, dynamic paramType, {bool isList = false}) =>
+    param?.toString();
 
-double computeGradientAlignmentY(double evaluatedAngle) {
-  evaluatedAngle %= 360;
-  final rads = evaluatedAngle * pi / 180;
-  double y;
-  if (evaluatedAngle < 45 || evaluatedAngle > 315) {
-    y = -1;
-  } else if (45 <= evaluatedAngle && evaluatedAngle <= 135) {
-    y = sin(-2 * rads);
-  } else if (135 <= evaluatedAngle && evaluatedAngle <= 225) {
-    y = 1;
-  } else {
-    y = sin(2 * rads);
-  }
-  return double.parse(roundTo(y, 2));
-}
-
-String getCurrentRoute(BuildContext context) =>
-    context.mounted ? MyApp.of(context).getRoute() : '';

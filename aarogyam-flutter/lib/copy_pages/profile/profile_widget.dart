@@ -4,7 +4,7 @@ import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import '/flutter_flow/upload_data.dart';
+import '/flutter_flow/upload_data.dart' hide uploadData;
 import 'dart:ui';
 import '/custom_code/actions/index.dart' as actions;
 import '/custom_code/widgets/index.dart' as custom_widgets;
@@ -105,21 +105,21 @@ class _ProfileWidgetState extends State<ProfileWidget> with RouteAware {
                   letterSpacing: 0.0,
                 ),
           ),
-          actions: [],
+          actions: const [],
           centerTitle: false,
           elevation: 2.0,
         ),
         body: SafeArea(
           top: true,
           child: Align(
-            alignment: AlignmentDirectional(0.0, 0.0),
+            alignment: const AlignmentDirectional(0.0, 0.0),
             child: SingleChildScrollView(
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Padding(
-                    padding: EdgeInsets.all(4.0),
+                    padding: const EdgeInsets.all(4.0),
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -163,7 +163,7 @@ class _ProfileWidgetState extends State<ProfileWidget> with RouteAware {
 
                             _model.recordedFilePath =
                                 await actions.downloadRecordedAudio(
-                              _model.recordedFileBytes,
+                              _model.recordedAudio,
                             );
                             _model.rspeechText = await actions.transcribeAudio(
                               '6ZXwMVTnT4A38daO89IRv9TEG4n_a3qLhOn30skZA29Q',
@@ -185,7 +185,7 @@ class _ProfileWidgetState extends State<ProfileWidget> with RouteAware {
                           ),
                           onPressed: () async {
                             _model.responseWithoutHtml =
-                                await actions.extractTextFromHTML(
+                                actions.extractTextFromHTML(
                               ProcessImageAPICall.imageAPIresponse(
                                 (_model.imageapiResponseinsights?.jsonBody ??
                                     ''),
@@ -220,7 +220,7 @@ class _ProfileWidgetState extends State<ProfileWidget> with RouteAware {
                     children: [
                       Flexible(
                         child: Align(
-                          alignment: AlignmentDirectional(0.0, 0.0),
+                          alignment: const AlignmentDirectional(0.0, 0.0),
                           child: FlutterFlowIconButton(
                             borderRadius: 8.0,
                             buttonSize: 40.0,
@@ -303,19 +303,19 @@ class _ProfileWidgetState extends State<ProfileWidget> with RouteAware {
                         width: 200.0,
                         height: 200.0,
                         fit: BoxFit.cover,
-                        alignment: Alignment(0.0, 0.0),
+                        alignment: const Alignment(0.0, 0.0),
                       ),
                     ),
                   ),
                   Align(
-                    alignment: AlignmentDirectional(0.0, 0.0),
+                    alignment: const AlignmentDirectional(0.0, 0.0),
                     child: Container(
                       width: double.infinity,
                       height: 400.0,
                       decoration: BoxDecoration(
                         color: FlutterFlowTheme.of(context).secondaryBackground,
                       ),
-                      alignment: AlignmentDirectional(0.0, 0.0),
+                      alignment: const AlignmentDirectional(0.0, 0.0),
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -344,7 +344,7 @@ class _ProfileWidgetState extends State<ProfileWidget> with RouteAware {
                                             .primaryText,
                                       ),
                                     ),
-                                    duration: Duration(milliseconds: 4000),
+                                    duration: const Duration(milliseconds: 4000),
                                     backgroundColor:
                                         FlutterFlowTheme.of(context).secondary,
                                   ),
@@ -362,7 +362,7 @@ class _ProfileWidgetState extends State<ProfileWidget> with RouteAware {
                                             .primaryText,
                                       ),
                                     ),
-                                    duration: Duration(milliseconds: 4000),
+                                    duration: const Duration(milliseconds: 4000),
                                     backgroundColor:
                                         FlutterFlowTheme.of(context).secondary,
                                   ),
@@ -376,9 +376,9 @@ class _ProfileWidgetState extends State<ProfileWidget> with RouteAware {
                             ),
                             options: FFButtonOptions(
                               height: 40.0,
-                              padding: EdgeInsetsDirectional.fromSTEB(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
                                   16.0, 0.0, 16.0, 0.0),
-                              iconPadding: EdgeInsetsDirectional.fromSTEB(
+                              iconPadding: const EdgeInsetsDirectional.fromSTEB(
                                   0.0, 0.0, 0.0, 0.0),
                               color: FlutterFlowTheme.of(context).primary,
                               textStyle: FlutterFlowTheme.of(context)
@@ -415,7 +415,7 @@ class _ProfileWidgetState extends State<ProfileWidget> with RouteAware {
                                             .primaryText,
                                       ),
                                     ),
-                                    duration: Duration(milliseconds: 4000),
+                                    duration: const Duration(milliseconds: 4000),
                                     backgroundColor:
                                         FlutterFlowTheme.of(context).secondary,
                                   ),
@@ -433,7 +433,7 @@ class _ProfileWidgetState extends State<ProfileWidget> with RouteAware {
                                             .primaryText,
                                       ),
                                     ),
-                                    duration: Duration(milliseconds: 4000),
+                                    duration: const Duration(milliseconds: 4000),
                                     backgroundColor:
                                         FlutterFlowTheme.of(context).secondary,
                                   ),
@@ -447,9 +447,9 @@ class _ProfileWidgetState extends State<ProfileWidget> with RouteAware {
                             ),
                             options: FFButtonOptions(
                               height: 40.0,
-                              padding: EdgeInsetsDirectional.fromSTEB(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
                                   16.0, 0.0, 16.0, 0.0),
-                              iconPadding: EdgeInsetsDirectional.fromSTEB(
+                              iconPadding: const EdgeInsetsDirectional.fromSTEB(
                                   0.0, 0.0, 0.0, 0.0),
                               color: FlutterFlowTheme.of(context).primary,
                               textStyle: FlutterFlowTheme.of(context)
@@ -472,9 +472,9 @@ class _ProfileWidgetState extends State<ProfileWidget> with RouteAware {
                             ),
                             options: FFButtonOptions(
                               height: 40.0,
-                              padding: EdgeInsetsDirectional.fromSTEB(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
                                   16.0, 0.0, 16.0, 0.0),
-                              iconPadding: EdgeInsetsDirectional.fromSTEB(
+                              iconPadding: const EdgeInsetsDirectional.fromSTEB(
                                   0.0, 0.0, 0.0, 0.0),
                               color: FlutterFlowTheme.of(context).primary,
                               textStyle: FlutterFlowTheme.of(context)
@@ -497,9 +497,9 @@ class _ProfileWidgetState extends State<ProfileWidget> with RouteAware {
                             ),
                             options: FFButtonOptions(
                               height: 40.0,
-                              padding: EdgeInsetsDirectional.fromSTEB(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
                                   16.0, 0.0, 16.0, 0.0),
-                              iconPadding: EdgeInsetsDirectional.fromSTEB(
+                              iconPadding: const EdgeInsetsDirectional.fromSTEB(
                                   0.0, 0.0, 0.0, 0.0),
                               color: FlutterFlowTheme.of(context).primary,
                               textStyle: FlutterFlowTheme.of(context)
@@ -513,13 +513,13 @@ class _ProfileWidgetState extends State<ProfileWidget> with RouteAware {
                               borderRadius: BorderRadius.circular(8.0),
                             ),
                           ),
-                        ].divide(SizedBox(height: 16.0)),
+                        ].divide(const SizedBox(height: 16.0)),
                       ),
                     ),
                   ),
                   Align(
-                    alignment: AlignmentDirectional(0.0, 0.0),
-                    child: Container(
+                    alignment: const AlignmentDirectional(0.0, 0.0),
+                    child: SizedBox(
                       width: double.infinity,
                       height: 500.0,
                       child: custom_widgets.HtmlContentWidget(
@@ -534,7 +534,7 @@ class _ProfileWidgetState extends State<ProfileWidget> with RouteAware {
                       ),
                     ),
                   ),
-                ].divide(SizedBox(height: 10.0)),
+                ].divide(const SizedBox(height: 10.0)),
               ),
             ),
           ),

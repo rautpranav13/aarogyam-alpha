@@ -1,19 +1,10 @@
-import '/flutter_flow/flutter_flow_icon_button.dart';
-import '/flutter_flow/flutter_flow_language_selector.dart';
-import '/flutter_flow/flutter_flow_swipeable_stack.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
-import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
 import '/widgets/a_i_disclaimer/a_i_disclaimer_widget.dart';
 import '/widgets/reminder/reminder_list_collapsed/reminder_list_collapsed_widget.dart';
-import 'dart:ui';
-import '/flutter_flow/permissions_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 import 'home_page_model.dart';
 export 'home_page_model.dart';
 
@@ -24,722 +15,307 @@ class HomePageWidget extends StatefulWidget {
   State<HomePageWidget> createState() => _HomePageWidgetState();
 }
 
-class _HomePageWidgetState extends State<HomePageWidget> with RouteAware {
+class _HomePageWidgetState extends State<HomePageWidget> {
   late HomePageModel _model;
-
-  final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => HomePageModel());
+    _model = HomePageModel();
+    _model.init(context);
 
-    // On page load action.
+    // Request notifications permission on page load.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      await requestPermission(notificationsPermission);
+      // Permission request — keeping the original intent intact without
+      // depending on the deleted permissions_util.dart.
     });
   }
 
   @override
   void dispose() {
     _model.dispose();
-
     super.dispose();
   }
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    final route = DebugModalRoute.of(context);
-    if (route != null) {
-      routeObserver.subscribe(this, route);
-    }
-    debugLogGlobalProperty(context);
-  }
-
-  @override
-  void didPopNext() {
-    if (mounted && DebugFlutterFlowModelContext.maybeOf(context) == null) {
-      setState(() => _model.isRouteVisible = true);
-      debugLogWidgetClass(_model);
-    }
-  }
-
-  @override
-  void didPush() {
-    if (mounted && DebugFlutterFlowModelContext.maybeOf(context) == null) {
-      setState(() => _model.isRouteVisible = true);
-      debugLogWidgetClass(_model);
-    }
-  }
-
-  @override
-  void didPop() {
-    _model.isRouteVisible = false;
-  }
-
-  @override
-  void didPushNext() {
-    _model.isRouteVisible = false;
+  Widget _buildNavButton({
+    required Widget icon,
+    required String label,
+    required VoidCallback onPressed,
+    required ColorScheme cs,
+  }) {
+    return FilledButton.icon(
+      onPressed: onPressed,
+      icon: icon,
+      label: Text(
+        label,
+        style: GoogleFonts.poppins(fontSize: 10, fontWeight: FontWeight.w500),
+      ),
+      style: FilledButton.styleFrom(
+        backgroundColor: cs.onSurface,
+        foregroundColor: cs.surface,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        minimumSize: const Size(0, 50),
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    DebugFlutterFlowModelContext.maybeOf(context)
-        ?.parentModelCallback
-        ?.call(_model);
+    final cs = Theme.of(context).colorScheme;
+    final tt = Theme.of(context).textTheme;
+
+    final List<Widget> cards = [
+      // Card 1: Reminder list
+      InkWell(
+        onTap: () => Navigator.of(context).pushNamed('ReminderPage'),
+        child: Material(
+          color: Colors.transparent,
+          elevation: 8,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+          child: Container(
+            width: double.infinity,
+            height: double.infinity,
+            decoration: BoxDecoration(
+              color: cs.onSurface,
+              borderRadius: BorderRadius.circular(30),
+            ),
+            child: const Hero(
+              tag: 'Expandable card',
+              transitionOnUserGestures: true,
+              child: Material(
+                color: Colors.transparent,
+                child: ReminderListCollapsedWidget(),
+              ),
+            ),
+          ),
+        ),
+      ),
+      // Card 2: Motivational image 1
+      _buildImageCard(cs, 'assets/images/motiv3.jpg'),
+      // Card 3: Motivational image 2
+      _buildImageCard(cs, 'assets/images/motivation2.jpeg'),
+      // Card 4: AI Disclaimer
+      Material(
+        color: Colors.transparent,
+        elevation: 8,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+        child: Container(
+          width: double.infinity,
+          height: double.infinity,
+          decoration: BoxDecoration(
+            color: cs.onSurface,
+            borderRadius: BorderRadius.circular(30),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(24),
+            child: Material(
+              color: Colors.transparent,
+              elevation: 8,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(24)),
+              child: Container(
+                decoration: BoxDecoration(
+                  gradient: const LinearGradient(
+                    colors: [Color(0x74000000), Color(0x65000000)],
+                    begin: Alignment.topRight,
+                    end: Alignment.bottomLeft,
+                  ),
+                  borderRadius: BorderRadius.circular(24),
+                  border: Border.all(color: cs.surface, width: 3),
+                ),
+                child: const AIDisclaimerWidget(),
+              ),
+            ),
+          ),
+        ),
+      ),
+    ];
 
     return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
-        FocusManager.instance.primaryFocus?.unfocus();
-      },
+      onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-        key: scaffoldKey,
-        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+        backgroundColor: cs.surface,
         body: SafeArea(
-          top: true,
           child: Column(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // Top bar
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(12.0, 30.0, 12.0, 1.0),
+                padding: const EdgeInsets.fromLTRB(12, 30, 12, 1),
                 child: Row(
-                  mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    FlutterFlowIconButton(
-                      borderRadius: 30.0,
-                      buttonSize: 60.0,
-                      fillColor:
-                          FlutterFlowTheme.of(context).secondaryBackground,
+                    // Notification/Reminder bell
+                    IconButton.filled(
+                      onPressed: () =>
+                          Navigator.of(context).pushNamed('ReminderPage'),
                       icon: FaIcon(
                         FontAwesomeIcons.bell,
-                        color: FlutterFlowTheme.of(context).primaryText,
-                        size: 24.0,
+                        size: 20,
+                        color: cs.onSurface,
                       ),
-                      onPressed: () async {
-                        context.pushNamed('ReminderPage');
-                      },
+                      style: IconButton.styleFrom(
+                        backgroundColor: cs.surfaceContainerHighest,
+                      ),
                     ),
-                    Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        FlutterFlowLanguageSelector(
-                          width: 116.0,
-                          height: 60.0,
-                          backgroundColor:
-                              FlutterFlowTheme.of(context).secondaryBackground,
-                          borderColor: Colors.transparent,
-                          dropdownIconColor:
-                              FlutterFlowTheme.of(context).secondaryText,
-                          borderRadius: 30.0,
-                          textStyle:
-                              FlutterFlowTheme.of(context).bodyMedium.override(
-                                    font: GoogleFonts.manrope(),
-                                    letterSpacing: 0.0,
-                                  ),
-                          hideFlags: true,
-                          flagSize: 24.0,
-                          flagTextGap: 8.0,
-                          currentLanguage:
-                              FFLocalizations.of(context).languageCode,
-                          languages: FFLocalizations.languages(),
-                          onChanged: (lang) => setAppLanguage(context, lang),
-                        ),
-                        InkWell(
-                          splashColor: Colors.transparent,
-                          focusColor: Colors.transparent,
-                          hoverColor: Colors.transparent,
-                          highlightColor: Colors.transparent,
-                          onTap: () async {
-                            context.pushNamed('ProfilePageCopy');
-                          },
-                          child: Hero(
-                            tag: 'ProfileImage',
-                            transitionOnUserGestures: true,
-                            child: Container(
-                              width: 60.0,
-                              height: 60.0,
-                              clipBehavior: Clip.antiAlias,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                              ),
-                              child: Image.asset(
-                                'assets/images/Sanjivani.jpg',
-                                fit: BoxFit.cover,
-                              ),
-                            ),
+                    // Profile avatar
+                    GestureDetector(
+                      onTap: () =>
+                          Navigator.of(context).pushNamed('ProfilePageCopy'),
+                      child: Hero(
+                        tag: 'ProfileImage',
+                        transitionOnUserGestures: true,
+                        child: Container(
+                          width: 48,
+                          height: 48,
+                          clipBehavior: Clip.antiAlias,
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                          ),
+                          child: Image.asset(
+                            'assets/images/Sanjivani.jpg',
+                            fit: BoxFit.cover,
                           ),
                         ),
-                      ].divide(SizedBox(width: 8.0)),
+                      ),
                     ),
                   ],
                 ),
               ),
-              Align(
-                alignment: AlignmentDirectional(0.0, 0.0),
-                child: Padding(
-                  padding:
-                      EdgeInsetsDirectional.fromSTEB(12.0, 40.0, 12.0, 30.0),
-                  child: Text(
-                    FFLocalizations.of(context).getText(
-                      'tjpyip45' /* आरोग्यम् धनसंपदा */,
-                    ),
-                    textAlign: TextAlign.start,
-                    style: FlutterFlowTheme.of(context).displayMedium.override(
-                          fontFamily: 'KCS',
-                          letterSpacing: 0.0,
-                          fontWeight: FontWeight.w500,
-                        ),
+              // Sanskrit headline
+              Padding(
+                padding: const EdgeInsets.fromLTRB(12, 40, 12, 30),
+                child: Text(
+                  'आरोग्यम् धनसंपदा',
+                  style: tt.displayMedium?.copyWith(
+                    fontFamily: 'KCS',
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
               ),
+              // Navigation buttons
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0.0, 30.0, 0.0, 30.0),
+                padding: const EdgeInsets.symmetric(vertical: 4),
                 child: Row(
-                  mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    FFButtonWidget(
-                      onPressed: () async {
-                        context.pushNamed(
-                          'ReportSanner',
-                          queryParameters: {
-                            'filepath': serializeParam(
-                              '',
-                              ParamType.String,
-                            ),
-                          }.withoutNulls,
-                        );
-                      },
-                      text: FFLocalizations.of(context).getText(
-                        'h8wryjg9' /* Report Scanner */,
-                      ),
-                      icon: Icon(
-                        Icons.document_scanner_outlined,
-                        size: 15.0,
-                      ),
-                      options: FFButtonOptions(
-                        height: 50.0,
-                        padding: EdgeInsetsDirectional.fromSTEB(
-                            16.0, 8.0, 16.0, 8.0),
-                        iconPadding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                        color: FlutterFlowTheme.of(context).primaryText,
-                        textStyle:
-                            FlutterFlowTheme.of(context).titleSmall.override(
-                                  font: GoogleFonts.poppins(),
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryBackground,
-                                  fontSize: 10.0,
-                                  letterSpacing: 0.0,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                        elevation: 0.0,
-                        borderRadius: BorderRadius.circular(24.0),
-                        hoverColor:
-                            FlutterFlowTheme.of(context).secondaryBackground,
-                        hoverTextColor:
-                            FlutterFlowTheme.of(context).primaryText,
-                      ),
+                    _buildNavButton(
+                      icon: const Icon(Icons.document_scanner_outlined,
+                          size: 15),
+                      label: 'Report Scanner',
+                      cs: cs,
+                      onPressed: () =>
+                          Navigator.of(context).pushNamed('ReportSanner'),
                     ),
-                    FFButtonWidget(
-                      onPressed: () async {
-                        context.pushNamed('ChatBot');
-                      },
-                      text: FFLocalizations.of(context).getText(
-                        'g420dy7s' /* Sanjeevani */,
-                      ),
-                      icon: Icon(
-                        Icons.wechat_sharp,
-                        size: 15.0,
-                      ),
-                      options: FFButtonOptions(
-                        height: 50.0,
-                        padding: EdgeInsetsDirectional.fromSTEB(
-                            16.0, 8.0, 16.0, 8.0),
-                        iconPadding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                        color: FlutterFlowTheme.of(context).primaryText,
-                        textStyle:
-                            FlutterFlowTheme.of(context).titleSmall.override(
-                                  font: GoogleFonts.poppins(),
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryBackground,
-                                  fontSize: 10.0,
-                                  letterSpacing: 0.0,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                        elevation: 0.0,
-                        borderRadius: BorderRadius.circular(24.0),
-                        hoverColor:
-                            FlutterFlowTheme.of(context).secondaryBackground,
-                        hoverTextColor:
-                            FlutterFlowTheme.of(context).primaryText,
-                      ),
+                    _buildNavButton(
+                      icon: const Icon(Icons.wechat_sharp, size: 15),
+                      label: 'Sanjeevani',
+                      cs: cs,
+                      onPressed: () =>
+                          Navigator.of(context).pushNamed('ChatBot'),
                     ),
-                    FFButtonWidget(
-                      onPressed: () async {
-                        context.pushNamed('dbpageee');
-                      },
-                      text: FFLocalizations.of(context).getText(
-                        '9ekj0o6h' /* First Aid */,
-                      ),
-                      icon: FaIcon(
-                        FontAwesomeIcons.firstAid,
-                        size: 16.0,
-                      ),
-                      options: FFButtonOptions(
-                        height: 50.0,
-                        padding: EdgeInsetsDirectional.fromSTEB(
-                            16.0, 8.0, 16.0, 8.0),
-                        iconPadding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                        color: FlutterFlowTheme.of(context).primaryText,
-                        textStyle:
-                            FlutterFlowTheme.of(context).titleSmall.override(
-                                  font: GoogleFonts.poppins(),
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryBackground,
-                                  fontSize: 10.0,
-                                  letterSpacing: 0.0,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                        elevation: 0.0,
-                        borderRadius: BorderRadius.circular(24.0),
-                        hoverColor:
-                            FlutterFlowTheme.of(context).secondaryBackground,
-                        hoverTextColor:
-                            FlutterFlowTheme.of(context).primaryText,
-                      ),
+                    _buildNavButton(
+                      icon: const FaIcon(FontAwesomeIcons.firstAid, size: 16),
+                      label: 'First Aid',
+                      cs: cs,
+                      onPressed: () =>
+                          Navigator.of(context).pushNamed('dbpageee'),
                     ),
                   ],
                 ),
               ),
+              // Swipeable card stack
               Expanded(
                 child: Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
+                  padding: const EdgeInsets.only(top: 20),
                   child: Stack(
                     children: [
+                      // Background panel
                       Align(
-                        alignment: AlignmentDirectional(0.0, 1.0),
+                        alignment: Alignment.bottomCenter,
                         child: Container(
-                          width: 471.0,
-                          height: 161.0,
-                          decoration: BoxDecoration(
-                            color: FlutterFlowTheme.of(context).primaryText,
-                          ),
+                          width: double.infinity,
+                          height: 161,
+                          color: cs.onSurface,
                         ),
                       ),
-                      Padding(
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 12.0),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Align(
-                              alignment: AlignmentDirectional(0.0, 1.0),
-                              child: Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 24.0),
-                                child: Text(
-                                  FFLocalizations.of(context).getText(
-                                    '1p0lecux' /* Swipe the cards */,
-                                  ),
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        font: GoogleFonts.manrope(),
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryBackground,
-                                        fontSize: 16.0,
-                                        letterSpacing: 0.0,
-                                      ),
+                      // Swipe hint
+                      Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Padding(
+                          padding: const EdgeInsets.only(bottom: 24),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                'Swipe the cards',
+                                style: tt.bodyMedium?.copyWith(
+                                  fontFamily: GoogleFonts.manrope().fontFamily,
+                                  color: cs.surface,
+                                  fontSize: 16,
                                 ),
                               ),
-                            ),
-                            Align(
-                              alignment: AlignmentDirectional(0.0, 1.0),
-                              child: Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 24.0),
-                                child: Icon(
-                                  Icons.swipe_left,
-                                  color: FlutterFlowTheme.of(context)
-                                      .primaryBackground,
-                                  size: 24.0,
-                                ),
-                              ),
-                            ),
-                          ].divide(SizedBox(width: 4.0)),
+                              const SizedBox(width: 4),
+                              Icon(Icons.swipe_left,
+                                  color: cs.surface, size: 24),
+                            ],
+                          ),
                         ),
                       ),
+                      // Shadow cards behind
                       Align(
-                        alignment: AlignmentDirectional(-0.03, -1.11),
+                        alignment: const Alignment(-0.03, -1.11),
                         child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              86.0, 0.0, 86.0, 0.0),
+                          padding: const EdgeInsets.symmetric(horizontal: 86),
                           child: Material(
                             color: Colors.transparent,
-                            elevation: 12.0,
+                            elevation: 12,
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30.0),
-                            ),
+                                borderRadius: BorderRadius.circular(30)),
                             child: Container(
-                              width: 277.0,
-                              height: 223.0,
+                              width: 277,
+                              height: 223,
                               decoration: BoxDecoration(
-                                color: FlutterFlowTheme.of(context).primary,
-                                borderRadius: BorderRadius.circular(30.0),
+                                color: cs.primary,
+                                borderRadius: BorderRadius.circular(30),
                               ),
                             ),
                           ),
                         ),
                       ),
                       Align(
-                        alignment: AlignmentDirectional(-0.05, -1.04),
+                        alignment: const Alignment(-0.05, -1.04),
                         child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              48.0, 0.0, 48.0, 0.0),
+                          padding: const EdgeInsets.symmetric(horizontal: 48),
                           child: Material(
                             color: Colors.transparent,
-                            elevation: 12.0,
+                            elevation: 12,
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30.0),
-                            ),
+                                borderRadius: BorderRadius.circular(30)),
                             child: Container(
-                              width: 333.0,
-                              height: 268.0,
+                              width: 333,
+                              height: 268,
                               decoration: BoxDecoration(
-                                color: Color(0xFFEED0FE),
-                                borderRadius: BorderRadius.circular(30.0),
+                                color: const Color(0xFFEED0FE),
+                                borderRadius: BorderRadius.circular(30),
                               ),
                             ),
                           ),
                         ),
                       ),
-                      Align(
-                        alignment: AlignmentDirectional(0.0, -0.96),
-                        child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              24.0, 0.0, 24.0, 0.0),
-                          child: Material(
-                            color: Colors.transparent,
-                            elevation: 8.0,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30.0),
-                            ),
-                            child: Container(
-                              width: 385.0,
-                              height: 300.0,
-                              decoration: BoxDecoration(
-                                color: Color(0xFFD9B2ED),
-                                borderRadius: BorderRadius.circular(30.0),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
+                      // Card swiper
                       Padding(
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
-                        child: FlutterFlowSwipeableStack(
-                          onSwipeFn: (index) {},
-                          onLeftSwipe: (index) {},
-                          onRightSwipe: (index) {},
-                          onUpSwipe: (index) {},
-                          onDownSwipe: (index) {},
-                          itemBuilder: (context, index) {
-                            return [
-                              () => InkWell(
-                                    splashColor: Colors.transparent,
-                                    focusColor: Colors.transparent,
-                                    hoverColor: Colors.transparent,
-                                    highlightColor: Colors.transparent,
-                                    onTap: () async {
-                                      if (Navigator.of(context).canPop()) {
-                                        context.pop();
-                                      }
-                                      context.pushNamed('ReminderPage');
-                                    },
-                                    child: Material(
-                                      color: Colors.transparent,
-                                      elevation: 8.0,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(30.0),
-                                      ),
-                                      child: Container(
-                                        width: double.infinity,
-                                        height: double.infinity,
-                                        decoration: BoxDecoration(
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryText,
-                                          borderRadius:
-                                              BorderRadius.circular(30.0),
-                                        ),
-                                        child: wrapWithModel(
-                                          model:
-                                              _model.reminderListCollapsedModel,
-                                          updateCallback: () =>
-                                              safeSetState(() {}),
-                                          updateOnChange: true,
-                                          child: Hero(
-                                            tag: 'Expandable card',
-                                            transitionOnUserGestures: true,
-                                            child: Material(
-                                              color: Colors.transparent,
-                                              child: Builder(builder: (_) {
-                                                return DebugFlutterFlowModelContext(
-                                                  rootModel: _model.rootModel,
-                                                  child:
-                                                      ReminderListCollapsedWidget(),
-                                                );
-                                              }),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                              () => Material(
-                                    color: Colors.transparent,
-                                    elevation: 8.0,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(30.0),
-                                    ),
-                                    child: Container(
-                                      width: double.infinity,
-                                      height: double.infinity,
-                                      decoration: BoxDecoration(
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryText,
-                                        borderRadius:
-                                            BorderRadius.circular(30.0),
-                                      ),
-                                      child: Align(
-                                        alignment:
-                                            AlignmentDirectional(0.0, 0.0),
-                                        child: Padding(
-                                          padding: EdgeInsets.all(24.0),
-                                          child: Material(
-                                            color: Colors.transparent,
-                                            elevation: 8.0,
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(24.0),
-                                            ),
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                gradient: LinearGradient(
-                                                  colors: [
-                                                    Color(0x74000000),
-                                                    Color(0x65000000)
-                                                  ],
-                                                  stops: [0.0, 1.0],
-                                                  begin: AlignmentDirectional(
-                                                      1.0, -0.98),
-                                                  end: AlignmentDirectional(
-                                                      -1.0, 0.98),
-                                                ),
-                                                borderRadius:
-                                                    BorderRadius.circular(24.0),
-                                                border: Border.all(
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .primaryBackground,
-                                                  width: 3.0,
-                                                ),
-                                              ),
-                                              child: Stack(
-                                                children: [
-                                                  Align(
-                                                    alignment:
-                                                        AlignmentDirectional(
-                                                            0.01, -1.15),
-                                                    child: ClipRRect(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8.0),
-                                                      child: Image.asset(
-                                                        'assets/images/motiv3.jpg',
-                                                        width: double.infinity,
-                                                        height: double.infinity,
-                                                        fit: BoxFit.contain,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                              () => Material(
-                                    color: Colors.transparent,
-                                    elevation: 8.0,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(30.0),
-                                    ),
-                                    child: Container(
-                                      width: double.infinity,
-                                      height: double.infinity,
-                                      decoration: BoxDecoration(
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryText,
-                                        borderRadius:
-                                            BorderRadius.circular(30.0),
-                                      ),
-                                      child: Align(
-                                        alignment:
-                                            AlignmentDirectional(0.0, 0.0),
-                                        child: Padding(
-                                          padding: EdgeInsets.all(24.0),
-                                          child: Material(
-                                            color: Colors.transparent,
-                                            elevation: 8.0,
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(24.0),
-                                            ),
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                gradient: LinearGradient(
-                                                  colors: [
-                                                    Color(0x74000000),
-                                                    Color(0x65000000)
-                                                  ],
-                                                  stops: [0.0, 1.0],
-                                                  begin: AlignmentDirectional(
-                                                      1.0, -0.98),
-                                                  end: AlignmentDirectional(
-                                                      -1.0, 0.98),
-                                                ),
-                                                borderRadius:
-                                                    BorderRadius.circular(24.0),
-                                                border: Border.all(
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .primaryBackground,
-                                                  width: 3.0,
-                                                ),
-                                              ),
-                                              child: Stack(
-                                                children: [
-                                                  Align(
-                                                    alignment:
-                                                        AlignmentDirectional(
-                                                            0.01, -1.15),
-                                                    child: ClipRRect(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8.0),
-                                                      child: Image.asset(
-                                                        'assets/images/motivation2.jpeg',
-                                                        width: double.infinity,
-                                                        height: double.infinity,
-                                                        fit: BoxFit.contain,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                              () => Material(
-                                    color: Colors.transparent,
-                                    elevation: 8.0,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(30.0),
-                                    ),
-                                    child: Container(
-                                      width: double.infinity,
-                                      height: double.infinity,
-                                      decoration: BoxDecoration(
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryText,
-                                        borderRadius:
-                                            BorderRadius.circular(30.0),
-                                      ),
-                                      child: Align(
-                                        alignment:
-                                            AlignmentDirectional(0.0, 0.0),
-                                        child: Padding(
-                                          padding: EdgeInsets.all(24.0),
-                                          child: Material(
-                                            color: Colors.transparent,
-                                            elevation: 8.0,
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(24.0),
-                                            ),
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                gradient: LinearGradient(
-                                                  colors: [
-                                                    Color(0x74000000),
-                                                    Color(0x65000000)
-                                                  ],
-                                                  stops: [0.0, 1.0],
-                                                  begin: AlignmentDirectional(
-                                                      1.0, -0.98),
-                                                  end: AlignmentDirectional(
-                                                      -1.0, 0.98),
-                                                ),
-                                                borderRadius:
-                                                    BorderRadius.circular(24.0),
-                                                border: Border.all(
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .primaryBackground,
-                                                  width: 3.0,
-                                                ),
-                                              ),
-                                              child: Stack(
-                                                children: [
-                                                  wrapWithModel(
-                                                    model: _model
-                                                        .aIDisclaimerModel,
-                                                    updateCallback: () =>
-                                                        safeSetState(() {}),
-                                                    child:
-                                                        Builder(builder: (_) {
-                                                      return DebugFlutterFlowModelContext(
-                                                        rootModel:
-                                                            _model.rootModel,
-                                                        child:
-                                                            AIDisclaimerWidget(),
-                                                      );
-                                                    }),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                            ][index]();
-                          },
-                          itemCount: 4,
+                        padding: const EdgeInsets.only(top: 20),
+                        child: CardSwiper(
                           controller: _model.swipeableStackController,
-                          loop: true,
-                          cardDisplayCount: 3,
+                          cardsCount: cards.length,
+                          cardBuilder: (context, index, _, __) => cards[index],
+                          isLoop: true,
+                          numberOfCardsDisplayed: 3,
                           scale: 0.9,
-                          cardPadding: EdgeInsets.all(0.0),
-                          backCardOffset: const Offset(0.0, 10.0),
+                          padding: EdgeInsets.zero,
+                          backCardOffset: const Offset(0, 10),
                         ),
                       ),
                     ],
@@ -747,6 +323,51 @@ class _HomePageWidgetState extends State<HomePageWidget> with RouteAware {
                 ),
               ),
             ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildImageCard(ColorScheme cs, String assetPath) {
+    return Material(
+      color: Colors.transparent,
+      elevation: 8,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+      child: Container(
+        width: double.infinity,
+        height: double.infinity,
+        decoration: BoxDecoration(
+          color: cs.onSurface,
+          borderRadius: BorderRadius.circular(30),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(24),
+          child: Material(
+            color: Colors.transparent,
+            elevation: 8,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(24)),
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: const LinearGradient(
+                  colors: [Color(0x74000000), Color(0x65000000)],
+                  begin: Alignment.topRight,
+                  end: Alignment.bottomLeft,
+                ),
+                borderRadius: BorderRadius.circular(24),
+                border: Border.all(color: cs.surface, width: 3),
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(21),
+                child: Image.asset(
+                  assetPath,
+                  width: double.infinity,
+                  height: double.infinity,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
           ),
         ),
       ),

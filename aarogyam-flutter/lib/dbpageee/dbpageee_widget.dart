@@ -97,7 +97,7 @@ class _DbpageeeWidgetState extends State<DbpageeeWidget> with RouteAware {
                   letterSpacing: 0.0,
                 ),
           ),
-          actions: [],
+          actions: const [],
           centerTitle: false,
           elevation: 0.0,
         ),

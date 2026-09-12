@@ -69,7 +69,7 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
       decoration: BoxDecoration(
         color: FlutterFlowTheme.of(context).primaryBackground,
         borderRadius: BorderRadius.circular(12),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
             color: Colors.black26,
             blurRadius: 8,
@@ -87,9 +87,9 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
                   fontSize: 18,
                 ),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           _isLoading
-              ? CircularProgressIndicator()
+              ? const CircularProgressIndicator()
               : IconButton(
                   icon: Icon(
                     _isPlaying ? Icons.pause : Icons.play_arrow,
@@ -98,7 +98,7 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
                   onPressed: _playPause,
                   color: FlutterFlowTheme.of(context).primaryColor,
                 ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Text(
             _isPlaying ? 'Playing...' : 'Paused',
             style: FlutterFlowTheme.of(context).bodyText1.copyWith(

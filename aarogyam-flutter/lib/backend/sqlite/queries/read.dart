@@ -12,14 +12,14 @@ Future<List<T>> _readQuery<T>(
 Future<List<ReadmedicationsRow>> performReadmedications(
   Database database,
 ) {
-  final query = '''
+  const query = '''
 SELECT * FROM medications;
 ''';
   return _readQuery(database, query, (d) => ReadmedicationsRow(d));
 }
 
 class ReadmedicationsRow extends SqliteRow {
-  ReadmedicationsRow(Map<String, dynamic> data) : super(data);
+  ReadmedicationsRow(super.data);
 
   int? get id => data['id'] as int?;
   String? get title => data['title'] as String?;

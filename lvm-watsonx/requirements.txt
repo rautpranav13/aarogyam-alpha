@@ -1,5 +1,7 @@
-flask==2.2.5
-requests==2.31.0
-ibm-watsonx-ai
-gunicorn==20.1.0
-werkzeug==2.2.3
+flask==3.1.0
+gunicorn==23.0.0
+flask-cors==5.0.0
+Werkzeug==3.1.3
+ibm-watsonx-ai==1.3.11
+requests==2.32.3
+python-dotenv==1.0.1

@@ -33,7 +33,7 @@ class _CustomQueryWidgetState extends State<CustomQueryWidget> with RouteAware {
     _model.titleTextfieldFocusNode ??= FocusNode();
     _model.titleTextfieldFocusNode!.addListener(
       () async {
-        FFAppState().userTitle = _model.titleTextfieldTextController.text;
+        FFAppState().userTitle = _model.titleTextfieldTextController!.text;
         safeSetState(() {});
       },
     );
@@ -109,7 +109,7 @@ class _CustomQueryWidgetState extends State<CustomQueryWidget> with RouteAware {
               children: [
                 Padding(
                   padding:
-                      EdgeInsetsDirectional.fromSTEB(12.0, 30.0, 12.0, 12.0),
+                      const EdgeInsetsDirectional.fromSTEB(12.0, 30.0, 12.0, 12.0),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -128,19 +128,19 @@ class _CustomQueryWidgetState extends State<CustomQueryWidget> with RouteAware {
                           context.safePop();
                         },
                       ),
-                    ].divide(SizedBox(width: 6.0)),
+                    ].divide(const SizedBox(width: 6.0)),
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.all(12.0),
+                  padding: const EdgeInsets.all(12.0),
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Align(
-                        alignment: AlignmentDirectional(-1.0, -1.0),
+                        alignment: const AlignmentDirectional(-1.0, -1.0),
                         child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
                               12.0, 12.0, 12.0, 0.0),
                           child: Text(
                             FFLocalizations.of(context).getText(
@@ -158,9 +158,9 @@ class _CustomQueryWidgetState extends State<CustomQueryWidget> with RouteAware {
                         ),
                       ),
                       Align(
-                        alignment: AlignmentDirectional(-1.0, -1.0),
+                        alignment: const AlignmentDirectional(-1.0, -1.0),
                         child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
                               12.0, 0.0, 12.0, 12.0),
                           child: Text(
                             FFLocalizations.of(context).getText(
@@ -178,9 +178,9 @@ class _CustomQueryWidgetState extends State<CustomQueryWidget> with RouteAware {
                         ),
                       ),
                       Align(
-                        alignment: AlignmentDirectional(-1.0, -1.0),
+                        alignment: const AlignmentDirectional(-1.0, -1.0),
                         child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
                               12.0, 12.0, 12.0, 0.0),
                           child: Text(
                             FFLocalizations.of(context).getText(
@@ -198,8 +198,8 @@ class _CustomQueryWidgetState extends State<CustomQueryWidget> with RouteAware {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.all(12.0),
-                        child: Container(
+                        padding: const EdgeInsets.all(12.0),
+                        child: SizedBox(
                           width: double.infinity,
                           child: TextFormField(
                             controller: _model.titleTextfieldTextController,
@@ -224,14 +224,14 @@ class _CustomQueryWidgetState extends State<CustomQueryWidget> with RouteAware {
                                     letterSpacing: 0.0,
                                   ),
                               enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                   color: Color(0x00000000),
                                   width: 1.0,
                                 ),
                                 borderRadius: BorderRadius.circular(8.0),
                               ),
                               focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                   color: Color(0x00000000),
                                   width: 1.0,
                                 ),
@@ -265,14 +265,14 @@ class _CustomQueryWidgetState extends State<CustomQueryWidget> with RouteAware {
                                 FlutterFlowTheme.of(context).primaryText,
                             validator: _model
                                 .titleTextfieldTextControllerValidator
-                                .asValidator(context),
+                                !.asValidator(context),
                           ),
                         ),
                       ),
                       Align(
-                        alignment: AlignmentDirectional(-1.0, -1.0),
+                        alignment: const AlignmentDirectional(-1.0, -1.0),
                         child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
                               12.0, 12.0, 12.0, 0.0),
                           child: Text(
                             FFLocalizations.of(context).getText(
@@ -290,15 +290,15 @@ class _CustomQueryWidgetState extends State<CustomQueryWidget> with RouteAware {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.all(12.0),
-                        child: Container(
+                        padding: const EdgeInsets.all(12.0),
+                        child: SizedBox(
                           width: double.infinity,
                           child: TextFormField(
                             controller: _model.queryTextfieldTextController,
                             focusNode: _model.queryTextfieldFocusNode,
                             onFieldSubmitted: (_) async {
                               FFAppState().userQuery =
-                                  _model.queryTextfieldTextController.text;
+                                  _model.queryTextfieldTextController!.text;
                               safeSetState(() {});
                             },
                             autofocus: false,
@@ -321,14 +321,14 @@ class _CustomQueryWidgetState extends State<CustomQueryWidget> with RouteAware {
                                     letterSpacing: 0.0,
                                   ),
                               enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                   color: Color(0x00000000),
                                   width: 1.0,
                                 ),
                                 borderRadius: BorderRadius.circular(8.0),
                               ),
                               focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                   color: Color(0x00000000),
                                   width: 1.0,
                                 ),
@@ -362,14 +362,14 @@ class _CustomQueryWidgetState extends State<CustomQueryWidget> with RouteAware {
                                 FlutterFlowTheme.of(context).primaryText,
                             validator: _model
                                 .queryTextfieldTextControllerValidator
-                                .asValidator(context),
+                                !.asValidator(context),
                           ),
                         ),
                       ),
                       Align(
-                        alignment: AlignmentDirectional(-1.0, -1.0),
+                        alignment: const AlignmentDirectional(-1.0, -1.0),
                         child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
                               12.0, 12.0, 12.0, 0.0),
                           child: Text(
                             FFLocalizations.of(context).getText(
@@ -403,7 +403,7 @@ class _CustomQueryWidgetState extends State<CustomQueryWidget> with RouteAware {
                           clipBehavior: Clip.none,
                           children: [
                             Padding(
-                              padding: EdgeInsets.all(12.0),
+                              padding: const EdgeInsets.all(12.0),
                               child: InkWell(
                                 splashColor: Colors.transparent,
                                 focusColor: Colors.transparent,
@@ -425,7 +425,7 @@ class _CustomQueryWidgetState extends State<CustomQueryWidget> with RouteAware {
                                     borderRadius: BorderRadius.circular(24.0),
                                   ),
                                   child: Padding(
-                                    padding: EdgeInsets.all(10.0),
+                                    padding: const EdgeInsets.all(10.0),
                                     child: Text(
                                       FFLocalizations.of(context).getText(
                                         '0j1qym1b' /* Suggest Generic Alternatives */,
@@ -444,7 +444,7 @@ class _CustomQueryWidgetState extends State<CustomQueryWidget> with RouteAware {
                               ),
                             ),
                             Padding(
-                              padding: EdgeInsets.all(12.0),
+                              padding: const EdgeInsets.all(12.0),
                               child: InkWell(
                                 splashColor: Colors.transparent,
                                 focusColor: Colors.transparent,
@@ -466,7 +466,7 @@ class _CustomQueryWidgetState extends State<CustomQueryWidget> with RouteAware {
                                     borderRadius: BorderRadius.circular(24.0),
                                   ),
                                   child: Padding(
-                                    padding: EdgeInsets.all(10.0),
+                                    padding: const EdgeInsets.all(10.0),
                                     child: Text(
                                       FFLocalizations.of(context).getText(
                                         'jfpacsfi' /* Check Urguent Actions */,
@@ -485,7 +485,7 @@ class _CustomQueryWidgetState extends State<CustomQueryWidget> with RouteAware {
                               ),
                             ),
                             Padding(
-                              padding: EdgeInsets.all(12.0),
+                              padding: const EdgeInsets.all(12.0),
                               child: InkWell(
                                 splashColor: Colors.transparent,
                                 focusColor: Colors.transparent,
@@ -507,7 +507,7 @@ class _CustomQueryWidgetState extends State<CustomQueryWidget> with RouteAware {
                                     borderRadius: BorderRadius.circular(24.0),
                                   ),
                                   child: Padding(
-                                    padding: EdgeInsets.all(10.0),
+                                    padding: const EdgeInsets.all(10.0),
                                     child: Text(
                                       FFLocalizations.of(context).getText(
                                         'wc11du46' /* Suggest Lifestyle Activities */,
@@ -526,7 +526,7 @@ class _CustomQueryWidgetState extends State<CustomQueryWidget> with RouteAware {
                               ),
                             ),
                             Padding(
-                              padding: EdgeInsets.all(12.0),
+                              padding: const EdgeInsets.all(12.0),
                               child: InkWell(
                                 splashColor: Colors.transparent,
                                 focusColor: Colors.transparent,
@@ -548,7 +548,7 @@ class _CustomQueryWidgetState extends State<CustomQueryWidget> with RouteAware {
                                     borderRadius: BorderRadius.circular(24.0),
                                   ),
                                   child: Padding(
-                                    padding: EdgeInsets.all(10.0),
+                                    padding: const EdgeInsets.all(10.0),
                                     child: Text(
                                       FFLocalizations.of(context).getText(
                                         '5qdqj63s' /* Check for Painkillers */,
@@ -569,7 +569,7 @@ class _CustomQueryWidgetState extends State<CustomQueryWidget> with RouteAware {
                           ],
                         ),
                       ),
-                    ].divide(SizedBox(height: 10.0)),
+                    ].divide(const SizedBox(height: 10.0)),
                   ),
                 ),
                 Row(
@@ -590,9 +590,9 @@ class _CustomQueryWidgetState extends State<CustomQueryWidget> with RouteAware {
                       },
                     ),
                     Align(
-                      alignment: AlignmentDirectional(1.0, 0.0),
+                      alignment: const AlignmentDirectional(1.0, 0.0),
                       child: Padding(
-                        padding: EdgeInsets.all(14.0),
+                        padding: const EdgeInsets.all(14.0),
                         child: FFButtonWidget(
                           onPressed: () {
                             print('Button pressed ...');
@@ -600,16 +600,16 @@ class _CustomQueryWidgetState extends State<CustomQueryWidget> with RouteAware {
                           text: FFLocalizations.of(context).getText(
                             'o8ioe8ak' /* Done */,
                           ),
-                          icon: Icon(
+                          icon: const Icon(
                             Icons.done,
                             size: 24.0,
                           ),
                           options: FFButtonOptions(
                             height: 40.0,
-                            padding: EdgeInsetsDirectional.fromSTEB(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
                                 16.0, 0.0, 16.0, 0.0),
                             iconAlignment: IconAlignment.end,
-                            iconPadding: EdgeInsetsDirectional.fromSTEB(
+                            iconPadding: const EdgeInsetsDirectional.fromSTEB(
                                 0.0, 0.0, 0.0, 0.0),
                             color: FlutterFlowTheme.of(context).primary,
                             textStyle: FlutterFlowTheme.of(context)

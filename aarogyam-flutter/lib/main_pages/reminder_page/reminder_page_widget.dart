@@ -89,10 +89,10 @@ class _ReminderPageWidgetState extends State<ReminderPageWidget>
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
         floatingActionButton: Align(
-          alignment: AlignmentDirectional(1.0, 1.0),
+          alignment: const AlignmentDirectional(1.0, 1.0),
           child: Builder(
             builder: (context) => Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 45.0),
+              padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 45.0),
               child: FloatingActionButton(
                 onPressed: () async {
                   await showDialog(
@@ -102,14 +102,14 @@ class _ReminderPageWidgetState extends State<ReminderPageWidget>
                         elevation: 0,
                         insetPadding: EdgeInsets.zero,
                         backgroundColor: Colors.transparent,
-                        alignment: AlignmentDirectional(0.0, 0.0)
+                        alignment: const AlignmentDirectional(0.0, 0.0)
                             .resolve(Directionality.of(context)),
                         child: GestureDetector(
                           onTap: () {
                             FocusScope.of(dialogContext).unfocus();
                             FocusManager.instance.primaryFocus?.unfocus();
                           },
-                          child: SetReminderWidget(),
+                          child: const SetReminderWidget(),
                         ),
                       );
                     },
@@ -117,7 +117,7 @@ class _ReminderPageWidgetState extends State<ReminderPageWidget>
                 },
                 backgroundColor: FlutterFlowTheme.of(context).primary,
                 elevation: 8.0,
-                child: Icon(
+                child: const Icon(
                   Icons.add_rounded,
                   color: Colors.black,
                   size: 24.0,
@@ -132,7 +132,7 @@ class _ReminderPageWidgetState extends State<ReminderPageWidget>
             mainAxisSize: MainAxisSize.max,
             children: [
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(12.0, 40.0, 12.0, 0.0),
+                padding: const EdgeInsetsDirectional.fromSTEB(12.0, 40.0, 12.0, 0.0),
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -183,7 +183,7 @@ class _ReminderPageWidgetState extends State<ReminderPageWidget>
                               width: 60.0,
                               height: 60.0,
                               clipBehavior: Clip.antiAlias,
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                 shape: BoxShape.circle,
                               ),
                               child: Image.asset(
@@ -193,20 +193,20 @@ class _ReminderPageWidgetState extends State<ReminderPageWidget>
                             ),
                           ),
                         ),
-                      ].divide(SizedBox(width: 8.0)),
+                      ].divide(const SizedBox(width: 8.0)),
                     ),
                   ],
                 ),
               ),
               Expanded(
                 child: Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
                   child: Stack(
                     children: [
                       Material(
                         color: Colors.transparent,
                         elevation: 8.0,
-                        shape: RoundedRectangleBorder(
+                        shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.only(
                             bottomLeft: Radius.circular(0.0),
                             bottomRight: Radius.circular(0.0),
@@ -219,7 +219,7 @@ class _ReminderPageWidgetState extends State<ReminderPageWidget>
                           height: double.infinity,
                           decoration: BoxDecoration(
                             color: FlutterFlowTheme.of(context).primaryText,
-                            borderRadius: BorderRadius.only(
+                            borderRadius: const BorderRadius.only(
                               bottomLeft: Radius.circular(0.0),
                               bottomRight: Radius.circular(0.0),
                               topLeft: Radius.circular(30.0),
@@ -240,7 +240,7 @@ class _ReminderPageWidgetState extends State<ReminderPageWidget>
                                     child: Builder(builder: (_) {
                                       return DebugFlutterFlowModelContext(
                                         rootModel: _model.rootModel,
-                                        child: ReminderListExpandedWidget(),
+                                        child: const ReminderListExpandedWidget(),
                                       );
                                     }),
                                   ),
