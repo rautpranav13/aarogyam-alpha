@@ -6,6 +6,7 @@
 // Set your action name, define your arguments and return parameter,
 // and then add the boilerplate code using the green button on the right!
 
+import 'package:flutter/foundation.dart';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter/services.dart';
@@ -34,9 +35,9 @@ Future<void> saveTXT(String text, String fileName) async {
     // Write the text to the file
     await file.writeAsString(text);
 
-    print('File saved successfully at $filePath');
+    debugPrint('File saved successfully at $filePath');
   } catch (e) {
-    print('Error saving file: $e');
+    debugPrint('Error saving file: $e');
     throw PlatformException(
       code: 'FILE_SAVE_ERROR',
       message: 'Failed to save file: $e',

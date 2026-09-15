@@ -3,6 +3,7 @@
 // Begin custom action code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
+import 'package:flutter/foundation.dart';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'package:html/parser.dart' show parse;
@@ -52,7 +53,7 @@ Future<void> updateMedicationsDatabase(String filename) async {
         String combinedTitle = "$title + $dosage";
 
         // Log the details being processed
-        print(
+        debugPrint(
             'Processing row $i: Title=$combinedTitle, Hour=$hour, Minute=$minute, Message=$instructions');
 
         // Step 6: Execute the INSERT OR REPLACE query
@@ -72,17 +73,17 @@ Future<void> updateMedicationsDatabase(String filename) async {
         );
 
         // Log successful insertion or update
-        print('Inserted/Updated row $i: $combinedTitle at $hour:$minute');
+        debugPrint('Inserted/Updated row $i: $combinedTitle at $hour:$minute');
       } else {
         // Log skipped rows
-        print(
+        debugPrint(
             'Skipped row $i due to unexpected column count: ${columns.length}');
       }
     }
 
-    print('All data successfully updated.');
+    debugPrint('All data successfully updated.');
   } catch (e) {
     // Log errors
-    print('Error updating medications database: $e');
+    debugPrint('Error updating medications database: $e');
   }
 }

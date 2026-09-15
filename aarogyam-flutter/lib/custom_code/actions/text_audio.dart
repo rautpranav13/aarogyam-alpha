@@ -3,6 +3,7 @@
 // Begin custom action code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
+import 'package:flutter/foundation.dart';
 import 'dart:convert'; // For utf8 and base64Encode
 import 'dart:io'; // For File operations
 import 'package:http/http.dart' as http; // For HTTP requests
@@ -14,7 +15,7 @@ Future<String?> textAudio(
     // Get the external storage directory
     final directory = await getExternalStorageDirectory();
     if (directory == null) {
-      print('Unable to access external storage directory.');
+      debugPrint('Unable to access external storage directory.');
       return null;
     }
 
@@ -50,14 +51,14 @@ Future<String?> textAudio(
       // Save the audio data to a file
       final audioFile = File(filePath);
       await audioFile.writeAsBytes(response.bodyBytes);
-      print('Audio saved successfully at: $filePath');
+      debugPrint('Audio saved successfully at: $filePath');
       return filePath; // Return the file path
     } else {
-      print('Error: ${response.statusCode} - ${response.body}');
+      debugPrint('Error: ${response.statusCode} - ${response.body}');
       return null;
     }
   } catch (e) {
-    print('Exception occurred: $e');
+    debugPrint('Exception occurred: $e');
     return null;
   }
 }

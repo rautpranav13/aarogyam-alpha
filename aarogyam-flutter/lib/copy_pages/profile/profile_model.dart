@@ -1,18 +1,6 @@
 import '/backend/api_requests/api_calls.dart';
-import '/backend/firebase_storage/storage.dart';
-import '/flutter_flow/flutter_flow_icon_button.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
-import '/flutter_flow/upload_data.dart' hide uploadData;
-import 'dart:ui';
-import '/custom_code/actions/index.dart' as actions;
-import '/custom_code/widgets/index.dart' as custom_widgets;
-import '/flutter_flow/permissions_util.dart';
 import 'profile_widget.dart' show ProfileWidget;
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 import 'package:record/record.dart';
 
 class ProfileModel extends FlutterFlowModel<ProfileWidget> {
@@ -79,95 +67,11 @@ class ProfileModel extends FlutterFlowModel<ProfileWidget> {
     debugLogWidgetClass(this);
   }
 
-  ApiCallResponse? get imageapiResponseinsights => _imageapiResponseinsights;
-
-  @override
-  final Map<String, DebugDataField> debugGeneratorVariables = {};
-  @override
-  final Map<String, DebugDataField> debugBackendQueries = {};
-  @override
-  final Map<String, FlutterFlowModel> widgetBuilderComponents = {};
-  @override
+  ApiCallResponse? get imageapiResponseinsights => _imageapiResponseinsights;  @override
   void initState(BuildContext context) {
     debugLogWidgetClass(this);
   }
-
   @override
-  void dispose() {}
-
-  @override
-  WidgetClassDebugData toWidgetClassDebugData() => WidgetClassDebugData(
-        actionOutputs: {
-          'recordedAudio': debugSerializeParam(
-            recordedAudio,
-            ParamType.String,
-            link:
-                'https://app.flutterflow.io/project/health-literacy-c97mzb?tab=uiBuilder&page=Profile',
-            name: 'String',
-            nullable: true,
-          ),
-          'recordedFilePath': debugSerializeParam(
-            recordedFilePath,
-            ParamType.String,
-            link:
-                'https://app.flutterflow.io/project/health-literacy-c97mzb?tab=uiBuilder&page=Profile',
-            name: 'String',
-            nullable: true,
-          ),
-          'rspeechText': debugSerializeParam(
-            rspeechText,
-            ParamType.String,
-            link:
-                'https://app.flutterflow.io/project/health-literacy-c97mzb?tab=uiBuilder&page=Profile',
-            name: 'String',
-            nullable: true,
-          ),
-          'responseWithoutHtml': debugSerializeParam(
-            responseWithoutHtml,
-            ParamType.String,
-            link:
-                'https://app.flutterflow.io/project/health-literacy-c97mzb?tab=uiBuilder&page=Profile',
-            name: 'String',
-            nullable: true,
-          ),
-          'ttsaudioPath': debugSerializeParam(
-            ttsaudioPath,
-            ParamType.String,
-            link:
-                'https://app.flutterflow.io/project/health-literacy-c97mzb?tab=uiBuilder&page=Profile',
-            name: 'String',
-            nullable: true,
-          ),
-          'imageapiResponseprescription': debugSerializeParam(
-            imageapiResponseprescription,
-            ParamType.ApiResponse,
-            link:
-                'https://app.flutterflow.io/project/health-literacy-c97mzb?tab=uiBuilder&page=Profile',
-            name: 'ApiCallResponse',
-            nullable: true,
-          ),
-          'imageapiResponseinsights': debugSerializeParam(
-            imageapiResponseinsights,
-            ParamType.ApiResponse,
-            link:
-                'https://app.flutterflow.io/project/health-literacy-c97mzb?tab=uiBuilder&page=Profile',
-            name: 'ApiCallResponse',
-            nullable: true,
-          )
-        },
-        generatorVariables: debugGeneratorVariables,
-        backendQueries: debugBackendQueries,
-        componentStates: {
-          ...widgetBuilderComponents.map(
-            (key, value) => MapEntry(
-              key,
-              value.toWidgetClassDebugData(),
-            ),
-          ),
-        }.withoutNulls,
-        link:
-            'https://app.flutterflow.io/project/health-literacy-c97mzb/tab=uiBuilder&page=Profile',
-        searchReference: 'reference=OgdQcm9maWxlUAFaB1Byb2ZpbGU=',
-        widgetClassName: 'Profile',
-      );
+  WidgetClassDebugData toWidgetClassDebugData() =>
+      const WidgetClassDebugData();
 }

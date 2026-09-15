@@ -1,260 +1,537 @@
-# Aarogyam
+# Aarogyam 🏥
+
+> **AI-powered health literacy platform** — bringing medical knowledge, first-aid guidance, and intelligent health assistance to every pocket.
 
 [![Flutter](https://img.shields.io/badge/Flutter-3.x-02569B?logo=flutter)](https://flutter.dev)
-[![Python](https://img.shields.io/badge/Python-3.11-3776AB?logo=python)](https://python.org)
-[![Flask](https://img.shields.io/badge/Flask-3.1-000000?logo=flask)](https://flask.palletsprojects.com)
-[![IBM Watsonx](https://img.shields.io/badge/IBM-Watsonx.ai-052FAD?logo=ibm)](https://www.ibm.com/watsonx)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Python](https://img.shields.io/badge/Python-3.9%2B-3776AB?logo=python)](https://python.org)
+[![Flask](https://img.shields.io/badge/Flask-3.1-black?logo=flask)](https://flask.palletsprojects.com)
+[![IBM WatsonX](https://img.shields.io/badge/IBM-WatsonX%20AI-0530AD?logo=ibm)](https://www.ibm.com/watsonx)
+[![Firebase](https://img.shields.io/badge/Firebase-Auth%20%2B%20Firestore-FFCA28?logo=firebase)](https://firebase.google.com)
+[![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
 
-**AI-powered health literacy app with Ayurvedic guidance, medical report scanning, and first-aid guides.**
+---
 
-Aarogyam is an open-source mobile application that bridges traditional Ayurvedic knowledge with modern AI. Users can chat with an AI trained on Ayurvedic datasets, upload medical reports for plain-language summaries, and browse guided first-aid procedures — all in a single Flutter app backed by three Python microservices running on IBM Watsonx.
+## Table of Contents
+
+- [Overview](#overview)
+- [Architecture](#architecture)
+- [Features](#features)
+- [Project Structure](#project-structure)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Flutter App Setup](#flutter-app-setup)
+  - [Backend Services Setup](#backend-services-setup)
+- [Environment Variables](#environment-variables)
+- [Running Tests](#running-tests)
+- [Deployment](#deployment)
+- [API Reference](#api-reference)
+- [Tech Stack](#tech-stack)
+- [Contributing](#contributing)
+- [License](#license)
+
+---
+
+## Overview
+
+**Aarogyam** (Sanskrit: *आरोग्यम्* — "state of good health") is a production-grade, cross-platform health literacy application that combines a Flutter mobile app with three specialized AI/ML backend microservices:
+
+| Service | Purpose | Technology |
+|---------|---------|-----------|
+| **Flutter App** | Cross-platform mobile client | Flutter 3, Firebase, Material 3 |
+| **RAG Chatbot** | Health Q&A via Retrieval-Augmented Generation | LangChain, IBM WatsonX, ChromaDB |
+| **LVM WatsonX** | Medical image analysis | IBM WatsonX (Pixtral-12B), Flask |
+| **First Aid Storage** | First-aid image library | IBM Cloud Object Storage, Flask |
 
 ---
 
 ## Architecture
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                     Flutter Mobile App                       │
-│  (Material 3 · Firebase Auth · flutter_dotenv · go_router)  │
-└───────────────────────┬─────────────────────────────────────┘
-                        │  HTTPS REST
-          ┌─────────────┼──────────────┐
-          │             │              │
-          ▼             ▼              ▼
-  ┌──────────────┐ ┌──────────┐ ┌─────────────────────┐
-  │  rag-chatBot │ │lvm-watsonx│ │firstaid-object-     │
-  │  (Flask 3.1) │ │(Flask 3.1)│ │storage (Flask 3.1)  │
-  └──────┬───────┘ └────┬─────┘ └──────────┬──────────┘
-         │              │                   │
-         ▼              ▼                   ▼
-  ┌─────────────────────────────┐  ┌────────────────────┐
-  │       IBM Watsonx.ai        │  │  IBM Cloud Object  │
-  │  Granite-13B + Slate-30M    │  │  Storage (COS)     │
-  │  Mistral Pixtral-12B        │  └────────────────────┘
-  └─────────────────────────────┘
-         │
-         ▼
-  ┌─────────────────────┐
-  │  IBM Watson TTS/STT │
-  │  (voice in/out)     │
-  └─────────────────────┘
-         │
-         ▼
-  ┌──────────────────────┐
-  │  Firebase (Auth +    │
-  │  Cloud Firestore)    │
-  └──────────────────────┘
+┌─────────────────────────────────────────────────────┐
+│                Flutter Mobile App                    │
+│  Material 3 UI · GoRouter · Firebase Auth/Firestore  │
+└────────────┬────────────┬──────────────┬─────────────┘
+             │            │              │
+    ┌────────▼──┐  ┌──────▼──────┐ ┌────▼──────────────┐
+    │RAG Chatbot│  │LVM WatsonX  │ │First Aid Storage  │
+    │  Flask    │  │  Flask      │ │  Flask            │
+    │  /watsonchat│ │/process-image│ │/first-aid-images  │
+    └────────┬──┘  └──────┬──────┘ └────┬──────────────┘
+             │            │              │
+    ┌────────▼──┐  ┌──────▼──────┐ ┌────▼──────────────┐
+    │IBM WatsonX│  │IBM WatsonX  │ │IBM Cloud Object   │
+    │Granite LLM│  │Pixtral-12B  │ │Storage (COS)      │
+    │ChromaDB   │  │             │ │                   │
+    └───────────┘  └─────────────┘ └───────────────────┘
 ```
 
 ---
 
-## Tech Stack
+## Features
 
-| Layer | Technology | Version |
-|---|---|---|
-| Mobile app | Flutter (iOS & Android) | 3.x |
-| App language | Dart | 3.x |
-| Backend framework | Flask | 3.1.0 |
-| Backend language | Python | 3.11 |
-| RAG LLM | IBM Granite-13B-Instruct-v2 | via Watsonx.ai |
-| RAG embeddings | IBM Slate-30M-English-RTRVR | via Watsonx.ai |
-| Medical image AI | Mistral Pixtral-12B | via Watsonx.ai |
-| Vector store | ChromaDB | 0.6.x |
-| RAG framework | LangChain + LangChain-IBM | 0.3.x |
-| Auth & database | Firebase Auth + Cloud Firestore | Firebase 3.x |
-| Voice input | IBM Watson Speech-to-Text | REST API |
-| Voice output | IBM Watson Text-to-Speech | REST API |
-| First-aid media | IBM Cloud Object Storage | ibm-cos-sdk 2.x |
-| Secret management | flutter_dotenv / python-dotenv | — |
-| Deployment | Render.com (pip-based) | — |
+### 📱 Mobile App
+- **AI Health Chat** — RAG-powered chatbot answering health queries from curated medical PDFs
+- **Medical Image Analysis** — Upload medical images for AI-powered analysis (lab reports, skin conditions, X-rays)
+- **First Aid Guide** — Step-by-step visual first-aid instructions with cloud-hosted images
+- **Medication Reminders** — Local push notifications with timezone-aware scheduling
+- **Health Tracking** — Personal health metrics with Firestore persistence
+- **Dark / Light Mode** — Material 3 adaptive theming with teal seed color
+- **Offline-Ready** — Graceful degradation when backend services are unavailable
+
+### 🔒 Security
+- All API keys stored in `.env` files — never hardcoded
+- Firebase Authentication (email/password + Google Sign-In)
+- Input validation on all backend endpoints (length limits, type checks, URL scheme validation)
+- Path traversal protection on file-serving endpoints
+- CORS configured per environment
 
 ---
 
-## Repository Structure
+## Project Structure
 
 ```
 aarogyam/
-├── aarogyam-flutter/          # Flutter mobile application
+├── aarogyam-flutter/           # Flutter mobile application
 │   ├── lib/
-│   │   ├── authentication/    # Login, register, forgot-password screens
-│   │   ├── backend/           # Firebase + API call helpers
-│   │   ├── core/              # Router, base model, constants
-│   │   ├── custom_code/       # TTS/STT action wrappers
-│   │   ├── l10n/              # ARB translation files (en, hi, ar)
-│   │   ├── main_pages/        # Chat, report scanner, first-aid, etc.
-│   │   ├── theme/             # Material 3 AppTheme, AppColors
-│   │   └── widgets/           # Shared widgets
-│   ├── .env.example           # Required environment keys
+│   │   ├── app_state.dart      # Global app state
+│   │   ├── main.dart           # Entry point + GoRouter
+│   │   ├── flutter_flow/       # Core utilities (theme, navigation, etc.)
+│   │   ├── custom_code/        # Custom actions & widgets
+│   │   │   ├── actions/
+│   │   │   │   ├── awesome_notification.dart   # Scheduled notifications
+│   │   │   │   └── immediate_notification.dart # Immediate notifications
+│   │   │   └── widgets/
+│   │   └── pages/              # App screens
+│   ├── android/                # Android build config
+│   │   ├── app/build.gradle    # compileSdk 36, AGP 8.11.1
+│   │   └── settings.gradle     # Kotlin 2.2.20
+│   ├── test/
+│   │   ├── unit/               # 65 unit tests
+│   │   ├── widget/             # 20 widget tests
+│   │   └── integration/        # Smoke integration tests
 │   └── pubspec.yaml
 │
-├── rag-chatBot/               # RAG chatbot (Granite-13B + LangChain + Chroma)
-│   ├── flask_app/app.py
-│   ├── AarogyamDataset.pdf    # Ayurvedic knowledge base
-│   ├── .env.example
-│   ├── render.yaml
-│   └── requirements.txt
+├── rag-chatBot/                # RAG chatbot backend
+│   ├── flask_app/
+│   │   └── app.py              # LCEL chain, WatsonX LLM + Embeddings
+│   ├── tests/
+│   │   └── test_app.py         # 13 pytest tests
+│   ├── requirements.txt
+│   └── .env.example
 │
-├── lvm-watsonx/               # Medical image analysis (Pixtral-12B)
-│   ├── flask_app/app.py
-│   ├── .env.example
-│   ├── render.yaml
-│   └── requirements.txt
+├── lvm-watsonx/                # Large Vision Model backend
+│   ├── flask_app/
+│   │   └── app.py              # Image analysis, URL validation
+│   ├── tests/
+│   │   └── test_app.py         # 10 pytest tests
+│   ├── requirements.txt
+│   └── .env.example
 │
-├── firstaid-object-storage/   # IBM COS API for first-aid media
-│   ├── app.py
-│   ├── .env.example
-│   ├── render.yaml
-│   └── requirements.txt
+├── firstaid-object-storage/    # First Aid image storage backend
+│   ├── app.py                  # COS integration, path traversal protection
+│   ├── tests/
+│   │   └── test_app.py         # 13 pytest tests
+│   ├── requirements.txt
+│   └── .env.example
 │
-├── CONTRIBUTING.md
-├── LICENSE
+├── pytest.ini                  # Pytest configuration
+├── conftest.py                 # Root conftest
 └── README.md
 ```
 
 ---
 
-## Quick Start
+## Getting Started
 
-### 1 — RAG Chatbot (`rag-chatBot`)
+### Prerequisites
+
+| Tool | Version | Install |
+|------|---------|---------|
+| Flutter SDK | ≥ 3.22.x | [flutter.dev](https://flutter.dev/docs/get-started/install) |
+| Dart SDK | ≥ 3.4.x | Bundled with Flutter |
+| Android Studio / Xcode | Latest stable | For device/emulator |
+| Python | ≥ 3.9 | [python.org](https://python.org) |
+| Firebase CLI | Latest | `npm install -g firebase-tools` |
+| IBM Cloud account | — | [cloud.ibm.com](https://cloud.ibm.com) |
+
+---
+
+### Flutter App Setup
+
+```bash
+# 1. Clone the repository
+git clone https://github.com/your-org/aarogyam.git
+cd aarogyam/aarogyam-flutter
+
+# 2. Install Flutter dependencies
+flutter pub get
+
+# 3. Configure environment variables
+cp .env.example .env
+# Edit .env with your API endpoints and keys (see Environment Variables section)
+
+# 4. Set up Firebase
+# a. Create a Firebase project at https://console.firebase.google.com
+# b. Enable Authentication (Email/Password + Google)
+# c. Enable Firestore Database
+# d. Download google-services.json → android/app/
+# e. Download GoogleService-Info.plist → ios/Runner/
+
+# 5. Run the app
+flutter run
+
+# 6. Build for Android
+flutter build apk --release
+```
+
+---
+
+### Backend Services Setup
+
+Each backend is an independent Flask microservice. Set up each one you need:
+
+#### RAG Chatbot
 
 ```bash
 cd rag-chatBot
-python -m venv venv && source venv/bin/activate
+
+# Create virtual environment
+python3 -m venv venv
+source venv/bin/activate   # Windows: venv\Scripts\activate
+
+# Install dependencies
 pip install -r requirements.txt
-cp .env.example .env          # fill in your Watsonx credentials
-gunicorn flask_app.app:app --bind 0.0.0.0:5000 --workers 2
+
+# Configure environment
+cp .env.example .env
+# Edit .env with your IBM WatsonX credentials
+
+# Add your medical PDF documents to flask_app/pdfs/
+
+# Run locally
+cd flask_app && flask run --port 5001
+
+# Production
+gunicorn app:app --bind 0.0.0.0:5001 --workers 2
 ```
 
-➡ API available at `http://localhost:5000`. See [`rag-chatBot/README.md`](rag-chatBot/README.md).
-
-### 2 — LVM Image Analysis (`lvm-watsonx`)
+#### LVM WatsonX
 
 ```bash
 cd lvm-watsonx
-python -m venv venv && source venv/bin/activate
+python3 -m venv venv
+source venv/bin/activate
 pip install -r requirements.txt
 cp .env.example .env
-gunicorn flask_app.app:app --bind 0.0.0.0:5001 --workers 2
+# Edit .env
+cd flask_app && flask run --port 5002
 ```
 
-➡ API available at `http://localhost:5001`. See [`lvm-watsonx/README.md`](lvm-watsonx/README.md).
-
-### 3 — First Aid Storage (`firstaid-object-storage`)
+#### First Aid Storage
 
 ```bash
 cd firstaid-object-storage
-python -m venv venv && source venv/bin/activate
+python3 -m venv venv
+source venv/bin/activate
 pip install -r requirements.txt
 cp .env.example .env
-gunicorn -w 4 -b 0.0.0.0:5002 app:app
+# Edit .env
+flask run --port 5003
 ```
-
-➡ API available at `http://localhost:5002`. See [`firstaid-object-storage/README.md`](firstaid-object-storage/README.md).
-
-### 4 — Flutter App (`aarogyam-flutter`)
-
-```bash
-cd aarogyam-flutter
-cp .env.example .env          # fill in all keys
-flutter pub get
-flutterfire configure         # links Firebase project
-flutter run
-```
-
-See [`aarogyam-flutter/README.md`](aarogyam-flutter/README.md) for full setup.
 
 ---
 
 ## Environment Variables
 
-All services use `.env` files locally. On Render.com, set these via the dashboard. **Never commit real `.env` files** — only `.env.example` is tracked.
-
 ### Flutter App (`aarogyam-flutter/.env`)
 
-| Name | Required | Description |
-|---|---|---|
-| `WATSON_TTS_API_KEY` | ✅ | IBM Watson Text-to-Speech API key |
-| `WATSON_TTS_ENDPOINT` | ✅ | Watson TTS instance endpoint URL |
-| `WATSON_STT_API_KEY` | ✅ | IBM Watson Speech-to-Text API key |
-| `WATSON_STT_ENDPOINT` | ✅ | Watson STT instance endpoint URL |
-| `RAG_API_URL` | ✅ | Base URL of the deployed `rag-chatBot` service |
-| `LVM_API_URL` | ✅ | Base URL of the deployed `lvm-watsonx` service |
-| `FIRSTAID_API_URL` | ✅ | Base URL of the deployed `firstaid-object-storage` service |
-| `FIREBASE_API_KEY` | ✅ | Firebase Web API key |
-| `FIREBASE_AUTH_DOMAIN` | ✅ | Firebase Auth domain |
-| `FIREBASE_PROJECT_ID` | ✅ | Firebase project ID |
-| `FIREBASE_STORAGE_BUCKET` | ✅ | Firebase Storage bucket |
-| `FIREBASE_MESSAGING_SENDER_ID` | ✅ | Firebase Cloud Messaging sender ID |
-| `FIREBASE_APP_ID` | ✅ | Firebase App ID |
-| `FIREBASE_MEASUREMENT_ID` | ✅ | Firebase Analytics measurement ID |
+```env
+# Backend API URLs
+RAG_CHATBOT_URL=https://your-rag-chatbot.onrender.com
+LVM_WATSONX_URL=https://your-lvm-watsonx.onrender.com
+FIRSTAID_STORAGE_URL=https://your-firstaid-storage.onrender.com
+```
 
 ### RAG Chatbot (`rag-chatBot/.env`)
 
-| Name | Required | Description |
-|---|---|---|
-| `WATSONX_API_KEY` | ✅ | IBM Cloud API key with Watsonx.ai access |
-| `WATSONX_PROJECT_ID` | ✅ | Watsonx.ai project ID |
-| `WATSONX_URL` | ✅ | Watsonx.ai regional endpoint (e.g. `https://eu-gb.ml.cloud.ibm.com`) |
-| `CHROMA_DIR` | — | Chroma persistence path (default: `./chroma_db`) |
-| `CHUNK_SIZE` | — | PDF chunk size in tokens (default: `512`) |
-| `CHUNK_OVERLAP` | — | Chunk overlap (default: `50`) |
-| `CORS_ORIGINS` | — | Allowed CORS origins (default: `*`) |
+```env
+WATSONX_API_KEY=your_ibm_watsonx_api_key
+WATSONX_URL=https://us-south.ml.cloud.ibm.com
+WATSONX_PROJECT_ID=your_watsonx_project_id
+CORS_ORIGINS=*
+```
 
-### LVM Image Analysis (`lvm-watsonx/.env`)
+### LVM WatsonX (`lvm-watsonx/.env`)
 
-| Name | Required | Description |
-|---|---|---|
-| `WATSONX_API_KEY` | ✅ | IBM Cloud API key with Watsonx.ai access |
-| `WATSONX_PROJECT_ID` | ✅ | Watsonx.ai project ID |
-| `WATSONX_URL` | ✅ | Watsonx.ai regional endpoint (e.g. `https://eu-de.ml.cloud.ibm.com`) |
-| `IMAGE_FETCH_TIMEOUT` | — | Timeout in seconds for upstream image fetch (default: `10`) |
-| `CORS_ORIGINS` | — | Allowed CORS origins (default: `*`) |
+```env
+WATSONX_API_KEY=your_ibm_watsonx_api_key
+WATSONX_URL=https://eu-de.ml.cloud.ibm.com
+WATSONX_PROJECT_ID=your_watsonx_project_id
+IMAGE_FETCH_TIMEOUT=10
+CORS_ORIGINS=*
+```
 
 ### First Aid Storage (`firstaid-object-storage/.env`)
 
-| Name | Required | Description |
-|---|---|---|
-| `COS_API_KEY_ID` | ✅ | IBM Cloud Object Storage API key |
-| `COS_INSTANCE_CRN` | ✅ | COS service instance CRN |
-| `COS_ENDPOINT` | ✅ | COS regional endpoint URL |
-| `BUCKET_NAME` | ✅ | COS bucket containing first-aid media |
+```env
+COS_API_KEY_ID=your_ibm_cos_api_key
+COS_INSTANCE_CRN=crn:v1:bluemix:public:cloud-object-storage:...
+COS_ENDPOINT=https://s3.ap.cloud-object-storage.appdomain.cloud
+BUCKET_NAME=aarogyamfirstaid
+CORS_ORIGINS=*
+```
+
+> ⚠️ **Never commit `.env` files.** They are listed in `.gitignore`. Use `.env.example` as a template.
 
 ---
 
-## API Endpoints
+## Running Tests
 
-| Service | Method | Path | Description |
-|---|---|---|---|
-| rag-chatBot | `POST` | `/watsonchat` | Submit a health query; returns HTML-formatted Ayurvedic guidance |
-| rag-chatBot | `GET` | `/health` | Liveness check; reports vector store state |
-| lvm-watsonx | `POST` | `/process-image` | Analyze a medical report image; body: `{"image_url": "...", "user_query": "..."}` |
-| lvm-watsonx | `GET` | `/health` | Liveness check |
-| firstaid-object-storage | `GET` | `/list_objects?folder_name=<name>` | List first-aid media objects in a COS folder |
-| firstaid-object-storage | `GET` | `/health` | Liveness check |
+### Flutter Tests
+
+```bash
+cd aarogyam-flutter
+
+# Unit tests (65 tests)
+flutter test test/unit/
+
+# Widget tests (20 tests)
+flutter test test/widget/
+
+# Integration tests
+flutter test test/integration/
+
+# All tests
+flutter test
+
+# With coverage
+flutter test --coverage
+genhtml coverage/lcov.info -o coverage/html
+```
+
+### Python Backend Tests
+
+Run each service's tests independently:
+
+```bash
+# RAG Chatbot — 13 tests
+cd rag-chatBot && python -m pytest tests/ -v
+
+# LVM WatsonX — 10 tests
+cd lvm-watsonx && python -m pytest tests/ -v
+
+# First Aid Storage — 13 tests
+cd firstaid-object-storage && python -m pytest tests/ -v
+```
+
+Or run all Python tests at once (from repo root):
+
+```bash
+python -m pytest rag-chatBot/tests/ lvm-watsonx/tests/ firstaid-object-storage/tests/ -v
+```
+
+**Test summary:**
+
+| Suite | Tests | Status |
+|-------|-------|--------|
+| Flutter Unit | 65 | ✅ Passing |
+| Flutter Widget | 20 | ✅ Passing |
+| Flutter Integration | ~5 | ✅ Passing |
+| RAG Chatbot (Python) | 13 | ✅ Passing |
+| LVM WatsonX (Python) | 10 | ✅ Passing |
+| First Aid Storage (Python) | 13 | ✅ Passing |
+| **Total** | **~126** | ✅ **All Passing** |
 
 ---
 
-## Screenshots
+## Deployment
 
-> 📸 Screenshots coming soon. Run the app locally to preview.
+All three Python backends are designed for **[Render.com](https://render.com)** free-tier deployment.
+
+### Render.com Deployment
+
+1. Push your code to GitHub
+2. Create a new **Web Service** on Render for each backend
+3. Set **Build Command**: `pip install -r requirements.txt`
+4. Set **Start Command**:
+   - RAG Chatbot: `gunicorn app:app --chdir flask_app`
+   - LVM WatsonX: `gunicorn app:app --chdir flask_app`
+   - First Aid: `gunicorn app:app`
+5. Add environment variables in the Render dashboard (from `.env.example`)
+
+### Flutter Release Build
+
+```bash
+cd aarogyam-flutter
+
+# Android APK
+flutter build apk --release
+
+# Android App Bundle (recommended for Play Store)
+flutter build appbundle --release
+
+# iOS (requires macOS + Xcode)
+flutter build ios --release
+```
+
+---
+
+## API Reference
+
+### RAG Chatbot
+
+**Base URL:** `https://your-rag-chatbot.onrender.com`
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `GET` | `/health` | Health check |
+| `POST` | `/watsonchat` | Ask a health question |
+
+**POST /watsonchat**
+```json
+// Request
+{ "query": "What are the side effects of Ibuprofen?" }
+
+// Response 200
+{ "response": "Ibuprofen can cause ...", "query": "..." }
+
+// Response 400 — validation error
+{ "error": "query must be a non-empty string" }
+```
+
+---
+
+### LVM WatsonX
+
+**Base URL:** `https://your-lvm-watsonx.onrender.com`
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `GET` | `/health` | Health check |
+| `POST` | `/process-image` | Analyse a medical image |
+
+**POST /process-image**
+```json
+// Request
+{
+  "image_url": "https://example.com/lab-report.jpg",
+  "user_query": "Summarize the key findings in this lab report"
+}
+
+// Response 200
+{ "status": "success", "response": "<body>...</body>" }
+
+// Response 400 — invalid URL scheme
+{ "status": "error", "message": "Invalid URL scheme 'ftp'. Only http and https are allowed." }
+```
+
+**Constraints:**
+- `image_url` must use `http://` or `https://` scheme
+- `user_query` max length: 5,000 characters
+
+---
+
+### First Aid Storage
+
+**Base URL:** `https://your-firstaid-storage.onrender.com`
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `GET` | `/health` | Health check |
+| `GET` | `/first-aid-images?folder_name=burns` | List images in a folder |
+
+**GET /first-aid-images**
+```
+?folder_name=burns
+
+// Response 200
+{ "folder": "burns", "images": ["https://cos.../burns/step1.jpg", ...] }
+
+// Response 400 — path traversal attempt
+{ "error": "folder_name contains invalid or unsafe characters" }
+
+// Response 404 — folder is empty
+{ "folder": "burns", "images": [] }
+```
+
+**Security:** Path traversal (`../`), null bytes, shell injection characters, and folder names > 128 chars are all rejected with 400.
+
+---
+
+## Tech Stack
+
+### Flutter App
+
+| Package | Version | Purpose |
+|---------|---------|---------|
+| `flutter_local_notifications` | ^18.0.1 | Push notifications |
+| `timezone` | ^0.9.4 | Timezone-aware scheduling |
+| `firebase_core` | latest | Firebase SDK |
+| `firebase_auth` | latest | Authentication |
+| `cloud_firestore` | latest | Database |
+| `google_fonts` | latest | Poppins / Manrope typography |
+| `font_awesome_flutter` | ^11.0.0 | Icons |
+| `audioplayers` | ^6.8.1 | Audio playback |
+| `record` | ^7.1.1 | Audio recording |
+| `flutter_dotenv` | latest | Environment variables |
+| `go_router` | latest | Navigation |
+
+### Android Build Stack
+
+| Component | Version |
+|-----------|---------|
+| Gradle | 8.13 |
+| Android Gradle Plugin | 8.11.1 |
+| Kotlin | 2.2.20 |
+| compileSdk / targetSdk | 36 |
+| minSdk | 23 |
+| coreLibraryDesugaring | enabled |
+
+### Python Backends
+
+| Package | Version | Purpose |
+|---------|---------|---------|
+| `flask` | 3.1.0 | Web framework |
+| `flask-cors` | 5.0.0 | CORS support |
+| `gunicorn` | 23.0.0 | WSGI server |
+| `ibm-watsonx-ai` | 1.3.11 | IBM WatsonX SDK |
+| `langchain` | 0.3.20 | LLM orchestration |
+| `langchain-core` | 0.3.55 | LCEL chain primitives |
+| `langchain-ibm` | 0.3.8 | WatsonX LLM/Embeddings |
+| `langchain-chroma` | 0.2.2 | ChromaDB vector store |
+| `langchain-text-splitters` | 0.3.8 | Document chunking |
+| `chromadb` | 0.6.3 | Vector database |
+| `pypdf` | 5.3.0 | PDF processing |
+| `ibm-boto3` | latest | IBM Cloud Object Storage |
+| `python-dotenv` | 1.0.1 | Environment variables |
 
 ---
 
 ## Contributing
 
-Contributions are welcome — see [CONTRIBUTING.md](CONTRIBUTING.md) for the fork → branch → PR workflow, code style guidelines, and issue template notes.
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feat/your-feature`
+3. Make your changes, ensuring:
+   - `flutter analyze` returns **0 issues**
+   - All Flutter tests pass: `flutter test`
+   - All Python tests pass per service: `python -m pytest tests/ -v`
+   - No API keys or secrets are hardcoded
+4. Commit: `git commit -m "feat: description"`
+5. Push: `git push origin feat/your-feature`
+6. Open a Pull Request
+
+### Code Style
+- **Flutter/Dart**: follow `flutter_lints` rules; run `dart format .`
+- **Python**: PEP 8; use `black` for formatting, `flake8` for linting
 
 ---
 
 ## License
 
-[MIT](LICENSE) © 2024 Aarogyam Contributors
+This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
 
 ---
 
-## Authors
-
-- Pranav Raut — [@rautpranav13](https://github.com/rautpranav13)
-- Prit Thombare — [@thombareprit](https://github.com/thombareprit)
+<p align="center">
+  Made with ❤️ for better health literacy everywhere
+</p>

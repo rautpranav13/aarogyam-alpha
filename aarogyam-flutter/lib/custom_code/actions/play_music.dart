@@ -3,6 +3,7 @@
 // Begin custom action code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
+import 'package:flutter/foundation.dart';
 import 'dart:io';
 import 'package:audioplayers/audioplayers.dart';
 
@@ -22,6 +23,6 @@ Future<void> playMusic(
     await audioPlayer.play(DeviceFileSource(audioPath));
   } catch (e) {
     // Handle any errors that occur.
-    print('Error playing audio: $e');
+    debugPrint('Error playing audio: $e');
   }
 }

@@ -1,14 +1,10 @@
-import 'dart:convert';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '/core/utils/firestore_helpers.dart';
 import 'api_manager.dart';
 
 export 'api_manager.dart' show ApiCallResponse;
 
-const _kPrivateApiFunctionName = 'ffPrivateApiCall';
 
 class ProcessImageAPICall {
   static Future<ApiCallResponse> call({
@@ -25,7 +21,7 @@ class ProcessImageAPICall {
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'processImageAPI',
-      apiUrl: dotenv.env['LVM_API_URL'] ?? 'https://ibmaarogyam.onrender.com/process-image',
+      apiUrl: dotenv.env['LVM_API_URL'] ?? '',
       callType: ApiCallType.POST,
       headers: {
         'Content-Type': 'application/json',
@@ -60,7 +56,7 @@ class RagAPICall {
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'ragAPI',
-      apiUrl: dotenv.env['RAG_API_URL'] ?? 'https://aarogyam.onrender.com/watsonchat',
+      apiUrl: dotenv.env['RAG_API_URL'] ?? '',
       callType: ApiCallType.POST,
       headers: {
         'Content-Type': 'application/json',
@@ -103,36 +99,8 @@ class ApiPagingParams {
       'PagingParams(nextPageNumber: $nextPageNumber, numItems: $numItems, lastResponse: $lastResponse,)';
 }
 
-String _toEncodable(dynamic item) {
-  if (item is DocumentReference) {
-    return item.path;
-  }
-  return item;
-}
 
-String _serializeList(List? list) {
-  list ??= <String>[];
-  try {
-    return json.encode(list, toEncodable: _toEncodable);
-  } catch (_) {
-    if (kDebugMode) {
-      print("List serialization failed. Returning empty list.");
-    }
-    return '[]';
-  }
-}
 
-String _serializeJson(dynamic jsonVar, [bool isList = false]) {
-  jsonVar ??= (isList ? [] : {});
-  try {
-    return json.encode(jsonVar, toEncodable: _toEncodable);
-  } catch (_) {
-    if (kDebugMode) {
-      print("Json serialization failed. Returning empty json.");
-    }
-    return isList ? '[]' : '{}';
-  }
-}
 
 String? escapeStringForJson(String? input) {
   if (input == null) {

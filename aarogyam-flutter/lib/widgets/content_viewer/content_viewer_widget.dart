@@ -1,10 +1,6 @@
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import 'dart:ui';
 import '/custom_code/widgets/index.dart' as custom_widgets;
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 import 'content_viewer_model.dart';
 export 'content_viewer_model.dart';
 
@@ -98,10 +94,10 @@ class _ContentViewerWidgetState extends State<ContentViewerWidget>
                 color: FlutterFlowTheme.of(context).primaryBackground,
                 borderRadius: BorderRadius.circular(12.0),
               ),
-              child: SizedBox(
+              child: const SizedBox(
                 width: double.infinity,
                 height: 500.0,
-                child: const custom_widgets.HtmlContentWidget(
+                child: custom_widgets.HtmlContentWidget(
                   width: double.infinity,
                   height: 500.0,
                   htmlContent: '',

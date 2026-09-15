@@ -2,13 +2,9 @@ import '/flutter_flow/flutter_flow_checkbox_group.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
-import 'dart:ui';
 import 'package:expandable/expandable.dart';
-import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 import 'allergies_p_age_copy_model.dart';
 export 'allergies_p_age_copy_model.dart';
 
@@ -840,7 +836,7 @@ class _AllergiesPAgeCopyWidgetState extends State<AllergiesPAgeCopyWidget>
                       padding: const EdgeInsets.all(24.0),
                       child: FFButtonWidget(
                         onPressed: () {
-                          print('Button pressed ...');
+                          debugPrint('Button pressed ...');
                         },
                         text: FFLocalizations.of(context).getText(
                           'wl8lcb2e' /* Save */,

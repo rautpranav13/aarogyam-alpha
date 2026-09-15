@@ -6,6 +6,7 @@
 // Set your action name, define your arguments and return parameter,
 // and then add the boilerplate code using the green button on the right!
 
+import 'package:flutter/foundation.dart';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter/services.dart';
@@ -28,9 +29,9 @@ Future<void> appendTXT(String text, String fileName) async {
     // Append the text to the file, create it if it doesn't exist
     await file.writeAsString(text, mode: FileMode.append);
 
-    print('Text appended successfully to $filePath');
+    debugPrint('Text appended successfully to $filePath');
   } catch (e) {
-    print('Error saving file: $e');
+    debugPrint('Error saving file: $e');
     throw PlatformException(
       code: 'FILE_SAVE_ERROR',
       message: 'Failed to save file: $e',

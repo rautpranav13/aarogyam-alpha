@@ -1,22 +1,6 @@
 import '/backend/api_requests/api_calls.dart';
-import '/backend/firebase_storage/storage.dart';
-import '/flutter_flow/flutter_flow_animations.dart';
-import '/flutter_flow/flutter_flow_icon_button.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
-import '/flutter_flow/upload_data.dart' hide uploadData;
-import 'dart:math';
-import 'dart:ui';
-import '/custom_code/actions/index.dart' as actions;
-import '/custom_code/widgets/index.dart' as custom_widgets;
 import 'report_sanner_widget.dart' show ReportSannerWidget;
-import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:flutter_animate/flutter_animate.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 
 class ReportSannerModel extends FlutterFlowModel<ReportSannerWidget> {
   ///  State fields for stateful widgets in this page.
@@ -70,91 +54,11 @@ class ReportSannerModel extends FlutterFlowModel<ReportSannerWidget> {
     debugLogWidgetClass(this);
   }
 
-  String? get ttsaudioPath => _ttsaudioPath;
-
-  @override
-  final Map<String, DebugDataField> debugGeneratorVariables = {};
-  @override
-  final Map<String, DebugDataField> debugBackendQueries = {};
-  @override
-  final Map<String, FlutterFlowModel> widgetBuilderComponents = {};
-  @override
+  String? get ttsaudioPath => _ttsaudioPath;  @override
   void initState(BuildContext context) {
     debugLogWidgetClass(this);
   }
-
   @override
-  void dispose() {}
-
-  @override
-  WidgetClassDebugData toWidgetClassDebugData() => WidgetClassDebugData(
-        widgetParameters: {
-          'filepath': debugSerializeParam(
-            widget?.filepath,
-            ParamType.String,
-            link:
-                'https://app.flutterflow.io/project/health-literacy-c97mzb?tab=uiBuilder&page=ReportSanner',
-            searchReference:
-                'reference=ShoKEgoIZmlsZXBhdGgSBmRoenVxeXIECAMgAVABWghmaWxlcGF0aA==',
-            name: 'String',
-            nullable: true,
-          )
-        }.withoutNulls,
-        actionOutputs: {
-          'imageapiResponseprescription': debugSerializeParam(
-            imageapiResponseprescription,
-            ParamType.ApiResponse,
-            link:
-                'https://app.flutterflow.io/project/health-literacy-c97mzb?tab=uiBuilder&page=ReportSanner',
-            name: 'ApiCallResponse',
-            nullable: true,
-          ),
-          'imageapiResponseinsights': debugSerializeParam(
-            imageapiResponseinsights,
-            ParamType.ApiResponse,
-            link:
-                'https://app.flutterflow.io/project/health-literacy-c97mzb?tab=uiBuilder&page=ReportSanner',
-            name: 'ApiCallResponse',
-            nullable: true,
-          ),
-          'imageapiResponseUserQ': debugSerializeParam(
-            imageapiResponseUserQ,
-            ParamType.ApiResponse,
-            link:
-                'https://app.flutterflow.io/project/health-literacy-c97mzb?tab=uiBuilder&page=ReportSanner',
-            name: 'ApiCallResponse',
-            nullable: true,
-          ),
-          'responseWithoutHtml': debugSerializeParam(
-            responseWithoutHtml,
-            ParamType.String,
-            link:
-                'https://app.flutterflow.io/project/health-literacy-c97mzb?tab=uiBuilder&page=ReportSanner',
-            name: 'String',
-            nullable: true,
-          ),
-          'ttsaudioPath': debugSerializeParam(
-            ttsaudioPath,
-            ParamType.String,
-            link:
-                'https://app.flutterflow.io/project/health-literacy-c97mzb?tab=uiBuilder&page=ReportSanner',
-            name: 'String',
-            nullable: true,
-          )
-        },
-        generatorVariables: debugGeneratorVariables,
-        backendQueries: debugBackendQueries,
-        componentStates: {
-          ...widgetBuilderComponents.map(
-            (key, value) => MapEntry(
-              key,
-              value.toWidgetClassDebugData(),
-            ),
-          ),
-        }.withoutNulls,
-        link:
-            'https://app.flutterflow.io/project/health-literacy-c97mzb/tab=uiBuilder&page=ReportSanner',
-        searchReference: 'reference=OgxSZXBvcnRTYW5uZXJQAVoMUmVwb3J0U2FubmVy',
-        widgetClassName: 'ReportSanner',
-      );
+  WidgetClassDebugData toWidgetClassDebugData() =>
+      const WidgetClassDebugData();
 }

@@ -15,6 +15,7 @@ let package = Package(
         .library(name: "FlutterGeneratedPluginSwiftPackage", type: .static, targets: ["FlutterGeneratedPluginSwiftPackage"])
     ],
     dependencies: [
+        .package(name: "audioplayers_darwin", path: "../.packages/audioplayers_darwin-6.5.0"),
         .package(name: "cloud_firestore", path: "../.packages/cloud_firestore-5.6.10"),
         .package(name: "firebase_auth", path: "../.packages/firebase_auth-5.6.1"),
         .package(name: "firebase_core", path: "../.packages/firebase_core-3.15.0"),
@@ -22,6 +23,7 @@ let package = Package(
         .package(name: "flutter_native_splash", path: "../.packages/flutter_native_splash-2.4.4"),
         .package(name: "image_picker_ios", path: "../.packages/image_picker_ios-0.8.12"),
         .package(name: "path_provider_foundation", path: "../.packages/path_provider_foundation-2.4.0"),
+        .package(name: "record_ios", path: "../.packages/record_ios-2.1.1"),
         .package(name: "shared_preferences_foundation", path: "../.packages/shared_preferences_foundation-2.5.2"),
         .package(name: "url_launcher_ios", path: "../.packages/url_launcher_ios-6.3.1"),
         .package(name: "video_player_avfoundation", path: "../.packages/video_player_avfoundation-2.6.2"),
@@ -31,6 +33,7 @@ let package = Package(
         .target(
             name: "FlutterGeneratedPluginSwiftPackage",
             dependencies: [
+                .product(name: "audioplayers-darwin", package: "audioplayers_darwin"),
                 .product(name: "cloud-firestore", package: "cloud_firestore"),
                 .product(name: "firebase-auth", package: "firebase_auth"),
                 .product(name: "firebase-core", package: "firebase_core"),
@@ -38,6 +41,7 @@ let package = Package(
                 .product(name: "flutter-native-splash", package: "flutter_native_splash"),
                 .product(name: "image-picker-ios", package: "image_picker_ios"),
                 .product(name: "path-provider-foundation", package: "path_provider_foundation"),
+                .product(name: "record-ios", package: "record_ios"),
                 .product(name: "shared-preferences-foundation", package: "shared_preferences_foundation"),
                 .product(name: "url-launcher-ios", package: "url_launcher_ios"),
                 .product(name: "video-player-avfoundation", package: "video_player_avfoundation"),

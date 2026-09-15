@@ -216,7 +216,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                           Navigator.of(context).pushNamed('ChatBot'),
                     ),
                     _buildNavButton(
-                      icon: const FaIcon(FontAwesomeIcons.firstAid, size: 16),
+                      icon: const FaIcon(FontAwesomeIcons.kitMedical, size: 16),
                       label: 'First Aid',
                       cs: cs,
                       onPressed: () =>

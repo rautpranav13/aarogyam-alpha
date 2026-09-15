@@ -3,6 +3,7 @@
 // Begin custom action code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
+import 'package:flutter/foundation.dart';
 import 'dart:convert'; // For utf8 and base64Encode
 import 'dart:io'; // For File operations
 import 'package:http/http.dart' as http; // For HTTP requests
@@ -10,7 +11,7 @@ import 'package:http/http.dart' as http; // For HTTP requests
 Future<String?> transcribeAudio(
     String apiKey, String url, String? audioPath) async {
   if (audioPath == null) {
-    print('Error: AudioPath is null');
+    debugPrint('Error: AudioPath is null');
     return null;
   }
 
@@ -24,7 +25,7 @@ Future<String?> transcribeAudio(
     // Load audio file from the provided path
     final audioFile = File(audioPath);
     if (!await audioFile.exists()) {
-      print('Error: Audio file does not exist at path: $audioPath');
+      debugPrint('Error: Audio file does not exist at path: $audioPath');
       return null;
     }
 
@@ -51,11 +52,11 @@ Future<String?> transcribeAudio(
           'No transcription available';
       return transcription;
     } else {
-      print('Error: ${response.statusCode} - ${response.body}');
+      debugPrint('Error: ${response.statusCode} - ${response.body}');
       return null;
     }
   } catch (e) {
-    print('Exception occurred: $e');
+    debugPrint('Exception occurred: $e');
     return null;
   }
 }

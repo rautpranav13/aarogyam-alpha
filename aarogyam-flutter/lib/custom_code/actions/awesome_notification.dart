@@ -1,61 +1,87 @@
-// Automatic FlutterFlow imports
-// Imports other custom actions
-// Begin custom action code
-// DO NOT REMOVE OR MODIFY THE CODE ABOVE!
+// Aarogyam — awesome_notification.dart (rewritten with flutter_local_notifications)
+// Schedules daily repeating notifications at a specific time.
 
-// Set your action name, define your arguments and return parameter,
-// and then add the boilerplate code using the green button on the right!
+import 'package:flutter/foundation.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:timezone/timezone.dart' as tz;
+import 'package:timezone/data/latest_all.dart' as tz;
 
-import 'package:awesome_notifications/awesome_notifications.dart';
+final FlutterLocalNotificationsPlugin _flnp =
+    FlutterLocalNotificationsPlugin();
 
-Future awesomeNotification(
-    int? idMorning,
-    String? morningTitle,
-    String? morningMessage,
-    int? morningHour,
-    int? morningMinute,
-    bool? morningturnedOn) async {
-  AwesomeNotifications().initialize(
-    null,
-    [
-      NotificationChannel(
-        channelKey: 'tap_in_notification',
-        channelName: 'TapIn Notification',
-        channelDescription: 'tap_in',
-        importance: NotificationImportance.High,
-        channelShowBadge: true,
-        locked: false,
-      ),
-    ],
+bool _initialized = false;
+
+Future<void> _ensureInit() async {
+  if (_initialized) return;
+  tz.initializeTimeZones();
+
+  const androidSettings =
+      AndroidInitializationSettings('@mipmap/ic_launcher');
+  const iosSettings = DarwinInitializationSettings(
+    requestAlertPermission: true,
+    requestBadgePermission: true,
+    requestSoundPermission: true,
   );
-  AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
-    if (!isAllowed) {
-      AwesomeNotifications().requestPermissionToSendNotifications();
-    }
-  });
+  const initSettings =
+      InitializationSettings(android: androidSettings, iOS: iosSettings);
+  await _flnp.initialize(initSettings);
+  _initialized = true;
+}
 
-  String localTimeZone =
-      await AwesomeNotifications().getLocalTimeZoneIdentifier();
+const AndroidNotificationDetails _androidDetails = AndroidNotificationDetails(
+  'aarogyam_reminder',
+  'Aarogyam Reminders',
+  channelDescription: 'Daily medication reminder notifications',
+  importance: Importance.high,
+  priority: Priority.high,
+  showWhen: true,
+);
+
+const NotificationDetails _notificationDetails =
+    NotificationDetails(android: _androidDetails);
+
+Future<void> awesomeNotification(
+  int? idMorning,
+  String? morningTitle,
+  String? morningMessage,
+  int? morningHour,
+  int? morningMinute,
+  bool? morningturnedOn,
+) async {
+  await _ensureInit();
+
+  final id = idMorning ?? 0;
+  final hour = morningHour ?? 8;
+  final minute = morningMinute ?? 0;
 
   if (morningturnedOn == true) {
-    await AwesomeNotifications().createNotification(
-        content: NotificationContent(
-            id: idMorning!,
-            channelKey: 'tap_in_notification',
-            title: morningTitle,
-            body: morningMessage),
-        schedule: NotificationCalendar(
-            hour: morningHour,
-            minute: morningMinute,
-            second: 00,
-            timeZone: localTimeZone,
-            preciseAlarm: true,
-            repeats: true));
+    final now = tz.TZDateTime.now(tz.local);
+    var scheduled = tz.TZDateTime(
+      tz.local,
+      now.year,
+      now.month,
+      now.day,
+      hour,
+      minute,
+    );
+    if (scheduled.isBefore(now)) {
+      scheduled = scheduled.add(const Duration(days: 1));
+    }
 
-    print('Reminder set for $morningHour:$morningMinute');
-  }
-  if (morningturnedOn == false) {
-    await AwesomeNotifications().cancel(idMorning!);
-    print('Reminder cancelled for $morningHour:$morningMinute');
+    await _flnp.zonedSchedule(
+      id,
+      morningTitle ?? 'Aarogyam Reminder',
+      morningMessage ?? 'Time to take your medication!',
+      scheduled,
+      _notificationDetails,
+      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+      uiLocalNotificationDateInterpretation:
+          UILocalNotificationDateInterpretation.absoluteTime,
+      matchDateTimeComponents: DateTimeComponents.time, // repeats daily
+    );
+    debugPrint('[Notification] Scheduled id=$id at $hour:$minute');
+  } else if (morningturnedOn == false) {
+    await _flnp.cancel(id);
+    debugPrint('[Notification] Cancelled id=$id');
   }
 }

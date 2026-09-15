@@ -1,16 +1,7 @@
-import '/flutter_flow/flutter_flow_checkbox_group.dart';
-import '/flutter_flow/flutter_flow_icon_button.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
-import 'dart:ui';
 import 'allergies_widget.dart' show AllergiesWidget;
 import 'package:expandable/expandable.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 
 class AllergiesModel extends FlutterFlowModel<AllergiesWidget> {
   ///  State fields for stateful widgets in this page.
@@ -78,15 +69,7 @@ class AllergiesModel extends FlutterFlowModel<AllergiesWidget> {
   // State field(s) for TextField widget.
   FocusNode? textFieldFocusNode;
   TextEditingController? textController;
-  String? Function(BuildContext, String?)? textControllerValidator;
-
-  @override
-  final Map<String, DebugDataField> debugGeneratorVariables = {};
-  @override
-  final Map<String, DebugDataField> debugBackendQueries = {};
-  @override
-  final Map<String, FlutterFlowModel> widgetBuilderComponents = {};
-  @override
+  String? Function(BuildContext, String?)? textControllerValidator;  @override
   void initState(BuildContext context) {
     debugLogWidgetClass(this);
   }
@@ -101,87 +84,10 @@ class AllergiesModel extends FlutterFlowModel<AllergiesWidget> {
     expandableExpandableController6.dispose();
     textFieldFocusNode?.dispose();
     textController?.dispose();
+    super.dispose();
   }
 
   @override
-  WidgetClassDebugData toWidgetClassDebugData() => WidgetClassDebugData(
-        widgetStates: {
-          'checkboxGroupValues1': debugSerializeParam(
-            checkboxGroupValues1,
-            ParamType.String,
-            isList: true,
-            link:
-                'https://app.flutterflow.io/project/health-literacy-c97mzb?tab=uiBuilder&page=Allergies',
-            name: 'String',
-            nullable: true,
-          ),
-          'checkboxGroupValues2': debugSerializeParam(
-            checkboxGroupValues2,
-            ParamType.String,
-            isList: true,
-            link:
-                'https://app.flutterflow.io/project/health-literacy-c97mzb?tab=uiBuilder&page=Allergies',
-            name: 'String',
-            nullable: true,
-          ),
-          'checkboxGroupValues3': debugSerializeParam(
-            checkboxGroupValues3,
-            ParamType.String,
-            isList: true,
-            link:
-                'https://app.flutterflow.io/project/health-literacy-c97mzb?tab=uiBuilder&page=Allergies',
-            name: 'String',
-            nullable: true,
-          ),
-          'checkboxGroupValues4': debugSerializeParam(
-            checkboxGroupValues4,
-            ParamType.String,
-            isList: true,
-            link:
-                'https://app.flutterflow.io/project/health-literacy-c97mzb?tab=uiBuilder&page=Allergies',
-            name: 'String',
-            nullable: true,
-          ),
-          'checkboxGroupValues5': debugSerializeParam(
-            checkboxGroupValues5,
-            ParamType.String,
-            isList: true,
-            link:
-                'https://app.flutterflow.io/project/health-literacy-c97mzb?tab=uiBuilder&page=Allergies',
-            name: 'String',
-            nullable: true,
-          ),
-          'checkboxGroupValues6': debugSerializeParam(
-            checkboxGroupValues6,
-            ParamType.String,
-            isList: true,
-            link:
-                'https://app.flutterflow.io/project/health-literacy-c97mzb?tab=uiBuilder&page=Allergies',
-            name: 'String',
-            nullable: true,
-          ),
-          'textFieldText': debugSerializeParam(
-            textController?.text,
-            ParamType.String,
-            link:
-                'https://app.flutterflow.io/project/health-literacy-c97mzb?tab=uiBuilder&page=Allergies',
-            name: 'String',
-            nullable: true,
-          )
-        },
-        generatorVariables: debugGeneratorVariables,
-        backendQueries: debugBackendQueries,
-        componentStates: {
-          ...widgetBuilderComponents.map(
-            (key, value) => MapEntry(
-              key,
-              value.toWidgetClassDebugData(),
-            ),
-          ),
-        }.withoutNulls,
-        link:
-            'https://app.flutterflow.io/project/health-literacy-c97mzb/tab=uiBuilder&page=Allergies',
-        searchReference: 'reference=OglBbGxlcmdpZXNQAVoJQWxsZXJnaWVz',
-        widgetClassName: 'Allergies',
-      );
+  WidgetClassDebugData toWidgetClassDebugData() =>
+      const WidgetClassDebugData();
 }

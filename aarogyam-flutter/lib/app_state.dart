@@ -17,22 +17,22 @@ class AppState extends ChangeNotifier {
   Future<void> initializePersistedState() async {
     prefs = await SharedPreferences.getInstance();
     _safeInit(() {
-      _genderValue = prefs.getString('ff_genderValue') ?? _genderValue;
+      genderValue = prefs.getString('ff_genderValue') ?? genderValue;
     });
     _safeInit(() {
-      _ageValue = prefs.getInt('ff_ageValue') ?? _ageValue;
+      ageValue = prefs.getInt('ff_ageValue') ?? ageValue;
     });
     _safeInit(() {
-      _heightValue = prefs.getInt('ff_heightValue') ?? _heightValue;
+      heightValue = prefs.getInt('ff_heightValue') ?? heightValue;
     });
     _safeInit(() {
-      _weightValue = prefs.getInt('ff_weightValue') ?? _weightValue;
+      weightValue = prefs.getInt('ff_weightValue') ?? weightValue;
     });
     _safeInit(() {
-      _userTitle = prefs.getString('ff_userTitle') ?? _userTitle;
+      userTitle = prefs.getString('ff_userTitle') ?? userTitle;
     });
     _safeInit(() {
-      _userQuery = prefs.getString('ff_userQuery') ?? _userQuery;
+      userQuery = prefs.getString('ff_userQuery') ?? userQuery;
     });
   }
 
@@ -43,71 +43,25 @@ class AppState extends ChangeNotifier {
 
   late SharedPreferences prefs;
 
-  String _genderValue = '';
-  String get genderValue => _genderValue;
-  set genderValue(String value) {
-    _genderValue = value;
-    prefs.setString('ff_genderValue', value);
-  }
+  String genderValue = '';
 
-  int _ageValue = 18;
-  int get ageValue => _ageValue;
-  set ageValue(int value) {
-    _ageValue = value;
-    prefs.setInt('ff_ageValue', value);
-  }
+  int ageValue = 18;
 
-  int _heightValue = 140;
-  int get heightValue => _heightValue;
-  set heightValue(int value) {
-    _heightValue = value;
-    prefs.setInt('ff_heightValue', value);
-  }
+  int heightValue = 140;
 
-  int _weightValue = 30;
-  int get weightValue => _weightValue;
-  set weightValue(int value) {
-    _weightValue = value;
-    prefs.setInt('ff_weightValue', value);
-  }
+  int weightValue = 30;
 
-  bool _isRecording = false;
-  bool get isRecording => _isRecording;
-  set isRecording(bool value) {
-    _isRecording = value;
-  }
+  bool isRecording = false;
 
-  int _whatClicked = 0;
-  int get whatClicked => _whatClicked;
-  set whatClicked(int value) {
-    _whatClicked = value;
-  }
+  int whatClicked = 0;
 
-  String _typedMessage = '';
-  String get typedMessage => _typedMessage;
-  set typedMessage(String value) {
-    _typedMessage = value;
-  }
+  String typedMessage = '';
 
-  bool _isTranslate = false;
-  bool get isTranslate => _isTranslate;
-  set isTranslate(bool value) {
-    _isTranslate = value;
-  }
+  bool isTranslate = false;
 
-  String _userTitle = '';
-  String get userTitle => _userTitle;
-  set userTitle(String value) {
-    _userTitle = value;
-    prefs.setString('ff_userTitle', value);
-  }
+  String userTitle = '';
 
-  String _userQuery = '';
-  String get userQuery => _userQuery;
-  set userQuery(String value) {
-    _userQuery = value;
-    prefs.setString('ff_userQuery', value);
-  }
+  String userQuery = '';
 }
 
 void _safeInit(Function() initializeField) {
@@ -116,8 +70,3 @@ void _safeInit(Function() initializeField) {
   } catch (_) {}
 }
 
-Future<void> _safeInitAsync(Function() initializeField) async {
-  try {
-    await initializeField();
-  } catch (_) {}
-}

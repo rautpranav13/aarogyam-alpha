@@ -1,3 +1,4 @@
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import '/app_state.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/backend/firebase_storage/storage.dart';
@@ -5,15 +6,9 @@ import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/upload_data.dart' hide uploadData;
-import 'dart:math';
-import 'dart:ui';
 import '/custom_code/actions/index.dart' as actions;
 import '/custom_code/widgets/index.dart' as custom_widgets;
-import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -322,6 +317,7 @@ class _ReportSannerWidgetState extends State<ReportSannerWidget>
                                     'Only extract medicines from the prescription and return an accurate HTML table: <table><tr><th>Medicines</th><th>Dosage</th><th>Exact Time</th><th>Specific Instructions</th></tr><tr><td>Paracetamol</td><td>500mg</td><td>20:00</td><td>Take with food</td></tr></table>; calculate Exact Time in strict 24-hour format by yourself. (e.g., 08:30, 20:30), use standard values if unspecified, and ensure the table is correctly formatted in single line html for mobile-friendly display without extra characters or formatting errors. Do not add anything except table, your response should start with <table> and end with </table>.',
                               );
 
+                              if (!context.mounted) return;
                               if ((_model.imageapiResponseprescription
                                       ?.succeeded ??
                                   true)) {
@@ -377,6 +373,7 @@ class _ReportSannerWidgetState extends State<ReportSannerWidget>
                               FFAppState().update(() {});
                             }),
                           ]);
+                          if (!context.mounted) return;
                           var confirmDialogResponse = await showDialog<bool>(
                                 context: context,
                                 builder: (alertDialogContext) {
@@ -481,6 +478,7 @@ class _ReportSannerWidgetState extends State<ReportSannerWidget>
                                     'Extract and summarize the key details present in the image with significant observations.',
                               );
 
+                              if (!context.mounted) return;
                               if ((_model.imageapiResponseinsights?.succeeded ??
                                   true)) {
                                 ScaffoldMessenger.of(context).showSnackBar(
@@ -687,6 +685,7 @@ class _ReportSannerWidgetState extends State<ReportSannerWidget>
                                   userQuery: FFAppState().userQuery,
                                 );
 
+                                if (!context.mounted) return;
                                 if ((_model.imageapiResponseUserQ?.succeeded ??
                                     true)) {
                                   ScaffoldMessenger.of(context).showSnackBar(
@@ -899,7 +898,7 @@ class _ReportSannerWidgetState extends State<ReportSannerWidget>
                                                   );
                                                   _model.ttsaudioPath =
                                                       await actions.textAudio(
-                                                    'gLk2p4Hk6BTIhKLeTgtrtdLU1CbHFI_vekMD-d_XD_Jw',
+                                                    dotenv.env['WATSON_TTS_API_KEY'] ?? '',
                                                     'https://api.eu-gb.text-to-speech.watson.cloud.ibm.com/instances/dc7f65b4-3f3b-464d-9d31-cfeefe0f6d3d',
                                                     _model.responseWithoutHtml!,
                                                     'speech.mp3',

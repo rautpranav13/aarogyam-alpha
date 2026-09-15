@@ -1,17 +1,14 @@
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/backend/firebase_storage/storage.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/upload_data.dart' hide uploadData;
-import 'dart:ui';
 import '/custom_code/actions/index.dart' as actions;
 import '/custom_code/widgets/index.dart' as custom_widgets;
 import '/flutter_flow/permissions_util.dart';
-import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 import 'package:record/record.dart';
 import 'profile_model.dart';
 export 'profile_model.dart';
@@ -135,6 +132,7 @@ class _ProfileWidgetState extends State<ProfileWidget> with RouteAware {
                           ),
                           onPressed: () async {
                             await requestPermission(microphonePermission);
+                            if (!context.mounted) return;
                             await startAudioRecording(
                               context,
                               audioRecorder: _model.audioRecorder ??=
@@ -166,7 +164,7 @@ class _ProfileWidgetState extends State<ProfileWidget> with RouteAware {
                               _model.recordedAudio,
                             );
                             _model.rspeechText = await actions.transcribeAudio(
-                              '6ZXwMVTnT4A38daO89IRv9TEG4n_a3qLhOn30skZA29Q',
+                              dotenv.env['WATSON_STT_API_KEY'] ?? '',
                               'https://api.eu-gb.speech-to-text.watson.cloud.ibm.com/instances/a704f190-7977-4e56-a8a1-ba84bf8dca45',
                               _model.recordedFilePath,
                             );
@@ -192,12 +190,13 @@ class _ProfileWidgetState extends State<ProfileWidget> with RouteAware {
                               ).toString(),
                             );
                             _model.ttsaudioPath = await actions.textAudio(
-                              'gLk2p4Hk6BTIhKLeTgtrtdLU1CbHFI_vekMD-d_XD_Jw',
+                              dotenv.env['WATSON_TTS_API_KEY'] ?? '',
                               'https://api.eu-gb.text-to-speech.watson.cloud.ibm.com/instances/dc7f65b4-3f3b-464d-9d31-cfeefe0f6d3d',
                               _model.responseWithoutHtml!,
                               'speech.mp3',
                             );
 
+                            if (!context.mounted) return;
                             context.pushNamed(
                               'ReportSanner',
                               queryParameters: {
@@ -329,6 +328,7 @@ class _ProfileWidgetState extends State<ProfileWidget> with RouteAware {
                                     'Extract medicines from the prescription and return an accurate HTML table: <table><tr><th>Medicines</th><th>Dosage</th><th>Timing</th><th>Specific Instructions</th></tr><tr><td>Paracetamol</td><td>500mg</td><td>08:00, 20:00</td><td>Take with food</td></tr></table>; calculate timing in strict 24-hour format based on frequency (e.g., twice daily = 08:00, 20:00), use standard values if unspecified, and ensure the table is correctly formatted in html for mobile-friendly display without extra characters or formatting errors.',
                               );
 
+                              if (!context.mounted) return;
                               if ((_model.imageapiResponseprescription
                                       ?.succeeded ??
                                   true)) {
@@ -401,6 +401,7 @@ class _ProfileWidgetState extends State<ProfileWidget> with RouteAware {
                                     'Extract and summarize the key details present in the image with significant observations.',
                               );
 
+                              if (!context.mounted) return;
                               if ((_model.imageapiResponseinsights?.succeeded ??
                                   true)) {
                                 ScaffoldMessenger.of(context).showSnackBar(
@@ -465,7 +466,7 @@ class _ProfileWidgetState extends State<ProfileWidget> with RouteAware {
                           ),
                           FFButtonWidget(
                             onPressed: () {
-                              print('Button pressed ...');
+                              debugPrint('Button pressed ...');
                             },
                             text: FFLocalizations.of(context).getText(
                               '512bhyt6' /* Button */,
@@ -490,7 +491,7 @@ class _ProfileWidgetState extends State<ProfileWidget> with RouteAware {
                           ),
                           FFButtonWidget(
                             onPressed: () {
-                              print('Button pressed ...');
+                              debugPrint('Button pressed ...');
                             },
                             text: FFLocalizations.of(context).getText(
                               'l9f043ki' /* Button */,

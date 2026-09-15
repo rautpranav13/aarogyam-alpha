@@ -2,13 +2,9 @@ import '/backend/sqlite/sqlite_manager.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import 'dart:ui';
 import '/custom_code/actions/index.dart' as actions;
 import '/flutter_flow/random_data_util.dart' as random_data;
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 import 'set_reminder_model.dart';
 export 'set_reminder_model.dart';
 
@@ -161,6 +157,7 @@ class _SetReminderWidgetState extends State<SetReminderWidget> with RouteAware {
                       }(_model.datePicked!.secondsSinceEpoch),
                       true,
                     );
+                    if (!context.mounted) return;
                     Navigator.pop(context);
                     await actions.immediateNotification(
                       0,

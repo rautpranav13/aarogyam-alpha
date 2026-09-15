@@ -1,5 +1,7 @@
-#API service
+# API service
 import os
+import logging
+from urllib.parse import urlparse
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -10,8 +12,14 @@ import base64
 from ibm_watsonx_ai import Credentials
 from ibm_watsonx_ai.foundation_models import ModelInference
 
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
 app = Flask(__name__)
 CORS(app, origins=os.getenv("CORS_ORIGINS", "*"))
+
+MAX_PROMPT_LENGTH = 5000
+ALLOWED_URL_SCHEMES = {"http", "https"}
 
 def augment_api_request_body(user_query, image):
     """
@@ -101,7 +109,7 @@ def process_image():
     """
     try:
         # Parse the JSON body
-        data = request.get_json()
+        data = request.get_json(silent=True)
         if not data or not data.get('image_url') or not data.get('user_query'):
             return jsonify({"error": "image_url and user_query are required"}), 400
 
@@ -115,12 +123,28 @@ def process_image():
         if not isinstance(user_query, str):
             return jsonify({"status": "error", "message": "Invalid input: 'user_query' must be a string."}), 400
 
+        # Validate URL scheme — only http/https allowed
+        parsed = urlparse(image_url)
+        if parsed.scheme.lower() not in ALLOWED_URL_SCHEMES:
+            return jsonify({
+                "status": "error",
+                "message": f"Invalid URL scheme '{parsed.scheme}'. Only http and https are allowed."
+            }), 400
+
+        # Validate prompt length
+        if len(user_query) > MAX_PROMPT_LENGTH:
+            return jsonify({
+                "status": "error",
+                "message": f"'user_query' exceeds maximum length of {MAX_PROMPT_LENGTH} characters."
+            }), 400
+
         # Process the image and query
         result = process_image_with_query(image_url, user_query)
         status_code = 500 if result.get("status") == "error" else 200
         return jsonify(result), status_code
 
     except Exception as e:
+        logger.exception("Unexpected error in /process-image")
         return jsonify({"status": "error", "message": str(e)}), 500
 
 @app.route('/')

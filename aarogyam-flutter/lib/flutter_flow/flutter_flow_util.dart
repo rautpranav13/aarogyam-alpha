@@ -1,3 +1,4 @@
+export 'package:flutter/foundation.dart' show debugPrint;
 // flutter_flow_util.dart — compatibility shim.
 //
 // The original flutter_flow/ directory was removed during the ST-1
@@ -59,7 +60,10 @@ T createModel<T extends BaseModel>(BuildContext context, T Function() creator) {
 // ---------------------------------------------------------------------------
 extension SafeSetStateExtension on State {
   void safeSetState(VoidCallback fn) {
-    if (mounted) setState(fn);
+    if (mounted) {
+      // ignore: invalid_use_of_protected_member
+      setState(fn);
+    }
   }
 }
 
@@ -182,6 +186,7 @@ extension TextStyleOverride on TextStyle {
 // ---------------------------------------------------------------------------
 // FFAppState shim — returns the AppState singleton
 // ---------------------------------------------------------------------------
+// ignore: non_constant_identifier_names
 AppState FFAppState() => AppState();
 
 // ---------------------------------------------------------------------------

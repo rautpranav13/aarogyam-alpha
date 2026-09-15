@@ -1,5 +1,6 @@
 # Import necessary libraries
 import os
+import logging
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -7,10 +8,12 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS  # To handle cross-origin requests
 from ibm_watsonx_ai import Credentials, APIClient
 from pypdf import PdfReader
-from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.docstore.document import Document
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+from langchain_core.documents import Document
 from langchain_ibm import WatsonxEmbeddings, WatsonxLLM
-from langchain.chains import RetrievalQA
+from langchain_core.prompts import PromptTemplate
+from langchain_core.output_parsers import StrOutputParser
+from langchain_core.runnables import RunnablePassthrough
 from langchain_chroma import Chroma
 from ibm_watsonx_ai.metanames import GenTextParamsMetaNames as GenParams
 from ibm_watsonx_ai.foundation_models.utils.enums import DecodingMethods
@@ -58,9 +61,9 @@ try:
         pdf_reader = PdfReader(f)
         for page in pdf_reader.pages:
             pdf_text += page.extract_text() or ""
-    print("info\nPDF successfully processed.")
+    logging.info("info\nPDF successfully processed.")
 except Exception as e:
-    print(f"error\nFailed to process PDF: {e}")
+    logging.info(f"error\nFailed to process PDF: {e}")
     pdf_text = ""
 
 # Split PDF text into chunks
@@ -72,9 +75,9 @@ try:
     )
     chunks = text_splitter.split_text(pdf_text)
     documents = [Document(page_content=chunk) for chunk in chunks]
-    print(f"info\nTotal document chunks created: {len(documents)}")
+    logging.info(f"info\nTotal document chunks created: {len(documents)}")
 except Exception as e:
-    print(f"error\nFailed to split PDF text: {e}")
+    logging.info(f"error\nFailed to split PDF text: {e}")
     documents = []
 
 # Create or load vector store for document retrieval
@@ -89,14 +92,14 @@ try:
     if os.path.exists(CHROMA_DIR) and len(os.listdir(CHROMA_DIR)) > 0:
         # Load existing vector store from disk
         docsearch = Chroma(persist_directory=CHROMA_DIR, embedding_function=embeddings)
-        print("Loaded existing vector store from disk")
+        logging.info("Loaded existing vector store from disk")
     else:
         # Build from PDF and persist to disk
         docsearch = Chroma.from_documents(documents, embeddings, persist_directory=CHROMA_DIR)
-        print("Built and persisted new vector store")
+        logging.info("Built and persisted new vector store")
 
 except Exception as e:
-    print(f"error\nFailed to create/load vector store: {e}")
+    logging.info(f"error\nFailed to create/load vector store: {e}")
     docsearch = None
 
 # In-process query cache
@@ -112,14 +115,20 @@ def health():
 def watsonchat():
     try:
         # Parse the query from the request
-        data = request.get_json()
+        data = request.get_json(silent=True) or {}
         user_query = data.get('query')
 
         if not user_query:
-            print("error\nNo query provided in the request.")
+            logging.info("No query provided in the request.")
             return jsonify({"error": "No query provided"}), 400
 
-        print(f"info\nUser Query: {user_query}")
+        if not isinstance(user_query, str):
+            return jsonify({"error": "query must be a string"}), 400
+
+        if len(user_query) > 2000:
+            return jsonify({"error": "query too long (max 2000 chars)"}), 400
+
+        logging.info(f"info\nUser Query: {user_query}")
 
         # Check in-process cache first
         cache_key = user_query.strip().lower()
@@ -132,28 +141,40 @@ def watsonchat():
             f"Ensure the output is plain text, concise, and suitable for mobile app display. Provide Ayurvedic remedies, dietary norms, yoga/exercise, and lifestyle precautions, avoiding allopathic medicines for the query: {user_query}"
         )
 
-        print(f"critical\nFormatted Query: {formatted_query}")
+        logging.info(f"critical\nFormatted Query: {formatted_query}")
 
         # Ensure the vector store is initialized
         if not docsearch:
-            print("error\nVector store is not initialized.")
+            logging.info("error\nVector store is not initialized.")
             return jsonify({"error": "Vector store is not initialized"}), 500
 
-        # Build RetrievalQA
-        qa = RetrievalQA.from_chain_type(llm=watsonx_granite, chain_type="stuff", retriever=docsearch.as_retriever())
+        # Build LCEL retrieval chain (replaces deprecated RetrievalQA)
+        rag_prompt = PromptTemplate.from_template(
+            "Use the following context to answer the question.\n\nContext:\n{context}\n\nQuestion: {question}\n\nAnswer:"
+        )
+        retriever = docsearch.as_retriever(search_kwargs={"k": 4})
+
+        def format_docs(docs):
+            return "\n\n".join(d.page_content for d in docs)
+
+        rag_chain = (
+            {"context": retriever | format_docs, "question": RunnablePassthrough()}
+            | rag_prompt
+            | watsonx_granite
+            | StrOutputParser()
+        )
 
         # Get the response from Watson AI
         try:
-            aiResponse = qa.invoke(formatted_query)
+            ai_response_result = rag_chain.invoke(formatted_query)
         except Exception as e:
-            print(f"error\nModel invocation failed: {e}")
+            logging.info(f"Model invocation failed: {e}")
             return jsonify({"error": "Model invocation failed", "detail": str(e)}), 500
 
-        print(f"critical\nAI Response: {aiResponse}")
+        logging.info(f"AI Response: {ai_response_result}")
 
-        ai_response_result = aiResponse.get("result")
         if not ai_response_result:
-            print("error\nAI did not return a valid result.")
+            logging.info("AI did not return a valid result.")
             return jsonify({"error": "AI did not return a valid result."}), 500
 
         # Cache the result
@@ -161,7 +182,7 @@ def watsonchat():
 
         return jsonify({"response": ai_response_result})
     except Exception as e:
-        print(f"error\nException: {e}")
+        logging.info(f"error\nException: {e}")
         return jsonify({"error": str(e)}), 500
 
 

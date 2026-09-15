@@ -2,10 +2,7 @@ import '/backend/sqlite/sqlite_manager.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/widgets/reminder/switch_remainder/switch_remainder_widget.dart';
-import 'dart:ui';
-import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 import 'reminder_list_expanded_model.dart';
 export 'reminder_list_expanded_model.dart';
 

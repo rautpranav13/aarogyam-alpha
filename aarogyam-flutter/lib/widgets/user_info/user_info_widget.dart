@@ -35,7 +35,6 @@ class _UserInfoWidgetState extends State<UserInfoWidget> {
     required int max,
     required ValueChanged<int> onChanged,
   }) {
-    final cs = Theme.of(context).colorScheme;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -67,8 +66,6 @@ class _UserInfoWidgetState extends State<UserInfoWidget> {
   @override
   Widget build(BuildContext context) {
     final appState = context.watch<AppState>();
-    final cs = Theme.of(context).colorScheme;
-
     // Initialise local state from AppState on first build
     _model.dropDownValue ??=
         appState.genderValue.isNotEmpty ? appState.genderValue : null;
@@ -149,7 +146,7 @@ class _UserInfoWidgetState extends State<UserInfoWidget> {
             ),
             trailing: Icon(
               Icons.chevron_right,
-              color: cs.onSurface,
+              color: Theme.of(context).colorScheme.onSurface,
             ),
             onTap: () => context.pushNamed('Allergies'),
           ),

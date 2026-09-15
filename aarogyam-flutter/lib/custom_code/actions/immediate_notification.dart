@@ -1,47 +1,48 @@
-// Automatic FlutterFlow imports
-// Imports other custom actions
-// Begin custom action code
-// DO NOT REMOVE OR MODIFY THE CODE ABOVE!
+// Aarogyam — immediate_notification.dart (rewritten with flutter_local_notifications)
 
-// Set your action name, define your arguments and return parameter,
-// and then add the boilerplate code using the green button on the right!
+import 'package:flutter/foundation.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:timezone/data/latest_all.dart' as tz;
 
-import 'package:awesome_notifications/awesome_notifications.dart';
+final FlutterLocalNotificationsPlugin _flnpImmediate =
+    FlutterLocalNotificationsPlugin();
+
+bool _immediateInitialized = false;
+
+Future<void> _ensureImmediateInit() async {
+  if (_immediateInitialized) return;
+  tz.initializeTimeZones();
+  const androidSettings =
+      AndroidInitializationSettings('@mipmap/ic_launcher');
+  const iosSettings = DarwinInitializationSettings();
+  const initSettings =
+      InitializationSettings(android: androidSettings, iOS: iosSettings);
+  await _flnpImmediate.initialize(initSettings);
+  _immediateInitialized = true;
+}
 
 Future<void> immediateNotification(
-    int? notificationId, String? title, String? message) async {
-  // Initialize the notification channel
-  AwesomeNotifications().initialize(
-    null,
-    [
-      NotificationChannel(
-        channelKey: 'tap_in_notification',
-        channelName: 'TapIn Notification',
-        channelDescription: 'Notifications for TapIn app',
-        importance: NotificationImportance.High,
-        channelShowBadge: true,
-        locked: false,
-      ),
-    ],
-  );
+  int? notificationId,
+  String? title,
+  String? message,
+) async {
+  await _ensureImmediateInit();
 
-  // Check if notification permissions are granted
-  AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
-    if (!isAllowed) {
-      // Request permission to send notifications if not allowed
-      AwesomeNotifications().requestPermissionToSendNotifications();
-    }
-  });
-
-  // Send the immediate notification
-  await AwesomeNotifications().createNotification(
-    content: NotificationContent(
-      id: notificationId ?? 0, // Default ID to 0 if null
-      channelKey: 'tap_in_notification',
-      title: title,
-      body: message,
+  const details = NotificationDetails(
+    android: AndroidNotificationDetails(
+      'aarogyam_immediate',
+      'Aarogyam Alerts',
+      channelDescription: 'Immediate in-app alerts',
+      importance: Importance.high,
+      priority: Priority.high,
     ),
   );
 
-  print('Immediate notification sent: $title - $message');
+  await _flnpImmediate.show(
+    notificationId ?? 0,
+    title ?? 'Aarogyam',
+    message ?? '',
+    details,
+  );
+  debugPrint('[Notification] Immediate: $title — $message');
 }

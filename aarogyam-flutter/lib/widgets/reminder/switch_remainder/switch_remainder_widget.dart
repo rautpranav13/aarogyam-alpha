@@ -1,9 +1,6 @@
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/widgets/reminder/set_reminder/set_reminder_widget.dart';
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 import 'switch_remainder_model.dart';
 export 'switch_remainder_model.dart';
 
@@ -114,7 +111,7 @@ class _SwitchRemainderWidgetState extends State<SwitchRemainderWidget>
             );
           }
         },
-        activeColor: FlutterFlowTheme.of(context).primaryBackground,
+        thumbColor: WidgetStateProperty.all(FlutterFlowTheme.of(context).primaryBackground),
         activeTrackColor: const Color(0xFF86D1C7),
         inactiveTrackColor: FlutterFlowTheme.of(context).secondaryText,
         inactiveThumbColor: FlutterFlowTheme.of(context).secondaryBackground,

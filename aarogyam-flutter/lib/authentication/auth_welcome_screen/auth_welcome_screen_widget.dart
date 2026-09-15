@@ -30,7 +30,6 @@ class _AuthWelcomeScreenWidgetState extends State<AuthWelcomeScreenWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final cs = Theme.of(context).colorScheme;
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(

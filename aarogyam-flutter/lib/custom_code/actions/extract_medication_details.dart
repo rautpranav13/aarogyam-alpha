@@ -3,6 +3,7 @@
 // Begin custom action code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
+import 'package:flutter/foundation.dart';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'package:html/parser.dart' show parse;
@@ -54,10 +55,10 @@ Future<dynamic> extractMedicationDetails(String filename) async {
     }
 
     // Convert the list of medication details to a JSON string
-    print(jsonEncode(medications));
+    debugPrint(jsonEncode(medications));
     return jsonEncode(medications);
   } catch (e) {
-    print('Error reading or parsing file: $e');
+    debugPrint('Error reading or parsing file: $e');
     return jsonEncode([]);
   }
 }
