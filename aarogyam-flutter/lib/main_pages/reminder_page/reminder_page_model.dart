@@ -2,7 +2,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/widgets/reminder/reminder_list_expanded/reminder_list_expanded_widget.dart';
 import 'reminder_page_widget.dart' show ReminderPageWidget;
 
-class ReminderPageModel extends FlutterFlowModel<ReminderPageWidget> {
+class ReminderPageModel extends BaseModel<ReminderPageWidget> {
   ///  State fields for stateful widgets in this page.
 
   // Model for ReminderListExpanded component.

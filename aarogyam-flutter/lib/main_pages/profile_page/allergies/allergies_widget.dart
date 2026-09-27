@@ -64,7 +64,7 @@ class _AllergiesWidgetState extends State<AllergiesWidget> with RouteAware {
 
   @override
   void didPopNext() {
-    if (mounted && DebugFlutterFlowModelContext.maybeOf(context) == null) {
+    if (mounted) {
       setState(() => _model.isRouteVisible = true);
       debugLogWidgetClass(_model);
     }
@@ -72,7 +72,7 @@ class _AllergiesWidgetState extends State<AllergiesWidget> with RouteAware {
 
   @override
   void didPush() {
-    if (mounted && DebugFlutterFlowModelContext.maybeOf(context) == null) {
+    if (mounted) {
       setState(() => _model.isRouteVisible = true);
       debugLogWidgetClass(_model);
     }
@@ -90,9 +90,6 @@ class _AllergiesWidgetState extends State<AllergiesWidget> with RouteAware {
 
   @override
   Widget build(BuildContext context) {
-    DebugFlutterFlowModelContext.maybeOf(context)
-        ?.parentModelCallback
-        ?.call(_model);
 
     return GestureDetector(
       onTap: () {

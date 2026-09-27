@@ -1,7 +1,7 @@
 import '/flutter_flow/flutter_flow_util.dart';
 import 'set_reminder_widget.dart' show SetReminderWidget;
 
-class SetReminderModel extends FlutterFlowModel<SetReminderWidget> {
+class SetReminderModel extends BaseModel<SetReminderWidget> {
   ///  State fields for stateful widgets in this component.
 
   // State field(s) for TextField widget.

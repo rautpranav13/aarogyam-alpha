@@ -69,7 +69,7 @@ class _ProfilePageCopyWidgetState extends State<ProfilePageCopyWidget>
 
   @override
   void didPopNext() {
-    if (mounted && DebugFlutterFlowModelContext.maybeOf(context) == null) {
+    if (mounted) {
       setState(() => _model.isRouteVisible = true);
       debugLogWidgetClass(_model);
     }
@@ -77,7 +77,7 @@ class _ProfilePageCopyWidgetState extends State<ProfilePageCopyWidget>
 
   @override
   void didPush() {
-    if (mounted && DebugFlutterFlowModelContext.maybeOf(context) == null) {
+    if (mounted) {
       setState(() => _model.isRouteVisible = true);
       debugLogWidgetClass(_model);
     }
@@ -95,9 +95,6 @@ class _ProfilePageCopyWidgetState extends State<ProfilePageCopyWidget>
 
   @override
   Widget build(BuildContext context) {
-    DebugFlutterFlowModelContext.maybeOf(context)
-        ?.parentModelCallback
-        ?.call(_model);
 
     return GestureDetector(
       onTap: () {
@@ -406,12 +403,7 @@ class _ProfilePageCopyWidgetState extends State<ProfilePageCopyWidget>
                       child: wrapWithModel(
                         model: _model.userInfoModel,
                         updateCallback: () => safeSetState(() {}),
-                        child: Builder(builder: (_) {
-                          return DebugFlutterFlowModelContext(
-                            rootModel: _model.rootModel,
-                            child: const UserInfoWidget(),
-                          );
-                        }),
+                        child: const UserInfoWidget(),
                       ),
                     ),
                   ),

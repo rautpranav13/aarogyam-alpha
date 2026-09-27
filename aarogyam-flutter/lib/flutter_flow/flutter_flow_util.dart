@@ -41,10 +41,6 @@ import '/theme/app_theme.dart';
 import '/flutter_flow/flutter_flow_animations.dart' show AnimationInfo;
 import '/flutter_flow/upload_data.dart' show selectMedia, SelectedMedia, selectMediaWithSourceBottomSheet;
 
-// ---------------------------------------------------------------------------
-// FlutterFlowModel — alias to BaseModel for backward compat
-// ---------------------------------------------------------------------------
-typedef FlutterFlowModel<T extends StatefulWidget> = BaseModel<T>;
 
 // ---------------------------------------------------------------------------
 // createModel — FF helper to instantiate and initialize a model
@@ -102,25 +98,6 @@ class DebugModalRoute {
   static ModalRoute? of(BuildContext context) => ModalRoute.of(context);
 }
 
-// ---------------------------------------------------------------------------
-// DebugFlutterFlowModelContext — no-op Widget wrapper + static helper
-// ---------------------------------------------------------------------------
-class DebugFlutterFlowModelContext extends StatelessWidget {
-  const DebugFlutterFlowModelContext({
-    super.key,
-    required this.child,
-    this.rootModel,
-    this.parentModelCallback,
-  });
-  final Widget child;
-  final dynamic rootModel;
-  final Function? parentModelCallback;
-
-  static DebugFlutterFlowModelContext? maybeOf(BuildContext context) => null;
-
-  @override
-  Widget build(BuildContext context) => child;
-}
 
 // ---------------------------------------------------------------------------
 // wrapWithModel — wraps a child widget, passing through as-is

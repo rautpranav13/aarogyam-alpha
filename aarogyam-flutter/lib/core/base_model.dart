@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import '/core/debug/debug_types.dart';
 
-/// Base class replacing FlutterFlowModel for all page/component models.
-/// Extend this instead of FlutterFlowModel<W>.
+/// Pure Flutter Base ViewModel extending ChangeNotifier for page and component state.
 abstract class BaseModel<T extends StatefulWidget> extends ChangeNotifier {
   T? _widget;
   T? get widget => _widget;
@@ -13,14 +12,13 @@ abstract class BaseModel<T extends StatefulWidget> extends ChangeNotifier {
   bool _isInitialized = false;
 
   // ---------------------------------------------------------------------------
-  // FF debug-panel fields — kept as no-ops so generated model code compiles.
+  // State and Debug properties
   // ---------------------------------------------------------------------------
   bool isRouteVisible = false;
   final Map<String, DebugDataField> debugGeneratorVariables = {};
   final Map<String, DebugDataField> debugBackendQueries = {};
   final Map<String, BaseModel> widgetBuilderComponents = {};
 
-  /// rootModel — used by DebugFlutterFlowModelContext; always returns self.
   BaseModel get rootModel => this;
 
   WidgetClassDebugData toWidgetClassDebugData() =>

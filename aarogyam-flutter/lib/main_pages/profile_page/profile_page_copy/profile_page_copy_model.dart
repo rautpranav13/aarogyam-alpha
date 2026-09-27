@@ -2,7 +2,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/widgets/user_info/user_info_widget.dart';
 import 'profile_page_copy_widget.dart' show ProfilePageCopyWidget;
 
-class ProfilePageCopyModel extends FlutterFlowModel<ProfilePageCopyWidget> {
+class ProfilePageCopyModel extends BaseModel<ProfilePageCopyWidget> {
   ///  State fields for stateful widgets in this page.
 
   // Model for UserInfo component.

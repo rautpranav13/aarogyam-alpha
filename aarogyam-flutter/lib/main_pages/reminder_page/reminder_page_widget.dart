@@ -45,7 +45,7 @@ class _ReminderPageWidgetState extends State<ReminderPageWidget>
 
   @override
   void didPopNext() {
-    if (mounted && DebugFlutterFlowModelContext.maybeOf(context) == null) {
+    if (mounted) {
       setState(() => _model.isRouteVisible = true);
       debugLogWidgetClass(_model);
     }
@@ -53,7 +53,7 @@ class _ReminderPageWidgetState extends State<ReminderPageWidget>
 
   @override
   void didPush() {
-    if (mounted && DebugFlutterFlowModelContext.maybeOf(context) == null) {
+    if (mounted) {
       setState(() => _model.isRouteVisible = true);
       debugLogWidgetClass(_model);
     }
@@ -71,9 +71,6 @@ class _ReminderPageWidgetState extends State<ReminderPageWidget>
 
   @override
   Widget build(BuildContext context) {
-    DebugFlutterFlowModelContext.maybeOf(context)
-        ?.parentModelCallback
-        ?.call(_model);
 
     return GestureDetector(
       onTap: () {
@@ -227,17 +224,12 @@ class _ReminderPageWidgetState extends State<ReminderPageWidget>
                                 model: _model.reminderListExpandedModel,
                                 updateCallback: () => safeSetState(() {}),
                                 updateOnChange: true,
-                                child: Hero(
+                                child: const Hero(
                                   tag: 'Expandable card',
                                   transitionOnUserGestures: true,
                                   child: Material(
                                     color: Colors.transparent,
-                                    child: Builder(builder: (_) {
-                                      return DebugFlutterFlowModelContext(
-                                        rootModel: _model.rootModel,
-                                        child: const ReminderListExpandedWidget(),
-                                      );
-                                    }),
+                                    child: ReminderListExpandedWidget(),
                                   ),
                                 ),
                               ),

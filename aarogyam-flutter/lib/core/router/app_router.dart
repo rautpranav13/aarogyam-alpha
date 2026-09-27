@@ -25,14 +25,14 @@ class AppStateNotifier extends ChangeNotifier {
 
   BaseAuthUser? initialUser;
   BaseAuthUser? user;
-  bool showSplashImage = true;
+  bool showSplashImage = false;
   String? _redirectLocation;
 
   /// When true the app will rebuild on sign-in / sign-out events.
   /// Disable temporarily before performing post-auth navigation.
   bool notifyOnAuthChange = true;
 
-  bool get loading => user == null || showSplashImage;
+  bool get loading => showSplashImage;
   bool get loggedIn => user?.loggedIn ?? false;
   bool get initiallyLoggedIn => initialUser?.loggedIn ?? false;
   bool get shouldRedirect => loggedIn && _redirectLocation != null;
@@ -87,16 +87,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           ),
         ),
         GoRoute(
-          name: 'Profile',
-          path: '/profile',
-          pageBuilder: (context, state) => _buildPage(
-            context,
-            state,
-            appStateNotifier,
-            const ProfileWidget(),
-          ),
-        ),
-        GoRoute(
           name: 'ReportSanner',
           path: '/reportSanner',
           pageBuilder: (context, state) {
@@ -117,26 +107,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             state,
             appStateNotifier,
             const HomePageWidget(),
-          ),
-        ),
-        GoRoute(
-          name: 'ResponsePage',
-          path: '/responsePage',
-          pageBuilder: (context, state) => _buildPage(
-            context,
-            state,
-            appStateNotifier,
-            const ResponsePageWidget(),
-          ),
-        ),
-        GoRoute(
-          name: 'FirstAid',
-          path: '/firstAid',
-          pageBuilder: (context, state) => _buildPage(
-            context,
-            state,
-            appStateNotifier,
-            const FirstAidWidget(),
           ),
         ),
         GoRoute(
@@ -210,16 +180,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           ),
         ),
         GoRoute(
-          name: 'AllergiesPAgeCopy',
-          path: '/allergiesPAgeCopy',
-          pageBuilder: (context, state) => _buildPage(
-            context,
-            state,
-            appStateNotifier,
-            const AllergiesPAgeCopyWidget(),
-          ),
-        ),
-        GoRoute(
           name: 'auth_userInfo',
           path: '/authUserInfo',
           pageBuilder: (context, state) => _buildPage(
@@ -250,23 +210,13 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           ),
         ),
         GoRoute(
-          name: 'CustomQuery',
-          path: '/customQuery',
+          name: 'BlisterVerifier',
+          path: '/blisterVerifier',
           pageBuilder: (context, state) => _buildPage(
             context,
             state,
             appStateNotifier,
-            const CustomQueryWidget(),
-          ),
-        ),
-        GoRoute(
-          name: 'dbpageee',
-          path: '/dbpageee',
-          pageBuilder: (context, state) => _buildPage(
-            context,
-            state,
-            appStateNotifier,
-            const DbpageeeWidget(),
+            const BlisterVerifierWidget(),
           ),
         ),
       ],
@@ -283,24 +233,7 @@ Page<dynamic> _buildPage(
   AppStateNotifier appStateNotifier,
   Widget pageWidget,
 ) {
-  // Redirect if a pending redirect location is stored.
-  // (Redirect logic is handled in the router's redirect callback below via
-  // GoRouterExtensions, but splash/loading is handled here.)
-  final child = appStateNotifier.loading
-      ? Center(
-          child: SizedBox(
-            width: 50.0,
-            height: 50.0,
-            child: CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(
-                Theme.of(context).colorScheme.primary,
-              ),
-            ),
-          ),
-        )
-      : pageWidget;
-
-  return MaterialPage(key: state.pageKey, child: child);
+  return MaterialPage(key: state.pageKey, child: pageWidget);
 }
 
 // A global RouteObserver for listening to route changes.

@@ -49,7 +49,7 @@ class _ReminderListCollapsedWidgetState
 
   @override
   void didPopNext() {
-    if (mounted && DebugFlutterFlowModelContext.maybeOf(context) == null) {
+    if (mounted) {
       setState(() => _model.isRouteVisible = true);
       debugLogWidgetClass(_model);
     }
@@ -57,7 +57,7 @@ class _ReminderListCollapsedWidgetState
 
   @override
   void didPush() {
-    if (mounted && DebugFlutterFlowModelContext.maybeOf(context) == null) {
+    if (mounted) {
       setState(() => _model.isRouteVisible = true);
       debugLogWidgetClass(_model);
     }
@@ -75,9 +75,6 @@ class _ReminderListCollapsedWidgetState
 
   @override
   Widget build(BuildContext context) {
-    DebugFlutterFlowModelContext.maybeOf(context)
-        ?.parentModelCallback
-        ?.call(_model);
 
     return Column(
       mainAxisSize: MainAxisSize.max,

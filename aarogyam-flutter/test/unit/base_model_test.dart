@@ -2,7 +2,6 @@
 // Unit tests for BaseModel lifecycle
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:aarogyam/core/base_model.dart';
 import 'package:aarogyam/flutter_flow/flutter_flow_util.dart';
 
 // Concrete implementation for testing

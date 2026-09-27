@@ -3,7 +3,7 @@ import '/widgets/reminder/switch_remainder/switch_remainder_widget.dart';
 import 'reminder_list_expanded_widget.dart' show ReminderListExpandedWidget;
 
 class ReminderListExpandedModel
-    extends FlutterFlowModel<ReminderListExpandedWidget> {
+    extends BaseModel<ReminderListExpandedWidget> {
   ///  State fields for stateful widgets in this component.
 
   // Models for switchRemainder dynamic component.

@@ -49,7 +49,7 @@ class _ReminderListExpandedWidgetState extends State<ReminderListExpandedWidget>
 
   @override
   void didPopNext() {
-    if (mounted && DebugFlutterFlowModelContext.maybeOf(context) == null) {
+    if (mounted) {
       setState(() => _model.isRouteVisible = true);
       debugLogWidgetClass(_model);
     }
@@ -57,7 +57,7 @@ class _ReminderListExpandedWidgetState extends State<ReminderListExpandedWidget>
 
   @override
   void didPush() {
-    if (mounted && DebugFlutterFlowModelContext.maybeOf(context) == null) {
+    if (mounted) {
       setState(() => _model.isRouteVisible = true);
       debugLogWidgetClass(_model);
     }
@@ -75,9 +75,6 @@ class _ReminderListExpandedWidgetState extends State<ReminderListExpandedWidget>
 
   @override
   Widget build(BuildContext context) {
-    DebugFlutterFlowModelContext.maybeOf(context)
-        ?.parentModelCallback
-        ?.call(_model);
 
     return Column(
       mainAxisSize: MainAxisSize.max,
@@ -224,19 +221,14 @@ class _ReminderListExpandedWidgetState extends State<ReminderListExpandedWidget>
                           listViewIndex,
                         ),
                         updateCallback: () => safeSetState(() {}),
-                        child: Builder(builder: (_) {
-                          return DebugFlutterFlowModelContext(
-                            rootModel: _model.rootModel,
-                            child: SwitchRemainderWidget(
-                              key: Key(
-                                'Keyfi2_${listViewReadmedicationsRow.id!.toString()}',
-                              ),
-                              id: listViewReadmedicationsRow.id!,
-                              title: listViewReadmedicationsRow.title!,
-                              message: listViewReadmedicationsRow.message,
-                            ),
-                          );
-                        }),
+                        child: SwitchRemainderWidget(
+                          key: Key(
+                            'Keyfi2_${listViewReadmedicationsRow.id!.toString()}',
+                          ),
+                          id: listViewReadmedicationsRow.id!,
+                          title: listViewReadmedicationsRow.title!,
+                          message: listViewReadmedicationsRow.message,
+                        ),
                       ),
                     ],
                   ),

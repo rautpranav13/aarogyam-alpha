@@ -48,7 +48,7 @@ class _AIDisclaimerWidgetState extends State<AIDisclaimerWidget>
 
   @override
   void didPopNext() {
-    if (mounted && DebugFlutterFlowModelContext.maybeOf(context) == null) {
+    if (mounted) {
       setState(() => _model.isRouteVisible = true);
       debugLogWidgetClass(_model);
     }
@@ -56,7 +56,7 @@ class _AIDisclaimerWidgetState extends State<AIDisclaimerWidget>
 
   @override
   void didPush() {
-    if (mounted && DebugFlutterFlowModelContext.maybeOf(context) == null) {
+    if (mounted) {
       setState(() => _model.isRouteVisible = true);
       debugLogWidgetClass(_model);
     }
@@ -74,9 +74,6 @@ class _AIDisclaimerWidgetState extends State<AIDisclaimerWidget>
 
   @override
   Widget build(BuildContext context) {
-    DebugFlutterFlowModelContext.maybeOf(context)
-        ?.parentModelCallback
-        ?.call(_model);
 
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 16.0),

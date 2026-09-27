@@ -120,4 +120,48 @@ void main() {
       expect(extracted, equals('What is Paracetamol?'));
     });
   });
+
+  group('DigitizeRxAPICall static helpers', () {
+    test('medicationsList extracts medication list', () {
+      final mockBody = {
+        'data': {
+          'medications': [
+            {'name': 'Metformin', 'strength': '500mg'},
+            {'name': 'Amlodipine', 'strength': '5mg'}
+          ]
+        }
+      };
+      final list = DigitizeRxAPICall.medicationsList(mockBody);
+      expect(list.length, equals(2));
+      expect(list[0]['name'], equals('Metformin'));
+    });
+
+    test('medicationsList returns empty list for null input', () {
+      final list = DigitizeRxAPICall.medicationsList(null);
+      expect(list, isEmpty);
+    });
+  });
+
+  group('VerifyStripAPICall static helpers', () {
+    test('isVerified returns true when verified', () {
+      final mockBody = {'verified': true, 'action': 'ALLOW_CONSUMPTION'};
+      expect(VerifyStripAPICall.isVerified(mockBody), isTrue);
+      expect(VerifyStripAPICall.action(mockBody), equals('ALLOW_CONSUMPTION'));
+    });
+
+    test('isVerified returns false when not verified', () {
+      final mockBody = {'verified': false, 'action': 'BLOCK_CONSUMPTION'};
+      expect(VerifyStripAPICall.isVerified(mockBody), isFalse);
+      expect(VerifyStripAPICall.action(mockBody), equals('BLOCK_CONSUMPTION'));
+    });
+
+    test('detectedText and voiceAlert extraction', () {
+      final mockBody = {
+        'detected_text': 'METFORMIN 500MG',
+        'voice_alert_vernacular': 'Verified Metformin'
+      };
+      expect(VerifyStripAPICall.detectedText(mockBody), equals('METFORMIN 500MG'));
+      expect(VerifyStripAPICall.voiceAlert(mockBody), equals('Verified Metformin'));
+    });
+  });
 }

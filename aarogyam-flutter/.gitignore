@@ -4,22 +4,24 @@
 *.pyc
 *.swp
 .DS_Store
+**/.DS_Store
 .atom/
 .buildlog/
 .history
+.history/
 .svn/
 migrate_working_dir/
 
-# IntelliJ related
+# IntelliJ / Android Studio
 *.iml
 *.ipr
 *.iws
 .idea/
 
-# VS Code related
+# VS Code
 .vscode/
 
-# Flutter/Dart/Pub related
+# Flutter / Dart / Pub
 **/doc/api/
 **/ios/Flutter/.last_build_id
 .dart_tool/
@@ -28,18 +30,44 @@ migrate_working_dir/
 .packages
 .pub-cache/
 .pub/
-/build/
+build/
+**/build/
 !**/ios/Runner/GeneratedPluginRegistrant.dart
 
-# Symbolication related
-app.*.symbols
+# iOS / macOS build artifacts
+ios/Flutter/ephemeral/
+ios/Flutter/Generated.xcconfig
+ios/Flutter/flutter_export_environment.sh
+ios/Flutter/App.framework
+ios/Flutter/Flutter.framework
+ios/Flutter/Flutter.podspec
+ios/Pods/
+ios/.symlinks/
+ios/DerivedData/
+ios/profile
+ios/xcuserdata/
 
-# Obfuscation related
+# Android build artifacts
+android/.gradle/
+android/.kotlin/
+android/local.properties
+android/captures/
+android/app/build/
+android/GeneratedPluginRegistrant.java
+
+# Symbolication & Obfuscation
+app.*.symbols
 app.*.map.json
 
-# Flutter.io specific
-/android/key.properties
+# Signing keys & secrets
+android/key.properties
 *.jks
+*.keystore
+*.pem
+*.key
 
 # Environment variables — NEVER commit real secrets
 .env
+.env.*
+!.env.example
+!.env.template

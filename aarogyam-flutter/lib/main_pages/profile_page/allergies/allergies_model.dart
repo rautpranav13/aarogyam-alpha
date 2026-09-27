@@ -3,7 +3,7 @@ import '/flutter_flow/form_field_controller.dart';
 import 'allergies_widget.dart' show AllergiesWidget;
 import 'package:expandable/expandable.dart';
 
-class AllergiesModel extends FlutterFlowModel<AllergiesWidget> {
+class AllergiesModel extends BaseModel<AllergiesWidget> {
   ///  State fields for stateful widgets in this page.
 
   // State field(s) for Expandable widget.

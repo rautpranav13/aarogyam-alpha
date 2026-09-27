@@ -1,29 +1,202 @@
-# Environment files — never commit real secrets
+# ==============================================================================
+# Environment & Secrets (Never commit credentials or local configs)
+# ==============================================================================
+.env
+.env.*
 **/.env
+**/.env.*
 !**/.env.example
+!**/.env.template
+*.pem
+*.key
+*.p12
+*.pfx
+*.cer
+key.properties
+**/android/key.properties
+*.jks
+*.keystore
 
+# ==============================================================================
+# Operating System Files
+# ==============================================================================
 # macOS
 .DS_Store
 **/.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
 
-# Flutter
-aarogyam-flutter/.dart_tool/
-aarogyam-flutter/build/
-aarogyam-flutter/.flutter-plugins
-aarogyam-flutter/.flutter-plugins-dependencies
-aarogyam-flutter/.packages
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+desktop.ini
+$RECYCLE.BIN/
 
-# Python
+# Linux
+*~
+
+# ==============================================================================
+# Python & Backend
+# ==============================================================================
+# Byte-compiled / optimized / C extensions
+__pycache__/
 **/__pycache__/
-**/*.pyc
-**/*.pyo
-**/venv/
-**/.venv/
-**/chroma_db/
-**/.chroma/
+*.py[cod]
+*$py.class
+*.so
 
-# Editor
+# Virtual Environments
+venv/
+**/venv/
+.venv/
+**/.venv/
+env/
+**/env/
+ENV/
+**/ENV/
+env.bak/
+**/env.bak/
+venv.bak/
+**/venv.bak/
+
+# Distribution / Packaging
+build/
+**/build/
+dist/
+**/dist/
+eggs/
+**/eggs/
+.eggs/
+**/.eggs/
+*.egg-info/
+**/*.egg-info/
+*.egg
+
+# Testing, Coverage & Quality Assurance
+.pytest_cache/
+**/.pytest_cache/
+.coverage
+**/.coverage
+.coverage.*
+**/.coverage.*
+htmlcov/
+**/htmlcov/
+coverage.xml
+**/coverage.xml
+nosetests.xml
+**/nosetests.xml
+.tox/
+**/.tox/
+.nox/
+**/.nox/
+.hypothesis/
+**/.hypothesis/
+.cache
+**/.cache
+
+# Type Checkers & Linters
+.mypy_cache/
+**/.mypy_cache/
+.ruff_cache/
+**/.ruff_cache/
+.pyre/
+**/.pyre/
+.pytype/
+**/.pytype/
+.dmypy.json
+dmypy.json
+
+# Databases & Vector Stores (Local storage)
+chroma_db/
+**/chroma_db/
+.chroma/
+**/.chroma/
+*.sqlite3-journal
+*.db-journal
+
+# Jupyter Notebooks
+.ipynb_checkpoints
+**/.ipynb_checkpoints
+
+# ==============================================================================
+# Flutter & Dart
+# ==============================================================================
+# Dart / Flutter generated & dependency files
+.dart_tool/
+**/.dart_tool/
+.flutter-plugins
+**/.flutter-plugins
+.flutter-plugins-dependencies
+**/.flutter-plugins-dependencies
+.packages
+**/.packages
+.pub-cache/
+**/.pub-cache/
+.pub/
+**/.pub/
+doc/api/
+**/doc/api/
+
+# Symbolication & Obfuscation
+app.*.symbols
+**/*.symbols
+app.*.map.json
+**/*.map.json
+
+# Android Specific (inside Flutter app)
+**/android/.gradle/
+**/android/.kotlin/
+**/android/local.properties
+**/android/captures/
+**/android/app/build/
+**/android/GeneratedPluginRegistrant.java
+
+# iOS / macOS Specific (inside Flutter app)
+**/ios/Flutter/ephemeral/
+**/ios/Flutter/Generated.xcconfig
+**/ios/Flutter/flutter_export_environment.sh
+**/ios/Flutter/App.framework
+**/ios/Flutter/Flutter.framework
+**/ios/Flutter/Flutter.podspec
+**/ios/Pods/
+**/ios/.symlinks/
+**/ios/DerivedData/
+**/ios/profile
+**/ios/xcuserdata/
+**/ios/Flutter/.last_build_id
+!**/ios/Runner/GeneratedPluginRegistrant.dart
+
+# ==============================================================================
+# IDEs & Editors
+# ==============================================================================
+# JetBrains / Android Studio / IntelliJ
 .idea/
+**/.idea/
+*.iml
+**/*.iml
+*.ipr
+*.iws
+out/
+**/out/
+
+# Visual Studio Code
 .vscode/
+**/.vscode/
+
+# Generic Editor / Temp / Backup files
 *.swp
+*.swo
+*.bak
+*.tmp
 *.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.history/
+.buildlog/
+.fleet/

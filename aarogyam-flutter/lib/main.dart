@@ -6,6 +6,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'auth/firebase_auth/firebase_user_provider.dart';
 import 'auth/firebase_auth/auth_util.dart';
 
@@ -20,14 +21,36 @@ void main() async {
   GoRouter.optionURLReflectsImperativeAPIs = true;
   usePathUrlStrategy();
 
-  await dotenv.load(fileName: '.env');
+  try {
+    await dotenv.load(fileName: '.env');
+  } catch (e) {
+    debugPrint('Error loading .env: $e');
+  }
 
-  await initFirebase();
-  await SQLiteManager.initialize();
-  await AppTheme.initialize();
+  try {
+    await initFirebase();
+  } catch (e, st) {
+    debugPrint('Error initializing Firebase: $e\n$st');
+  }
+
+  try {
+    await SQLiteManager.initialize();
+  } catch (e, st) {
+    debugPrint('Error initializing SQLiteManager: $e\n$st');
+  }
+
+  try {
+    await AppTheme.initialize();
+  } catch (e, st) {
+    debugPrint('Error initializing AppTheme: $e\n$st');
+  }
 
   final appState = AppState();
-  await appState.initializePersistedState();
+  try {
+    await appState.initializePersistedState();
+  } catch (e, st) {
+    debugPrint('Error initializing persisted state: $e\n$st');
+  }
 
   runApp(ChangeNotifierProvider(
     create: (context) => appState,
@@ -72,14 +95,18 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     _appStateNotifier = AppStateNotifier.instance;
+    try {
+      final currentFirebaseUser = FirebaseAuth.instance.currentUser;
+      _appStateNotifier.update(AarogyamFirebaseUser(currentFirebaseUser));
+    } catch (_) {}
     _router = createRouter(_appStateNotifier);
-    userStream = aarogyamFirebaseUserStream()
-      ..listen((user) => _appStateNotifier.update(user));
-    jwtTokenStream.listen((_) {});
-    Future.delayed(
-      const Duration(milliseconds: 1000),
-      () => _appStateNotifier.stopShowingSplashImage(),
-    );
+    try {
+      userStream = aarogyamFirebaseUserStream()
+        ..listen((user) => _appStateNotifier.update(user));
+      jwtTokenStream.listen((_) {});
+    } catch (e) {
+      debugPrint('Error setting up auth stream: $e');
+    }
   }
 
   @override

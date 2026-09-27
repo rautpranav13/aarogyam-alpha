@@ -46,7 +46,7 @@ class _ContentViewerWidgetState extends State<ContentViewerWidget>
 
   @override
   void didPopNext() {
-    if (mounted && DebugFlutterFlowModelContext.maybeOf(context) == null) {
+    if (mounted) {
       setState(() => _model.isRouteVisible = true);
       debugLogWidgetClass(_model);
     }
@@ -54,7 +54,7 @@ class _ContentViewerWidgetState extends State<ContentViewerWidget>
 
   @override
   void didPush() {
-    if (mounted && DebugFlutterFlowModelContext.maybeOf(context) == null) {
+    if (mounted) {
       setState(() => _model.isRouteVisible = true);
       debugLogWidgetClass(_model);
     }
@@ -72,9 +72,6 @@ class _ContentViewerWidgetState extends State<ContentViewerWidget>
 
   @override
   Widget build(BuildContext context) {
-    DebugFlutterFlowModelContext.maybeOf(context)
-        ?.parentModelCallback
-        ?.call(_model);
 
     return Container(
       width: double.infinity,

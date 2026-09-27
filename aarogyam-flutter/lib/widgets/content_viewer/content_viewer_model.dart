@@ -1,7 +1,7 @@
 import '/flutter_flow/flutter_flow_util.dart';
 import 'content_viewer_widget.dart' show ContentViewerWidget;
 
-class ContentViewerModel extends FlutterFlowModel<ContentViewerWidget> {  @override
+class ContentViewerModel extends BaseModel<ContentViewerWidget> {  @override
   void initState(BuildContext context) {}
   @override
   WidgetClassDebugData toWidgetClassDebugData() =>

@@ -203,24 +203,24 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                     _buildNavButton(
                       icon: const Icon(Icons.document_scanner_outlined,
                           size: 15),
-                      label: 'Report Scanner',
+                      label: 'Scan Rx',
                       cs: cs,
                       onPressed: () =>
                           Navigator.of(context).pushNamed('ReportSanner'),
                     ),
                     _buildNavButton(
-                      icon: const Icon(Icons.wechat_sharp, size: 15),
-                      label: 'Sanjeevani',
+                      icon: const Icon(Icons.shield_outlined, size: 15),
+                      label: 'Pill Verifier',
                       cs: cs,
                       onPressed: () =>
-                          Navigator.of(context).pushNamed('ChatBot'),
+                          Navigator.of(context).pushNamed('BlisterVerifier'),
                     ),
                     _buildNavButton(
-                      icon: const FaIcon(FontAwesomeIcons.kitMedical, size: 16),
-                      label: 'First Aid',
+                      icon: const Icon(Icons.alarm_on, size: 16),
+                      label: 'Reminders',
                       cs: cs,
                       onPressed: () =>
-                          Navigator.of(context).pushNamed('dbpageee'),
+                          Navigator.of(context).pushNamed('ReminderPage'),
                     ),
                   ],
                 ),

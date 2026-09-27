@@ -57,7 +57,7 @@ class _SwitchRemainderWidgetState extends State<SwitchRemainderWidget>
 
   @override
   void didPopNext() {
-    if (mounted && DebugFlutterFlowModelContext.maybeOf(context) == null) {
+    if (mounted) {
       setState(() => _model.isRouteVisible = true);
       debugLogWidgetClass(_model);
     }
@@ -65,7 +65,7 @@ class _SwitchRemainderWidgetState extends State<SwitchRemainderWidget>
 
   @override
   void didPush() {
-    if (mounted && DebugFlutterFlowModelContext.maybeOf(context) == null) {
+    if (mounted) {
       setState(() => _model.isRouteVisible = true);
       debugLogWidgetClass(_model);
     }
@@ -83,9 +83,6 @@ class _SwitchRemainderWidgetState extends State<SwitchRemainderWidget>
 
   @override
   Widget build(BuildContext context) {
-    DebugFlutterFlowModelContext.maybeOf(context)
-        ?.parentModelCallback
-        ?.call(_model);
 
     return Builder(
       builder: (context) => Switch.adaptive(
