@@ -20,5 +20,6 @@ class DadiMaModel extends BaseModel<DadiMaWidget> {
     unfocusNode.dispose();
     textController?.dispose();
     textFieldFocusNode?.dispose();
+    super.dispose();
   }
 }

@@ -834,10 +834,10 @@
     "semantic_hash": "fe522e059d49364cbe0fc84e562a7e35"
   },
   "docs/api_spec.md": {
-    "mtime": 1790541335.899104,
-    "seen": 1790542799.236922,
-    "ast_hash": "abbeb7b806632b6cdc409dd795028c6a",
-    "semantic_hash": "abbeb7b806632b6cdc409dd795028c6a"
+    "mtime": 1790557370.0377898,
+    "seen": 1790557375.559267,
+    "ast_hash": "bc13d57ec9b830587c01e3f7acf9de8f",
+    "semantic_hash": ""
   },
   "docs/architecture.md": {
     "mtime": 1790541327.7288818,
@@ -1437,6 +1437,12 @@
     "mtime": 1790557330.8206758,
     "seen": 1790557354.676327,
     "ast_hash": "b6bf502987d49eff82819b23ad153db7",
+    "semantic_hash": ""
+  },
+  ".agents/teamwork/survey_spec_miner_privacy/handoff.md": {
+    "mtime": 1790557363.679733,
+    "seen": 1790557375.559254,
+    "ast_hash": "932ef1012b021db0b9a745ec7624324f",
     "semantic_hash": ""
   }
 }

@@ -34,8 +34,14 @@ class MedicationStorageService extends ChangeNotifier {
   int get totalDosesToday => _todayDoseLogs.length;
   double get adherenceRate => totalDosesToday == 0 ? 1.0 : completedDosesCount / totalDosesToday;
 
-  Future<void> initialize() async {
-    if (_initialized) return;
+  Future<void> initialize({bool force = false}) async {
+    if (_initialized && !force) {
+      if (_todayDoseLogs.isEmpty && _medicines.isNotEmpty) {
+        _generateTodayDoseLogs();
+        notifyListeners();
+      }
+      return;
+    }
     final prefs = await SharedPreferences.getInstance();
 
     final rxRaw = prefs.getString(_prescriptionsKey);
@@ -69,6 +75,10 @@ class MedicationStorageService extends ChangeNotifier {
     } else {
       _generateTodayDoseLogs();
       await prefs.setString(_lastDateKey, todayStr);
+    }
+
+    if (_todayDoseLogs.isEmpty && _medicines.isNotEmpty) {
+      _generateTodayDoseLogs();
     }
 
     _initialized = true;

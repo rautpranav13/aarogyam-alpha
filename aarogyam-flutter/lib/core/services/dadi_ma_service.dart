@@ -4,7 +4,6 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import '../models/dadi_ma_models.dart';
 import '../models/medication_schedule.dart';
-import 'audio_service.dart';
 import 'vernacular_service.dart';
 
 class DadiMaService extends ChangeNotifier {
@@ -354,14 +353,14 @@ class DadiMaService extends ChangeNotifier {
       matched = localRemedies.take(2).toList();
       final count = activeMedications?.length ?? 0;
       if (lang == AppLanguage.marathi) {
-        reply = 'मी तुझी आजी सदैव तुझ्या सोबत आहे. ' +
-            (count > 0 ? 'तुझ्याकडे $count सक्रिय औषधे आहेत. ती वेळेवर घे.' : 'वेळेवर आहार आणि पाणी घे.');
+        final medPart = count > 0 ? 'तुझ्याकडे $count सक्रिय औषधे आहेत. ती वेळेवर घे.' : 'वेळेवर आहार आणि पाणी घे.';
+        reply = 'मी तुझी आजी सदैव तुझ्या सोबत आहे. $medPart';
       } else if (lang == AppLanguage.english) {
-        reply = 'Your Dadi-Ma is here for your well-being. ' +
-            (count > 0 ? 'You have $count scheduled medications. Take them on time.' : 'Stay healthy, hydrated and well rested.');
+        final medPart = count > 0 ? 'You have $count scheduled medications. Take them on time.' : 'Stay healthy, hydrated and well rested.';
+        reply = 'Your Dadi-Ma is here for your well-being. $medPart';
       } else {
-        reply = 'मैं तुम्हारी दादी-माँ तुम्हारे साथ हूँ। ' +
-            (count > 0 ? 'तुम्हारी $count दवाइयाँ हैं, उन्हें नियम से समय पर लो।' : 'समय पर भोजन और पानी लेते रहो।');
+        final medPart = count > 0 ? 'तुम्हारी $count दवाइयाँ हैं, उन्हें नियम से समय पर लो।' : 'समय पर भोजन और पानी लेते रहो।';
+        reply = 'मैं तुम्हारी दादी-माँ तुम्हारे साथ हूँ। $medPart';
       }
     }
 

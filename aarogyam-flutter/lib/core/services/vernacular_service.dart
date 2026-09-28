@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -523,10 +522,20 @@ class VernacularService extends ChangeNotifier {
       AppLanguage.marathi: 'कोणताही प्रिस्क्रिप्शन इतिहास नाही',
       AppLanguage.english: 'No prescription history found',
     },
-    'medAddedSuccess': {
-      AppLanguage.hindi: '✓ नई दवा समय सारणी में जोड़ दी गई है!',
-      AppLanguage.marathi: '✓ नवीन औषध वेळापत्रकात जोडले गेले आहे!',
-      AppLanguage.english: '✓ New medicine added to schedule!',
+    'morningSlot': {
+      AppLanguage.hindi: 'सुबह',
+      AppLanguage.marathi: 'सकाळ',
+      AppLanguage.english: 'Morning',
+    },
+    'afternoonSlot': {
+      AppLanguage.hindi: 'दोपहर',
+      AppLanguage.marathi: 'दुपार',
+      AppLanguage.english: 'Afternoon',
+    },
+    'nightSlot': {
+      AppLanguage.hindi: 'रात',
+      AppLanguage.marathi: 'रात्र',
+      AppLanguage.english: 'Night',
     },
     'validationFillName': {
       AppLanguage.hindi: 'कृपया दवा का नाम दर्ज करें',

@@ -88,6 +88,18 @@
       "source_location": "L5"
     },
     {
+      "id": "backend_scripts_download_granite_download_model",
+      "label": "download_model()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 10,
+      "community_name": "test_app.py",
+      "file_type": "code",
+      "norm_label": "download_model()",
+      "source_file": "backend/scripts/download_granite.py",
+      "source_location": "L9"
+    },
+    {
       "id": "backend_tests_test_app_client",
       "label": "client()",
       "_callable": true,
@@ -268,6 +280,42 @@
       "source_location": "L49"
     },
     {
+      "id": "backend_dadi_ma_service_dadi_ma_chat",
+      "label": "dadi_ma_chat()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 105,
+      "community_name": "test_dadi_ma.py",
+      "file_type": "code",
+      "norm_label": "dadi_ma_chat()",
+      "source_file": "backend/dadi_ma_service.py",
+      "source_location": "L457"
+    },
+    {
+      "id": "backend_dadi_ma_service_dadi_ma_daily_greeting",
+      "label": "dadi_ma_daily_greeting()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 105,
+      "community_name": "test_dadi_ma.py",
+      "file_type": "code",
+      "norm_label": "dadi_ma_daily_greeting()",
+      "source_file": "backend/dadi_ma_service.py",
+      "source_location": "L494"
+    },
+    {
+      "id": "backend_dadi_ma_service_dadi_ma_explain_prescription",
+      "label": "dadi_ma_explain_prescription()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 105,
+      "community_name": "test_dadi_ma.py",
+      "file_type": "code",
+      "norm_label": "dadi_ma_explain_prescription()",
+      "source_file": "backend/dadi_ma_service.py",
+      "source_location": "L507"
+    },
+    {
       "id": "backend_dadi_ma_service_dadi_ma_remedies",
       "label": "dadi_ma_remedies()",
       "_callable": true,
@@ -290,6 +338,18 @@
       "norm_label": "format_dadi_ma_response()",
       "source_file": "backend/dadi_ma_service.py",
       "source_location": "L347"
+    },
+    {
+      "id": "backend_dadi_ma_service_get_dadi_ma_greeting",
+      "label": "get_dadi_ma_greeting()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 105,
+      "community_name": "test_dadi_ma.py",
+      "file_type": "code",
+      "norm_label": "get_dadi_ma_greeting()",
+      "source_file": "backend/dadi_ma_service.py",
+      "source_location": "L259"
     },
     {
       "id": "backend_dadi_ma_service_search_remedies",
@@ -412,132 +472,12 @@
       "source_location": "L44"
     },
     {
-      "id": "backend_scripts_download_granite_download_model",
-      "label": "download_model()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 161,
-      "community_name": "download_granite.py",
-      "file_type": "code",
-      "norm_label": "download_model()",
-      "source_file": "backend/scripts/download_granite.py",
-      "source_location": "L9"
-    },
-    {
-      "id": "backend_app_get_demo_rx_response",
-      "label": "_get_demo_rx_response()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 34,
-      "community_name": "app.py",
-      "file_type": "code",
-      "norm_label": "_get_demo_rx_response()",
-      "source_file": "backend/app.py",
-      "source_location": "L275"
-    },
-    {
-      "id": "backend_app_get_demo_verify_response",
-      "label": "_get_demo_verify_response()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 34,
-      "community_name": "app.py",
-      "file_type": "code",
-      "norm_label": "_get_demo_verify_response()",
-      "source_file": "backend/app.py",
-      "source_location": "L502"
-    },
-    {
-      "id": "backend_app_health",
-      "label": "health()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 34,
-      "community_name": "app.py",
-      "file_type": "code",
-      "norm_label": "health()",
-      "source_file": "backend/app.py",
-      "source_location": "L123"
-    },
-    {
-      "id": "backend_app_home",
-      "label": "home()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 34,
-      "community_name": "app.py",
-      "file_type": "code",
-      "norm_label": "home()",
-      "source_file": "backend/app.py",
-      "source_location": "L570"
-    },
-    {
-      "id": "backend_app_vernacular_tts",
-      "label": "vernacular_tts()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 34,
-      "community_name": "app.py",
-      "file_type": "code",
-      "norm_label": "vernacular_tts()",
-      "source_file": "backend/app.py",
-      "source_location": "L528"
-    },
-    {
-      "id": "backend_dadi_ma_service_dadi_ma_chat",
-      "label": "dadi_ma_chat()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 34,
-      "community_name": "app.py",
-      "file_type": "code",
-      "norm_label": "dadi_ma_chat()",
-      "source_file": "backend/dadi_ma_service.py",
-      "source_location": "L457"
-    },
-    {
-      "id": "backend_dadi_ma_service_dadi_ma_daily_greeting",
-      "label": "dadi_ma_daily_greeting()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 34,
-      "community_name": "app.py",
-      "file_type": "code",
-      "norm_label": "dadi_ma_daily_greeting()",
-      "source_file": "backend/dadi_ma_service.py",
-      "source_location": "L494"
-    },
-    {
-      "id": "backend_dadi_ma_service_dadi_ma_explain_prescription",
-      "label": "dadi_ma_explain_prescription()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 34,
-      "community_name": "app.py",
-      "file_type": "code",
-      "norm_label": "dadi_ma_explain_prescription()",
-      "source_file": "backend/dadi_ma_service.py",
-      "source_location": "L507"
-    },
-    {
-      "id": "backend_dadi_ma_service_get_dadi_ma_greeting",
-      "label": "get_dadi_ma_greeting()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 34,
-      "community_name": "app.py",
-      "file_type": "code",
-      "norm_label": "get_dadi_ma_greeting()",
-      "source_file": "backend/dadi_ma_service.py",
-      "source_location": "L259"
-    },
-    {
       "id": "backend_app_clean_base64",
       "label": "_clean_base64()",
       "_callable": true,
       "_origin": "ast",
       "community": 50,
-      "community_name": "digitize_rx",
+      "community_name": "app.py",
       "file_type": "code",
       "norm_label": "_clean_base64()",
       "source_file": "backend/app.py",
@@ -549,11 +489,35 @@
       "_callable": true,
       "_origin": "ast",
       "community": 50,
-      "community_name": "digitize_rx",
+      "community_name": "app.py",
       "file_type": "code",
       "norm_label": "digitize_rx()",
       "source_file": "backend/app.py",
       "source_location": "L168"
+    },
+    {
+      "id": "backend_app_get_demo_rx_response",
+      "label": "_get_demo_rx_response()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 50,
+      "community_name": "app.py",
+      "file_type": "code",
+      "norm_label": "_get_demo_rx_response()",
+      "source_file": "backend/app.py",
+      "source_location": "L275"
+    },
+    {
+      "id": "backend_app_get_demo_verify_response",
+      "label": "_get_demo_verify_response()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 50,
+      "community_name": "app.py",
+      "file_type": "code",
+      "norm_label": "_get_demo_verify_response()",
+      "source_file": "backend/app.py",
+      "source_location": "L502"
     },
     {
       "id": "backend_app_get_watsonx_model",
@@ -561,11 +525,47 @@
       "_callable": true,
       "_origin": "ast",
       "community": 50,
-      "community_name": "digitize_rx",
+      "community_name": "app.py",
       "file_type": "code",
       "norm_label": "_get_watsonx_model()",
       "source_file": "backend/app.py",
       "source_location": "L55"
+    },
+    {
+      "id": "backend_app_health",
+      "label": "health()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 50,
+      "community_name": "app.py",
+      "file_type": "code",
+      "norm_label": "health()",
+      "source_file": "backend/app.py",
+      "source_location": "L123"
+    },
+    {
+      "id": "backend_app_home",
+      "label": "home()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 50,
+      "community_name": "app.py",
+      "file_type": "code",
+      "norm_label": "home()",
+      "source_file": "backend/app.py",
+      "source_location": "L570"
+    },
+    {
+      "id": "backend_app_redact_pii_endpoint",
+      "label": "redact_pii_endpoint()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 50,
+      "community_name": "app.py",
+      "file_type": "code",
+      "norm_label": "redact_pii_endpoint()",
+      "source_file": "backend/app.py",
+      "source_location": "L150"
     },
     {
       "id": "backend_app_sanitize_json_markdown",
@@ -573,7 +573,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 50,
-      "community_name": "digitize_rx",
+      "community_name": "app.py",
       "file_type": "code",
       "norm_label": "_sanitize_json_markdown()",
       "source_file": "backend/app.py",
@@ -585,11 +585,23 @@
       "_callable": true,
       "_origin": "ast",
       "community": 50,
-      "community_name": "digitize_rx",
+      "community_name": "app.py",
       "file_type": "code",
       "norm_label": "verify_strip()",
       "source_file": "backend/app.py",
       "source_location": "L409"
+    },
+    {
+      "id": "backend_app_vernacular_tts",
+      "label": "vernacular_tts()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 50,
+      "community_name": "app.py",
+      "file_type": "code",
+      "norm_label": "vernacular_tts()",
+      "source_file": "backend/app.py",
+      "source_location": "L528"
     },
     {
       "id": "backend_app_mask_pii",
@@ -602,18 +614,6 @@
       "norm_label": "mask_pii()",
       "source_file": "backend/app.py",
       "source_location": "L90"
-    },
-    {
-      "id": "backend_app_redact_pii_endpoint",
-      "label": "redact_pii_endpoint()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 60,
-      "community_name": "R2: Edge Privacy & PII Sanitization Specification Report",
-      "file_type": "code",
-      "norm_label": "redact_pii_endpoint()",
-      "source_file": "backend/app.py",
-      "source_location": "L150"
     },
     {
       "id": "aarogyam_flutter_ios_imagenotification_notificationservice_notificationservice_didreceive",
@@ -3790,6 +3790,17 @@
       "source_location": null
     },
     {
+      "id": "backend_scripts_download_granite",
+      "label": "download_granite.py",
+      "_origin": "ast",
+      "community": 10,
+      "community_name": "test_app.py",
+      "file_type": "code",
+      "norm_label": "download_granite.py",
+      "source_file": "backend/scripts/download_granite.py",
+      "source_location": "L1"
+    },
+    {
       "id": "backend_tests_test_app",
       "label": "test_app.py",
       "_origin": "ast",
@@ -3833,6 +3844,17 @@
       "norm_label": "`backend/tests/test_app.py`:",
       "source_file": ".agents/teamwork/survey_explorer_backend/survey_report.md",
       "source_location": "L256"
+    },
+    {
+      "id": "backend_scripts_download_granite_rationale_1",
+      "label": "Utility to download and cache IBM Granite Vision 3.2 2B weights locally from\u2026",
+      "_origin": "ast",
+      "community": 10,
+      "community_name": "test_app.py",
+      "file_type": "rationale",
+      "norm_label": "utility to download and cache ibm granite vision 3.2 2b weights locally from...",
+      "source_file": "backend/scripts/download_granite.py",
+      "source_location": "L1"
     },
     {
       "id": "backend_tests_test_app_rationale_1",
@@ -4011,92 +4033,88 @@
       "source_location": null
     },
     {
-      "id": "aarogyam_flutter_lib_widgets_user_info_user_info_model",
-      "label": "user_info_model.dart",
+      "id": "agents_teamwork_survey_spec_miner_privacy_handoff",
+      "label": "survey_spec_miner_privacy/handoff.md",
       "_origin": "ast",
       "community": 101,
-      "community_name": "user_info_model.dart",
-      "file_type": "code",
-      "norm_label": "user_info_model.dart",
-      "source_file": "aarogyam-flutter/lib/widgets/user_info/user_info_model.dart",
-      "source_location": null
+      "community_name": "Handoff Report: Privacy Spec Miner (R2)",
+      "file_type": "document",
+      "node_kind": "page",
+      "norm_label": "survey_spec_miner_privacy/handoff.md",
+      "source_file": ".agents/teamwork/survey_spec_miner_privacy/handoff.md",
+      "source_location": "L1"
     },
     {
-      "id": "aarogyam_flutter_lib_widgets_user_info_user_info_model_countcontrollervalue1",
-      "label": "countControllerValue1",
+      "id": "agents_teamwork_survey_spec_miner_privacy_handoff_1_observation",
+      "label": "1. Observation",
       "_origin": "ast",
       "community": 101,
-      "community_name": "user_info_model.dart",
-      "file_type": "code",
-      "norm_label": "countcontrollervalue1",
-      "source_file": "aarogyam-flutter/lib/widgets/user_info/user_info_model.dart",
-      "source_location": "L7"
+      "community_name": "Handoff Report: Privacy Spec Miner (R2)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "1. observation",
+      "source_file": ".agents/teamwork/survey_spec_miner_privacy/handoff.md",
+      "source_location": "L3"
     },
     {
-      "id": "aarogyam_flutter_lib_widgets_user_info_user_info_model_countcontrollervalue2",
-      "label": "countControllerValue2",
+      "id": "agents_teamwork_survey_spec_miner_privacy_handoff_2_logic_chain",
+      "label": "2. Logic Chain",
       "_origin": "ast",
       "community": 101,
-      "community_name": "user_info_model.dart",
-      "file_type": "code",
-      "norm_label": "countcontrollervalue2",
-      "source_file": "aarogyam-flutter/lib/widgets/user_info/user_info_model.dart",
-      "source_location": "L8"
+      "community_name": "Handoff Report: Privacy Spec Miner (R2)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "2. logic chain",
+      "source_file": ".agents/teamwork/survey_spec_miner_privacy/handoff.md",
+      "source_location": "L16"
     },
     {
-      "id": "aarogyam_flutter_lib_widgets_user_info_user_info_model_countcontrollervalue3",
-      "label": "countControllerValue3",
+      "id": "agents_teamwork_survey_spec_miner_privacy_handoff_3_caveats",
+      "label": "3. Caveats",
       "_origin": "ast",
       "community": 101,
-      "community_name": "user_info_model.dart",
-      "file_type": "code",
-      "norm_label": "countcontrollervalue3",
-      "source_file": "aarogyam-flutter/lib/widgets/user_info/user_info_model.dart",
-      "source_location": "L9"
+      "community_name": "Handoff Report: Privacy Spec Miner (R2)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "3. caveats",
+      "source_file": ".agents/teamwork/survey_spec_miner_privacy/handoff.md",
+      "source_location": "L22"
     },
     {
-      "id": "aarogyam_flutter_lib_widgets_user_info_user_info_model_dropdownvalue",
-      "label": "dropDownValue",
+      "id": "agents_teamwork_survey_spec_miner_privacy_handoff_4_conclusion",
+      "label": "4. Conclusion",
       "_origin": "ast",
       "community": 101,
-      "community_name": "user_info_model.dart",
-      "file_type": "code",
-      "norm_label": "dropdownvalue",
-      "source_file": "aarogyam-flutter/lib/widgets/user_info/user_info_model.dart",
-      "source_location": "L6"
+      "community_name": "Handoff Report: Privacy Spec Miner (R2)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "4. conclusion",
+      "source_file": ".agents/teamwork/survey_spec_miner_privacy/handoff.md",
+      "source_location": "L26"
     },
     {
-      "id": "aarogyam_flutter_lib_widgets_user_info_user_info_model_initstate",
-      "label": "initState",
+      "id": "agents_teamwork_survey_spec_miner_privacy_handoff_5_verification_method",
+      "label": "5. Verification Method",
       "_origin": "ast",
       "community": 101,
-      "community_name": "user_info_model.dart",
-      "file_type": "code",
-      "norm_label": "initstate",
-      "source_file": "aarogyam-flutter/lib/widgets/user_info/user_info_model.dart",
-      "source_location": "L12"
+      "community_name": "Handoff Report: Privacy Spec Miner (R2)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "5. verification method",
+      "source_file": ".agents/teamwork/survey_spec_miner_privacy/handoff.md",
+      "source_location": "L35"
     },
     {
-      "id": "int",
-      "label": "int?",
+      "id": "agents_teamwork_survey_spec_miner_privacy_handoff_handoff_report_privacy_spec_miner_r2",
+      "label": "Handoff Report: Privacy Spec Miner (R2)",
       "_origin": "ast",
       "community": 101,
-      "community_name": "user_info_model.dart",
-      "file_type": "code",
-      "norm_label": "int?",
-      "source_file": null,
-      "source_location": null
-    },
-    {
-      "id": "user_info_widget_dart",
-      "label": "user_info_widget.dart",
-      "_origin": "ast",
-      "community": 101,
-      "community_name": "user_info_model.dart",
-      "file_type": "code",
-      "norm_label": "user_info_widget.dart",
-      "source_file": null,
-      "source_location": null
+      "community_name": "Handoff Report: Privacy Spec Miner (R2)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "handoff report: privacy spec miner (r2)",
+      "source_file": ".agents/teamwork/survey_spec_miner_privacy/handoff.md",
+      "source_location": "L1"
     },
     {
       "id": "aarogyam_flutter_lib_flutter_flow_flutter_flow_util_flutterflowdynamicmodels",
@@ -4165,6 +4183,17 @@
       "source_location": null
     },
     {
+      "id": "backend_dadi_ma_service",
+      "label": "dadi_ma_service.py",
+      "_origin": "ast",
+      "community": 105,
+      "community_name": "test_dadi_ma.py",
+      "file_type": "code",
+      "norm_label": "dadi_ma_service.py",
+      "source_file": "backend/dadi_ma_service.py",
+      "source_location": "L1"
+    },
+    {
       "id": "backend_dadi_ma_service_py_any",
       "label": "Any",
       "_origin": "ast",
@@ -4172,6 +4201,17 @@
       "community_name": "test_dadi_ma.py",
       "file_type": "code",
       "norm_label": "any",
+      "source_file": "",
+      "source_location": ""
+    },
+    {
+      "id": "backend_dadi_ma_service_py_route",
+      "label": "route",
+      "_origin": "ast",
+      "community": 105,
+      "community_name": "test_dadi_ma.py",
+      "file_type": "code",
+      "norm_label": "route",
       "source_file": "",
       "source_location": ""
     },
@@ -4208,6 +4248,28 @@
       "norm_label": "`backend/tests/test_dadi_ma.py`:",
       "source_file": ".agents/teamwork/survey_explorer_backend/survey_report.md",
       "source_location": "L271"
+    },
+    {
+      "id": "backend_dadi_ma_service_rationale_1",
+      "label": "Aarogyam: Dadi-Ma Intelligence Engine Production-grade conversational and\u2026",
+      "_origin": "ast",
+      "community": 105,
+      "community_name": "test_dadi_ma.py",
+      "file_type": "rationale",
+      "norm_label": "aarogyam: dadi-ma intelligence engine production-grade conversational and...",
+      "source_file": "backend/dadi_ma_service.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "backend_dadi_ma_service_rationale_260",
+      "label": "Generates warm, maternal, contextual daily greetings based on local time.",
+      "_origin": "ast",
+      "community": 105,
+      "community_name": "test_dadi_ma.py",
+      "file_type": "rationale",
+      "norm_label": "generates warm, maternal, contextual daily greetings based on local time.",
+      "source_file": "backend/dadi_ma_service.py",
+      "source_location": "L260"
     },
     {
       "id": "backend_dadi_ma_service_rationale_331",
@@ -4694,6 +4756,28 @@
       "source_location": "L34"
     },
     {
+      "id": "aarogyam_flutter_lib_backend_schema_users_record_usersrecorddocumentequality",
+      "label": "UsersRecordDocumentEquality",
+      "_origin": "ast",
+      "community": 11,
+      "community_name": "users_record.dart",
+      "file_type": "code",
+      "norm_label": "usersrecorddocumentequality",
+      "source_file": "aarogyam-flutter/lib/backend/schema/users_record.dart",
+      "source_location": "L236"
+    },
+    {
+      "id": "aarogyam_flutter_lib_flutter_flow_flutter_flow_util_datetimeextension",
+      "label": "DateTimeExtension",
+      "_origin": "ast",
+      "community": 11,
+      "community_name": "users_record.dart",
+      "file_type": "code",
+      "norm_label": "datetimeextension",
+      "source_file": "aarogyam-flutter/lib/flutter_flow/flutter_flow_util.dart",
+      "source_location": "L278"
+    },
+    {
       "id": "backend_schema_util_firestore_util_dart",
       "label": "/backend/schema/util/firestore_util.dart",
       "_origin": "ast",
@@ -4701,6 +4785,28 @@
       "community_name": "users_record.dart",
       "file_type": "code",
       "norm_label": "/backend/schema/util/firestore_util.dart",
+      "source_file": null,
+      "source_location": null
+    },
+    {
+      "id": "datetime",
+      "label": "DateTime?",
+      "_origin": "ast",
+      "community": 11,
+      "community_name": "users_record.dart",
+      "file_type": "code",
+      "norm_label": "datetime?",
+      "source_file": null,
+      "source_location": null
+    },
+    {
+      "id": "equality",
+      "label": "Equality",
+      "_origin": "ast",
+      "community": 11,
+      "community_name": "users_record.dart",
+      "file_type": "code",
+      "norm_label": "equality",
       "source_file": null,
       "source_location": null
     },
@@ -5035,37 +5141,64 @@
       "source_location": "L1"
     },
     {
-      "id": "aarogyam_flutter_lib_backend_schema_util_firestore_util_fffirebasestruct",
-      "label": "FFFirebaseStruct",
+      "id": "agents_teamwork_survey_spec_miner_privacy_spec_report_7_1_clinical_entity_differentiation",
+      "label": "7.1 Clinical Entity Differentiation",
       "_origin": "ast",
       "community": 124,
-      "community_name": "BaseStruct",
-      "file_type": "code",
-      "norm_label": "fffirebasestruct",
-      "source_file": "aarogyam-flutter/lib/backend/schema/util/firestore_util.dart",
-      "source_location": "L16"
+      "community_name": "7. Formal Specification: Patient Name & Demographic De-identification",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "7.1 clinical entity differentiation",
+      "source_file": ".agents/teamwork/survey_spec_miner_privacy/spec_report.md",
+      "source_location": "L179"
     },
     {
-      "id": "aarogyam_flutter_lib_backend_schema_util_schema_util_basestruct",
-      "label": "BaseStruct",
+      "id": "agents_teamwork_survey_spec_miner_privacy_spec_report_7_2_multilingual_anchor_heuristics",
+      "label": "7.2 Multilingual Anchor Heuristics",
       "_origin": "ast",
       "community": 124,
-      "community_name": "BaseStruct",
-      "file_type": "code",
-      "norm_label": "basestruct",
-      "source_file": "aarogyam-flutter/lib/backend/schema/util/schema_util.dart",
-      "source_location": "L16"
+      "community_name": "7. Formal Specification: Patient Name & Demographic De-identification",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "7.2 multilingual anchor heuristics",
+      "source_file": ".agents/teamwork/survey_spec_miner_privacy/spec_report.md",
+      "source_location": "L192"
     },
     {
-      "id": "aarogyam_flutter_lib_core_debug_debug_types_debugloggable",
-      "label": "DebugLoggable",
+      "id": "agents_teamwork_survey_spec_miner_privacy_spec_report_7_3_synthetic_token_generation",
+      "label": "7.3 Synthetic Token Generation",
       "_origin": "ast",
       "community": 124,
-      "community_name": "BaseStruct",
-      "file_type": "code",
-      "norm_label": "debugloggable",
-      "source_file": "aarogyam-flutter/lib/core/debug/debug_types.dart",
-      "source_location": "L9"
+      "community_name": "7. Formal Specification: Patient Name & Demographic De-identification",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "7.3 synthetic token generation",
+      "source_file": ".agents/teamwork/survey_spec_miner_privacy/spec_report.md",
+      "source_location": "L207"
+    },
+    {
+      "id": "agents_teamwork_survey_spec_miner_privacy_spec_report_7_formal_specification_patient_name_demographic_de_identification",
+      "label": "7. Formal Specification: Patient Name & Demographic De-identification",
+      "_origin": "ast",
+      "community": 124,
+      "community_name": "7. Formal Specification: Patient Name & Demographic De-identification",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "7. formal specification: patient name & demographic de-identification",
+      "source_file": ".agents/teamwork/survey_spec_miner_privacy/spec_report.md",
+      "source_location": "L177"
+    },
+    {
+      "id": "agents_teamwork_survey_spec_miner_privacy_spec_report_negative_filter_doctor_safeguard",
+      "label": "Negative Filter (Doctor Safeguard):",
+      "_origin": "ast",
+      "community": 124,
+      "community_name": "7. Formal Specification: Patient Name & Demographic De-identification",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "negative filter (doctor safeguard):",
+      "source_file": ".agents/teamwork/survey_spec_miner_privacy/spec_report.md",
+      "source_location": "L203"
     },
     {
       "id": "none_bool",
@@ -5247,6 +5380,54 @@
       "norm_label": "2. existing vision & multimodal endpoints",
       "source_file": ".agents/teamwork/survey_explorer_backend/survey_report.md",
       "source_location": "L21"
+    },
+    {
+      "id": "agents_teamwork_survey_explorer_backend_survey_report_3_1_sdk_model_configuration",
+      "label": "3.1 SDK & Model Configuration",
+      "_origin": "ast",
+      "community": 129,
+      "community_name": "Aarogyam Backend & Cloud Vision Architecture Survey Report",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "3.1 sdk & model configuration",
+      "source_file": ".agents/teamwork/survey_explorer_backend/survey_report.md",
+      "source_location": "L47"
+    },
+    {
+      "id": "agents_teamwork_survey_explorer_backend_survey_report_3_2_client_instantiation",
+      "label": "3.2 Client Instantiation",
+      "_origin": "ast",
+      "community": 129,
+      "community_name": "Aarogyam Backend & Cloud Vision Architecture Survey Report",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "3.2 client instantiation",
+      "source_file": ".agents/teamwork/survey_explorer_backend/survey_report.md",
+      "source_location": "L57"
+    },
+    {
+      "id": "agents_teamwork_survey_explorer_backend_survey_report_3_3_multimodal_prompt_formulation",
+      "label": "3.3 Multimodal Prompt Formulation",
+      "_origin": "ast",
+      "community": 129,
+      "community_name": "Aarogyam Backend & Cloud Vision Architecture Survey Report",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "3.3 multimodal prompt formulation",
+      "source_file": ".agents/teamwork/survey_explorer_backend/survey_report.md",
+      "source_location": "L73"
+    },
+    {
+      "id": "agents_teamwork_survey_explorer_backend_survey_report_3_ibm_granite_vision_watsonx_integration_architecture",
+      "label": "3. IBM Granite Vision & WatsonX Integration Architecture",
+      "_origin": "ast",
+      "community": 129,
+      "community_name": "Aarogyam Backend & Cloud Vision Architecture Survey Report",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "3. ibm granite vision & watsonx integration architecture",
+      "source_file": ".agents/teamwork/survey_explorer_backend/survey_report.md",
+      "source_location": "L45"
     },
     {
       "id": "agents_teamwork_survey_explorer_backend_survey_report_5_1_timeout_configuration",
@@ -6790,6 +6971,17 @@
       "source_location": "L58"
     },
     {
+      "id": "aarogyam_flutter_lib_backend_backend_queryextension",
+      "label": "QueryExtension",
+      "_origin": "ast",
+      "community": 14,
+      "community_name": "backend.dart",
+      "file_type": "code",
+      "norm_label": "queryextension",
+      "source_file": "aarogyam-flutter/lib/backend/backend.dart",
+      "source_location": "L137"
+    },
+    {
       "id": "aarogyam_flutter_lib_backend_backend_queryusersrecord",
       "label": "queryUsersRecord",
       "_origin": "ast",
@@ -6929,6 +7121,17 @@
       "community_name": "backend.dart",
       "file_type": "code",
       "norm_label": "/core/core.dart",
+      "source_file": null,
+      "source_location": null
+    },
+    {
+      "id": "query",
+      "label": "Query",
+      "_origin": "ast",
+      "community": 14,
+      "community_name": "backend.dart",
+      "file_type": "code",
+      "norm_label": "query",
       "source_file": null,
       "source_location": null
     },
@@ -8768,6 +8971,18 @@
       "source_location": "L13"
     },
     {
+      "id": "agents_teamwork_survey_spec_miner_privacy_briefing_key_decisions_made",
+      "label": "Key Decisions Made",
+      "_origin": "ast",
+      "community": 154,
+      "community_name": "BRIEFING \u2014 2026-09-28T00:57:33Z",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "key decisions made",
+      "source_file": ".agents/teamwork/survey_spec_miner_privacy/BRIEFING.md",
+      "source_location": "L33"
+    },
+    {
       "id": "agents_teamwork_survey_spec_miner_privacy_briefing_mission",
       "label": "Mission",
       "_origin": "ast",
@@ -9618,26 +9833,48 @@
       "source_location": "L1"
     },
     {
-      "id": "backend_scripts_download_granite",
-      "label": "download_granite.py",
+      "id": "aarogyam_flutter_lib_auth_firebase_auth_auth_util_authuserstreamwidget",
+      "label": "AuthUserStreamWidget",
       "_origin": "ast",
       "community": 161,
-      "community_name": "download_granite.py",
+      "community_name": "StatelessWidget",
       "file_type": "code",
-      "norm_label": "download_granite.py",
-      "source_file": "backend/scripts/download_granite.py",
-      "source_location": "L1"
+      "norm_label": "authuserstreamwidget",
+      "source_file": "aarogyam-flutter/lib/auth/firebase_auth/auth_util.dart",
+      "source_location": "L60"
     },
     {
-      "id": "backend_scripts_download_granite_rationale_1",
-      "label": "Utility to download and cache IBM Granite Vision 3.2 2B weights locally from\u2026",
+      "id": "aarogyam_flutter_lib_flutter_flow_flutter_flow_icon_button_flutterflowiconbutton",
+      "label": "FlutterFlowIconButton",
       "_origin": "ast",
       "community": 161,
-      "community_name": "download_granite.py",
-      "file_type": "rationale",
-      "norm_label": "utility to download and cache ibm granite vision 3.2 2b weights locally from...",
-      "source_file": "backend/scripts/download_granite.py",
-      "source_location": "L1"
+      "community_name": "StatelessWidget",
+      "file_type": "code",
+      "norm_label": "flutterflowiconbutton",
+      "source_file": "aarogyam-flutter/lib/flutter_flow/flutter_flow_icon_button.dart",
+      "source_location": "L7"
+    },
+    {
+      "id": "aarogyam_flutter_lib_flutter_flow_flutter_flow_util_ffbuttonwidget",
+      "label": "FFButtonWidget",
+      "_origin": "ast",
+      "community": 161,
+      "community_name": "StatelessWidget",
+      "file_type": "code",
+      "norm_label": "ffbuttonwidget",
+      "source_file": "aarogyam-flutter/lib/flutter_flow/flutter_flow_util.dart",
+      "source_location": "L213"
+    },
+    {
+      "id": "statelesswidget",
+      "label": "StatelessWidget",
+      "_origin": "ast",
+      "community": 161,
+      "community_name": "StatelessWidget",
+      "file_type": "code",
+      "norm_label": "statelesswidget",
+      "source_file": null,
+      "source_location": null
     },
     {
       "id": "aarogyam_flutter_lib_backend_sqlite_queries_read_readmedicationsrow",
@@ -9682,50 +9919,6 @@
       "norm_label": "sqliterow",
       "source_file": "aarogyam-flutter/lib/backend/sqlite/queries/sqlite_row.dart",
       "source_location": "L1"
-    },
-    {
-      "id": "aarogyam_flutter_lib_flutter_flow_form_field_controller",
-      "label": "form_field_controller.dart",
-      "_origin": "ast",
-      "community": 163,
-      "community_name": "T?",
-      "file_type": "code",
-      "norm_label": "form_field_controller.dart",
-      "source_file": "aarogyam-flutter/lib/flutter_flow/form_field_controller.dart",
-      "source_location": null
-    },
-    {
-      "id": "aarogyam_flutter_lib_flutter_flow_form_field_controller_formfieldcontroller",
-      "label": "FormFieldController",
-      "_origin": "ast",
-      "community": 163,
-      "community_name": "T?",
-      "file_type": "code",
-      "norm_label": "formfieldcontroller",
-      "source_file": "aarogyam-flutter/lib/flutter_flow/form_field_controller.dart",
-      "source_location": "L6"
-    },
-    {
-      "id": "t",
-      "label": "T?",
-      "_origin": "ast",
-      "community": 163,
-      "community_name": "T?",
-      "file_type": "code",
-      "norm_label": "t?",
-      "source_file": null,
-      "source_location": null
-    },
-    {
-      "id": "valuenotifier",
-      "label": "ValueNotifier",
-      "_origin": "ast",
-      "community": 163,
-      "community_name": "T?",
-      "file_type": "code",
-      "norm_label": "valuenotifier",
-      "source_file": null,
-      "source_location": null
     },
     {
       "id": "agents_teamwork_survey_explorer_backend_progress",
@@ -9906,50 +10099,6 @@
       "norm_label": "dispatch log",
       "source_file": ".agents/teamwork/orchestrator/DISPATCH.md",
       "source_location": "L1"
-    },
-    {
-      "id": "aarogyam_flutter_lib_backend_backend_queryextension",
-      "label": "QueryExtension",
-      "_origin": "ast",
-      "community": 168,
-      "community_name": "QueryExtension",
-      "file_type": "code",
-      "norm_label": "queryextension",
-      "source_file": "aarogyam-flutter/lib/backend/backend.dart",
-      "source_location": "L137"
-    },
-    {
-      "id": "query",
-      "label": "Query",
-      "_origin": "ast",
-      "community": 168,
-      "community_name": "QueryExtension",
-      "file_type": "code",
-      "norm_label": "query",
-      "source_file": null,
-      "source_location": null
-    },
-    {
-      "id": "aarogyam_flutter_lib_backend_schema_users_record_usersrecorddocumentequality",
-      "label": "UsersRecordDocumentEquality",
-      "_origin": "ast",
-      "community": 169,
-      "community_name": "UsersRecordDocumentEquality",
-      "file_type": "code",
-      "norm_label": "usersrecorddocumentequality",
-      "source_file": "aarogyam-flutter/lib/backend/schema/users_record.dart",
-      "source_location": "L236"
-    },
-    {
-      "id": "equality",
-      "label": "Equality",
-      "_origin": "ast",
-      "community": 169,
-      "community_name": "UsersRecordDocumentEquality",
-      "file_type": "code",
-      "norm_label": "equality",
-      "source_file": null,
-      "source_location": null
     },
     {
       "id": "aarogyam_flutter_lib_auth_auth_manager",
@@ -10269,28 +10418,6 @@
       "norm_label": "firebaseauthmanager",
       "source_file": "aarogyam-flutter/lib/auth/firebase_auth/firebase_auth_manager.dart",
       "source_location": "L42"
-    },
-    {
-      "id": "aarogyam_flutter_lib_flutter_flow_flutter_flow_util_datetimeextension",
-      "label": "DateTimeExtension",
-      "_origin": "ast",
-      "community": 170,
-      "community_name": "DateTime?",
-      "file_type": "code",
-      "norm_label": "datetimeextension",
-      "source_file": "aarogyam-flutter/lib/flutter_flow/flutter_flow_util.dart",
-      "source_location": "L278"
-    },
-    {
-      "id": "datetime",
-      "label": "DateTime?",
-      "_origin": "ast",
-      "community": 170,
-      "community_name": "DateTime?",
-      "file_type": "code",
-      "norm_label": "datetime?",
-      "source_file": null,
-      "source_location": null
     },
     {
       "id": "aarogyam_flutter_lib_backend_schema_users_record_usersrecord",
@@ -13329,6 +13456,28 @@
       "source_location": "L41"
     },
     {
+      "id": "aarogyam_flutter_lib_flutter_flow_flutter_flow_checkbox_group_flutterflowcheckboxgroup",
+      "label": "FlutterFlowCheckboxGroup",
+      "_origin": "ast",
+      "community": 23,
+      "community_name": "flutter_flow_checkbox_group.dart",
+      "file_type": "code",
+      "norm_label": "flutterflowcheckboxgroup",
+      "source_file": "aarogyam-flutter/lib/flutter_flow/flutter_flow_checkbox_group.dart",
+      "source_location": "L6"
+    },
+    {
+      "id": "aarogyam_flutter_lib_flutter_flow_flutter_flow_checkbox_group_flutterflowcheckboxgroupstate",
+      "label": "_FlutterFlowCheckboxGroupState",
+      "_origin": "ast",
+      "community": 23,
+      "community_name": "flutter_flow_checkbox_group.dart",
+      "file_type": "code",
+      "norm_label": "_flutterflowcheckboxgroupstate",
+      "source_file": "aarogyam-flutter/lib/flutter_flow/flutter_flow_checkbox_group.dart",
+      "source_location": "L45"
+    },
+    {
       "id": "aarogyam_flutter_lib_flutter_flow_flutter_flow_checkbox_group_initialized",
       "label": "initialized",
       "_origin": "ast",
@@ -13890,72 +14039,6 @@
       "source_location": null
     },
     {
-      "id": "aarogyam_flutter_lib_auth_firebase_auth_google_auth",
-      "label": "google_auth.dart",
-      "_origin": "ast",
-      "community": 26,
-      "community_name": "package:flutter/foundation.dart",
-      "file_type": "code",
-      "norm_label": "google_auth.dart",
-      "source_file": "aarogyam-flutter/lib/auth/firebase_auth/google_auth.dart",
-      "source_location": null
-    },
-    {
-      "id": "aarogyam_flutter_lib_auth_firebase_auth_google_auth_auth",
-      "label": "auth",
-      "_origin": "ast",
-      "community": 26,
-      "community_name": "package:flutter/foundation.dart",
-      "file_type": "code",
-      "norm_label": "auth",
-      "source_file": "aarogyam-flutter/lib/auth/firebase_auth/google_auth.dart",
-      "source_location": "L14"
-    },
-    {
-      "id": "aarogyam_flutter_lib_auth_firebase_auth_google_auth_credential",
-      "label": "credential",
-      "_origin": "ast",
-      "community": 26,
-      "community_name": "package:flutter/foundation.dart",
-      "file_type": "code",
-      "norm_label": "credential",
-      "source_file": "aarogyam-flutter/lib/auth/firebase_auth/google_auth.dart",
-      "source_location": "L18"
-    },
-    {
-      "id": "aarogyam_flutter_lib_auth_firebase_auth_google_auth_googlesignin",
-      "label": "_googleSignIn",
-      "_origin": "ast",
-      "community": 26,
-      "community_name": "package:flutter/foundation.dart",
-      "file_type": "code",
-      "norm_label": "_googlesignin",
-      "source_file": "aarogyam-flutter/lib/auth/firebase_auth/google_auth.dart",
-      "source_location": "L5"
-    },
-    {
-      "id": "aarogyam_flutter_lib_auth_firebase_auth_google_auth_googlesigninfunc",
-      "label": "googleSignInFunc",
-      "_origin": "ast",
-      "community": 26,
-      "community_name": "package:flutter/foundation.dart",
-      "file_type": "code",
-      "norm_label": "googlesigninfunc",
-      "source_file": "aarogyam-flutter/lib/auth/firebase_auth/google_auth.dart",
-      "source_location": "L7"
-    },
-    {
-      "id": "aarogyam_flutter_lib_auth_firebase_auth_google_auth_signoutwithgoogle",
-      "label": "signOutWithGoogle",
-      "_origin": "ast",
-      "community": 26,
-      "community_name": "package:flutter/foundation.dart",
-      "file_type": "code",
-      "norm_label": "signoutwithgoogle",
-      "source_file": "aarogyam-flutter/lib/auth/firebase_auth/google_auth.dart",
-      "source_location": "L13"
-    },
-    {
       "id": "aarogyam_flutter_lib_custom_code_actions_extract_medication_details",
       "label": "extract_medication_details.dart",
       "_origin": "ast",
@@ -14051,17 +14134,6 @@
       "community_name": "package:flutter/foundation.dart",
       "file_type": "code",
       "norm_label": "package:flutter/foundation.dart",
-      "source_file": null,
-      "source_location": null
-    },
-    {
-      "id": "package_google_sign_in_google_sign_in_dart",
-      "label": "package:google_sign_in/google_sign_in.dart",
-      "_origin": "ast",
-      "community": 26,
-      "community_name": "package:flutter/foundation.dart",
-      "file_type": "code",
-      "norm_label": "package:google_sign_in/google_sign_in.dart",
       "source_file": null,
       "source_location": null
     },
@@ -14715,6 +14787,83 @@
       "source_location": "L16"
     },
     {
+      "id": "aarogyam_flutter_lib_widgets_user_info_user_info_model",
+      "label": "user_info_model.dart",
+      "_origin": "ast",
+      "community": 29,
+      "community_name": "switch_remainder_widget.dart",
+      "file_type": "code",
+      "norm_label": "user_info_model.dart",
+      "source_file": "aarogyam-flutter/lib/widgets/user_info/user_info_model.dart",
+      "source_location": null
+    },
+    {
+      "id": "aarogyam_flutter_lib_widgets_user_info_user_info_model_countcontrollervalue1",
+      "label": "countControllerValue1",
+      "_origin": "ast",
+      "community": 29,
+      "community_name": "switch_remainder_widget.dart",
+      "file_type": "code",
+      "norm_label": "countcontrollervalue1",
+      "source_file": "aarogyam-flutter/lib/widgets/user_info/user_info_model.dart",
+      "source_location": "L7"
+    },
+    {
+      "id": "aarogyam_flutter_lib_widgets_user_info_user_info_model_countcontrollervalue2",
+      "label": "countControllerValue2",
+      "_origin": "ast",
+      "community": 29,
+      "community_name": "switch_remainder_widget.dart",
+      "file_type": "code",
+      "norm_label": "countcontrollervalue2",
+      "source_file": "aarogyam-flutter/lib/widgets/user_info/user_info_model.dart",
+      "source_location": "L8"
+    },
+    {
+      "id": "aarogyam_flutter_lib_widgets_user_info_user_info_model_countcontrollervalue3",
+      "label": "countControllerValue3",
+      "_origin": "ast",
+      "community": 29,
+      "community_name": "switch_remainder_widget.dart",
+      "file_type": "code",
+      "norm_label": "countcontrollervalue3",
+      "source_file": "aarogyam-flutter/lib/widgets/user_info/user_info_model.dart",
+      "source_location": "L9"
+    },
+    {
+      "id": "aarogyam_flutter_lib_widgets_user_info_user_info_model_dropdownvalue",
+      "label": "dropDownValue",
+      "_origin": "ast",
+      "community": 29,
+      "community_name": "switch_remainder_widget.dart",
+      "file_type": "code",
+      "norm_label": "dropdownvalue",
+      "source_file": "aarogyam-flutter/lib/widgets/user_info/user_info_model.dart",
+      "source_location": "L6"
+    },
+    {
+      "id": "aarogyam_flutter_lib_widgets_user_info_user_info_model_initstate",
+      "label": "initState",
+      "_origin": "ast",
+      "community": 29,
+      "community_name": "switch_remainder_widget.dart",
+      "file_type": "code",
+      "norm_label": "initstate",
+      "source_file": "aarogyam-flutter/lib/widgets/user_info/user_info_model.dart",
+      "source_location": "L12"
+    },
+    {
+      "id": "int",
+      "label": "int?",
+      "_origin": "ast",
+      "community": 29,
+      "community_name": "switch_remainder_widget.dart",
+      "file_type": "code",
+      "norm_label": "int?",
+      "source_file": null,
+      "source_location": null
+    },
+    {
       "id": "switch_remainder_model_dart",
       "label": "switch_remainder_model.dart",
       "_origin": "ast",
@@ -14722,6 +14871,17 @@
       "community_name": "switch_remainder_widget.dart",
       "file_type": "code",
       "norm_label": "switch_remainder_model.dart",
+      "source_file": null,
+      "source_location": null
+    },
+    {
+      "id": "user_info_widget_dart",
+      "label": "user_info_widget.dart",
+      "_origin": "ast",
+      "community": 29,
+      "community_name": "switch_remainder_widget.dart",
+      "file_type": "code",
+      "norm_label": "user_info_widget.dart",
       "source_file": null,
       "source_location": null
     },
@@ -17036,17 +17196,6 @@
       "source_location": "L20"
     },
     {
-      "id": "aarogyam_flutter_lib_flutter_flow_debug_util",
-      "label": "debug_util.dart",
-      "_origin": "ast",
-      "community": 33,
-      "community_name": "base_model.dart",
-      "file_type": "code",
-      "norm_label": "debug_util.dart",
-      "source_file": "aarogyam-flutter/lib/flutter_flow/debug_util.dart",
-      "source_location": null
-    },
-    {
       "id": "basemodel_get",
       "label": "BaseModel get",
       "_origin": "ast",
@@ -17069,17 +17218,6 @@
       "source_location": null
     },
     {
-      "id": "core_debug_debug_types_dart",
-      "label": "/core/debug/debug_types.dart",
-      "_origin": "ast",
-      "community": 33,
-      "community_name": "base_model.dart",
-      "file_type": "code",
-      "norm_label": "/core/debug/debug_types.dart",
-      "source_file": null,
-      "source_location": null
-    },
-    {
       "id": "t_get",
       "label": "T? get",
       "_origin": "ast",
@@ -17091,114 +17229,81 @@
       "source_location": null
     },
     {
-      "id": "backend_app",
-      "label": "app.py",
+      "id": "aarogyam_flutter_lib_auth_firebase_auth_google_auth",
+      "label": "google_auth.dart",
       "_origin": "ast",
       "community": 34,
-      "community_name": "app.py",
+      "community_name": "google_auth.dart",
       "file_type": "code",
-      "norm_label": "app.py",
-      "source_file": "backend/app.py",
-      "source_location": "L1"
+      "norm_label": "google_auth.dart",
+      "source_file": "aarogyam-flutter/lib/auth/firebase_auth/google_auth.dart",
+      "source_location": null
     },
     {
-      "id": "backend_dadi_ma_service",
-      "label": "dadi_ma_service.py",
+      "id": "aarogyam_flutter_lib_auth_firebase_auth_google_auth_auth",
+      "label": "auth",
       "_origin": "ast",
       "community": 34,
-      "community_name": "app.py",
+      "community_name": "google_auth.dart",
       "file_type": "code",
-      "norm_label": "dadi_ma_service.py",
-      "source_file": "backend/dadi_ma_service.py",
-      "source_location": "L1"
+      "norm_label": "auth",
+      "source_file": "aarogyam-flutter/lib/auth/firebase_auth/google_auth.dart",
+      "source_location": "L14"
     },
     {
-      "id": "backend_dadi_ma_service_py_route",
-      "label": "route",
+      "id": "aarogyam_flutter_lib_auth_firebase_auth_google_auth_credential",
+      "label": "credential",
       "_origin": "ast",
       "community": 34,
-      "community_name": "app.py",
+      "community_name": "google_auth.dart",
       "file_type": "code",
-      "norm_label": "route",
-      "source_file": "",
-      "source_location": ""
+      "norm_label": "credential",
+      "source_file": "aarogyam-flutter/lib/auth/firebase_auth/google_auth.dart",
+      "source_location": "L18"
     },
     {
-      "id": "backend_app_rationale_1",
-      "label": "Aarogyam: Project Alpha \u2014 Consolidated Production Gateway Powered by IBM\u2026",
+      "id": "aarogyam_flutter_lib_auth_firebase_auth_google_auth_googlesignin",
+      "label": "_googleSignIn",
       "_origin": "ast",
       "community": 34,
-      "community_name": "app.py",
-      "file_type": "rationale",
-      "norm_label": "aarogyam: project alpha \u2014 consolidated production gateway powered by ibm...",
-      "source_file": "backend/app.py",
-      "source_location": "L1"
+      "community_name": "google_auth.dart",
+      "file_type": "code",
+      "norm_label": "_googlesignin",
+      "source_file": "aarogyam-flutter/lib/auth/firebase_auth/google_auth.dart",
+      "source_location": "L5"
     },
     {
-      "id": "backend_app_rationale_124",
-      "label": "Health check endpoint returning service status, model configuration, and\u2026",
+      "id": "aarogyam_flutter_lib_auth_firebase_auth_google_auth_googlesigninfunc",
+      "label": "googleSignInFunc",
       "_origin": "ast",
       "community": 34,
-      "community_name": "app.py",
-      "file_type": "rationale",
-      "norm_label": "health check endpoint returning service status, model configuration, and...",
-      "source_file": "backend/app.py",
-      "source_location": "L124"
+      "community_name": "google_auth.dart",
+      "file_type": "code",
+      "norm_label": "googlesigninfunc",
+      "source_file": "aarogyam-flutter/lib/auth/firebase_auth/google_auth.dart",
+      "source_location": "L7"
     },
     {
-      "id": "backend_app_rationale_276",
-      "label": "Returns a clinical dataset for offline resilience and demonstration.",
+      "id": "aarogyam_flutter_lib_auth_firebase_auth_google_auth_signoutwithgoogle",
+      "label": "signOutWithGoogle",
       "_origin": "ast",
       "community": 34,
-      "community_name": "app.py",
-      "file_type": "rationale",
-      "norm_label": "returns a clinical dataset for offline resilience and demonstration.",
-      "source_file": "backend/app.py",
-      "source_location": "L276"
+      "community_name": "google_auth.dart",
+      "file_type": "code",
+      "norm_label": "signoutwithgoogle",
+      "source_file": "aarogyam-flutter/lib/auth/firebase_auth/google_auth.dart",
+      "source_location": "L13"
     },
     {
-      "id": "backend_app_rationale_503",
-      "label": "Fallback verifier logic.",
+      "id": "package_google_sign_in_google_sign_in_dart",
+      "label": "package:google_sign_in/google_sign_in.dart",
       "_origin": "ast",
       "community": 34,
-      "community_name": "app.py",
-      "file_type": "rationale",
-      "norm_label": "fallback verifier logic.",
-      "source_file": "backend/app.py",
-      "source_location": "L503"
-    },
-    {
-      "id": "backend_app_rationale_529",
-      "label": "Step 3: Synthesizes high-clarity spoken audio via IBM Watson Text-to-Speech.",
-      "_origin": "ast",
-      "community": 34,
-      "community_name": "app.py",
-      "file_type": "rationale",
-      "norm_label": "step 3: synthesizes high-clarity spoken audio via ibm watson text-to-speech.",
-      "source_file": "backend/app.py",
-      "source_location": "L529"
-    },
-    {
-      "id": "backend_dadi_ma_service_rationale_1",
-      "label": "Aarogyam: Dadi-Ma Intelligence Engine Production-grade conversational and\u2026",
-      "_origin": "ast",
-      "community": 34,
-      "community_name": "app.py",
-      "file_type": "rationale",
-      "norm_label": "aarogyam: dadi-ma intelligence engine production-grade conversational and...",
-      "source_file": "backend/dadi_ma_service.py",
-      "source_location": "L1"
-    },
-    {
-      "id": "backend_dadi_ma_service_rationale_260",
-      "label": "Generates warm, maternal, contextual daily greetings based on local time.",
-      "_origin": "ast",
-      "community": 34,
-      "community_name": "app.py",
-      "file_type": "rationale",
-      "norm_label": "generates warm, maternal, contextual daily greetings based on local time.",
-      "source_file": "backend/dadi_ma_service.py",
-      "source_location": "L260"
+      "community_name": "google_auth.dart",
+      "file_type": "code",
+      "norm_label": "package:google_sign_in/google_sign_in.dart",
+      "source_file": null,
+      "source_location": null
     },
     {
       "id": "aarogyam_flutter_lib_widgets_reminder_set_reminder_set_reminder_model_setremindermodel",
@@ -19434,28 +19539,6 @@
       "source_location": "L27"
     },
     {
-      "id": "aarogyam_flutter_lib_custom_code_widgets_audio_player_widget_audioplayerwidget",
-      "label": "AudioPlayerWidget",
-      "_origin": "ast",
-      "community": 41,
-      "community_name": "audio_player_widget.dart",
-      "file_type": "code",
-      "norm_label": "audioplayerwidget",
-      "source_file": "aarogyam-flutter/lib/custom_code/widgets/audio_player_widget.dart",
-      "source_location": "L10"
-    },
-    {
-      "id": "aarogyam_flutter_lib_custom_code_widgets_audio_player_widget_audioplayerwidgetstate",
-      "label": "_AudioPlayerWidgetState",
-      "_origin": "ast",
-      "community": 41,
-      "community_name": "audio_player_widget.dart",
-      "file_type": "code",
-      "norm_label": "_audioplayerwidgetstate",
-      "source_file": "aarogyam-flutter/lib/custom_code/widgets/audio_player_widget.dart",
-      "source_location": "L26"
-    },
-    {
       "id": "aarogyam_flutter_lib_custom_code_widgets_audio_player_widget_build",
       "label": "build",
       "_origin": "ast",
@@ -19564,6 +19647,17 @@
       "norm_label": "width",
       "source_file": "aarogyam-flutter/lib/custom_code/widgets/audio_player_widget.dart",
       "source_location": "L18"
+    },
+    {
+      "id": "audioplayer",
+      "label": "AudioPlayer",
+      "_origin": "ast",
+      "community": 41,
+      "community_name": "audio_player_widget.dart",
+      "file_type": "code",
+      "norm_label": "audioplayer",
+      "source_file": null,
+      "source_location": null
     },
     {
       "id": "aarogyam_flutter_lib_auth_base_auth_user_provider_baseauthuser",
@@ -21612,34 +21706,33 @@
       "source_location": null
     },
     {
+      "id": "backend_app",
+      "label": "app.py",
+      "_origin": "ast",
+      "community": 50,
+      "community_name": "app.py",
+      "file_type": "code",
+      "norm_label": "app.py",
+      "source_file": "backend/app.py",
+      "source_location": "L1"
+    },
+    {
       "id": "backend_app_py_route",
       "label": "route",
       "_origin": "ast",
       "community": 50,
-      "community_name": "digitize_rx",
+      "community_name": "app.py",
       "file_type": "code",
       "norm_label": "route",
       "source_file": "",
       "source_location": ""
     },
     {
-      "id": "agents_teamwork_survey_explorer_backend_handoff",
-      "label": "survey_explorer_backend/handoff.md",
-      "_origin": "ast",
-      "community": 50,
-      "community_name": "digitize_rx",
-      "file_type": "document",
-      "node_kind": "page",
-      "norm_label": "survey_explorer_backend/handoff.md",
-      "source_file": ".agents/teamwork/survey_explorer_backend/handoff.md",
-      "source_location": "L1"
-    },
-    {
       "id": "agents_teamwork_survey_explorer_backend_handoff_1_observation",
       "label": "1. Observation",
       "_origin": "ast",
       "community": 50,
-      "community_name": "digitize_rx",
+      "community_name": "app.py",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "1. observation",
@@ -21647,35 +21740,11 @@
       "source_location": "L9"
     },
     {
-      "id": "agents_teamwork_survey_explorer_backend_handoff_2_logic_chain",
-      "label": "2. Logic Chain",
-      "_origin": "ast",
-      "community": 50,
-      "community_name": "digitize_rx",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "2. logic chain",
-      "source_file": ".agents/teamwork/survey_explorer_backend/handoff.md",
-      "source_location": "L47"
-    },
-    {
-      "id": "agents_teamwork_survey_explorer_backend_handoff_3_caveats",
-      "label": "3. Caveats",
-      "_origin": "ast",
-      "community": 50,
-      "community_name": "digitize_rx",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "3. caveats",
-      "source_file": ".agents/teamwork/survey_explorer_backend/handoff.md",
-      "source_location": "L68"
-    },
-    {
       "id": "agents_teamwork_survey_explorer_backend_handoff_4_conclusion",
       "label": "4. Conclusion",
       "_origin": "ast",
       "community": 50,
-      "community_name": "digitize_rx",
+      "community_name": "app.py",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "4. conclusion",
@@ -21683,71 +21752,11 @@
       "source_location": "L75"
     },
     {
-      "id": "agents_teamwork_survey_explorer_backend_handoff_5_verification_method",
-      "label": "5. Verification Method",
-      "_origin": "ast",
-      "community": 50,
-      "community_name": "digitize_rx",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "5. verification method",
-      "source_file": ".agents/teamwork/survey_explorer_backend/handoff.md",
-      "source_location": "L89"
-    },
-    {
-      "id": "agents_teamwork_survey_explorer_backend_handoff_handoff_report_survey_explorer_backend_vision_architecture",
-      "label": "Handoff Report: Survey Explorer - Backend Vision Architecture",
-      "_origin": "ast",
-      "community": 50,
-      "community_name": "digitize_rx",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "handoff report: survey explorer - backend vision architecture",
-      "source_file": ".agents/teamwork/survey_explorer_backend/handoff.md",
-      "source_location": "L1"
-    },
-    {
-      "id": "agents_teamwork_survey_explorer_backend_survey_report_3_1_sdk_model_configuration",
-      "label": "3.1 SDK & Model Configuration",
-      "_origin": "ast",
-      "community": 50,
-      "community_name": "digitize_rx",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "3.1 sdk & model configuration",
-      "source_file": ".agents/teamwork/survey_explorer_backend/survey_report.md",
-      "source_location": "L47"
-    },
-    {
-      "id": "agents_teamwork_survey_explorer_backend_survey_report_3_2_client_instantiation",
-      "label": "3.2 Client Instantiation",
-      "_origin": "ast",
-      "community": 50,
-      "community_name": "digitize_rx",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "3.2 client instantiation",
-      "source_file": ".agents/teamwork/survey_explorer_backend/survey_report.md",
-      "source_location": "L57"
-    },
-    {
-      "id": "agents_teamwork_survey_explorer_backend_survey_report_3_3_multimodal_prompt_formulation",
-      "label": "3.3 Multimodal Prompt Formulation",
-      "_origin": "ast",
-      "community": 50,
-      "community_name": "digitize_rx",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "3.3 multimodal prompt formulation",
-      "source_file": ".agents/teamwork/survey_explorer_backend/survey_report.md",
-      "source_location": "L73"
-    },
-    {
       "id": "agents_teamwork_survey_explorer_backend_survey_report_3_4_fallback_execution_path",
       "label": "3.4 Fallback Execution Path",
       "_origin": "ast",
       "community": 50,
-      "community_name": "digitize_rx",
+      "community_name": "app.py",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "3.4 fallback execution path",
@@ -21755,23 +21764,11 @@
       "source_location": "L95"
     },
     {
-      "id": "agents_teamwork_survey_explorer_backend_survey_report_3_ibm_granite_vision_watsonx_integration_architecture",
-      "label": "3. IBM Granite Vision & WatsonX Integration Architecture",
-      "_origin": "ast",
-      "community": 50,
-      "community_name": "digitize_rx",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "3. ibm granite vision & watsonx integration architecture",
-      "source_file": ".agents/teamwork/survey_explorer_backend/survey_report.md",
-      "source_location": "L45"
-    },
-    {
       "id": "agents_teamwork_survey_explorer_backend_survey_report_5_3_exception_handling_hierarchy",
       "label": "5.3 Exception Handling Hierarchy",
       "_origin": "ast",
       "community": 50,
-      "community_name": "digitize_rx",
+      "community_name": "app.py",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "5.3 exception handling hierarchy",
@@ -21783,7 +21780,7 @@
       "label": "7.1 Gap Analysis",
       "_origin": "ast",
       "community": 50,
-      "community_name": "digitize_rx",
+      "community_name": "app.py",
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "7.1 gap analysis",
@@ -21791,33 +21788,99 @@
       "source_location": "L294"
     },
     {
+      "id": "backend_app_rationale_1",
+      "label": "Aarogyam: Project Alpha \u2014 Consolidated Production Gateway Powered by IBM\u2026",
+      "_origin": "ast",
+      "community": 50,
+      "community_name": "app.py",
+      "file_type": "rationale",
+      "norm_label": "aarogyam: project alpha \u2014 consolidated production gateway powered by ibm...",
+      "source_file": "backend/app.py",
+      "source_location": "L1"
+    },
+    {
+      "id": "backend_app_rationale_124",
+      "label": "Health check endpoint returning service status, model configuration, and\u2026",
+      "_origin": "ast",
+      "community": 50,
+      "community_name": "app.py",
+      "file_type": "rationale",
+      "norm_label": "health check endpoint returning service status, model configuration, and...",
+      "source_file": "backend/app.py",
+      "source_location": "L124"
+    },
+    {
+      "id": "backend_app_rationale_151",
+      "label": "Endpoint to de-identify raw text before processing.",
+      "_origin": "ast",
+      "community": 50,
+      "community_name": "app.py",
+      "file_type": "rationale",
+      "norm_label": "endpoint to de-identify raw text before processing.",
+      "source_file": "backend/app.py",
+      "source_location": "L151"
+    },
+    {
       "id": "backend_app_rationale_169",
       "label": "Step 2: Digitize handwritten doctor prescription into structured clinical JSON.\u2026",
       "_origin": "ast",
       "community": 50,
-      "community_name": "digitize_rx",
+      "community_name": "app.py",
       "file_type": "rationale",
       "norm_label": "step 2: digitize handwritten doctor prescription into structured clinical json....",
       "source_file": "backend/app.py",
       "source_location": "L169"
     },
     {
+      "id": "backend_app_rationale_276",
+      "label": "Returns a clinical dataset for offline resilience and demonstration.",
+      "_origin": "ast",
+      "community": 50,
+      "community_name": "app.py",
+      "file_type": "rationale",
+      "norm_label": "returns a clinical dataset for offline resilience and demonstration.",
+      "source_file": "backend/app.py",
+      "source_location": "L276"
+    },
+    {
       "id": "backend_app_rationale_410",
       "label": "Step 5: Closed-Loop Blister Strip Verifier. Inspects printed foil\u2026",
       "_origin": "ast",
       "community": 50,
-      "community_name": "digitize_rx",
+      "community_name": "app.py",
       "file_type": "rationale",
       "norm_label": "step 5: closed-loop blister strip verifier. inspects printed foil...",
       "source_file": "backend/app.py",
       "source_location": "L410"
     },
     {
+      "id": "backend_app_rationale_503",
+      "label": "Fallback verifier logic.",
+      "_origin": "ast",
+      "community": 50,
+      "community_name": "app.py",
+      "file_type": "rationale",
+      "norm_label": "fallback verifier logic.",
+      "source_file": "backend/app.py",
+      "source_location": "L503"
+    },
+    {
+      "id": "backend_app_rationale_529",
+      "label": "Step 3: Synthesizes high-clarity spoken audio via IBM Watson Text-to-Speech.",
+      "_origin": "ast",
+      "community": 50,
+      "community_name": "app.py",
+      "file_type": "rationale",
+      "norm_label": "step 3: synthesizes high-clarity spoken audio via ibm watson text-to-speech.",
+      "source_file": "backend/app.py",
+      "source_location": "L529"
+    },
+    {
       "id": "backend_app_rationale_56",
       "label": "Initializes and returns the IBM WatsonX ModelInference instance.",
       "_origin": "ast",
       "community": 50,
-      "community_name": "digitize_rx",
+      "community_name": "app.py",
       "file_type": "rationale",
       "norm_label": "initializes and returns the ibm watsonx modelinference instance.",
       "source_file": "backend/app.py",
@@ -21828,7 +21891,7 @@
       "label": "Strips data URL header if present and ensures clean base64 string.",
       "_origin": "ast",
       "community": 50,
-      "community_name": "digitize_rx",
+      "community_name": "app.py",
       "file_type": "rationale",
       "norm_label": "strips data url header if present and ensures clean base64 string.",
       "source_file": "backend/app.py",
@@ -21839,22 +21902,11 @@
       "label": "Strips markdown code fences and cleans JSON output.",
       "_origin": "ast",
       "community": 50,
-      "community_name": "digitize_rx",
+      "community_name": "app.py",
       "file_type": "rationale",
       "norm_label": "strips markdown code fences and cleans json output.",
       "source_file": "backend/app.py",
       "source_location": "L79"
-    },
-    {
-      "id": "aarogyam_flutter_lib_auth_firebase_auth_auth_util_authuserstreamwidget",
-      "label": "AuthUserStreamWidget",
-      "_origin": "ast",
-      "community": 51,
-      "community_name": "flutter_flow_icon_button.dart",
-      "file_type": "code",
-      "norm_label": "authuserstreamwidget",
-      "source_file": "aarogyam-flutter/lib/auth/firebase_auth/auth_util.dart",
-      "source_location": "L60"
     },
     {
       "id": "aarogyam_flutter_lib_flutter_flow_flutter_flow_icon_button",
@@ -21945,17 +21997,6 @@
       "source_location": "L25"
     },
     {
-      "id": "aarogyam_flutter_lib_flutter_flow_flutter_flow_icon_button_flutterflowiconbutton",
-      "label": "FlutterFlowIconButton",
-      "_origin": "ast",
-      "community": 51,
-      "community_name": "flutter_flow_icon_button.dart",
-      "file_type": "code",
-      "norm_label": "flutterflowiconbutton",
-      "source_file": "aarogyam-flutter/lib/flutter_flow/flutter_flow_icon_button.dart",
-      "source_location": "L7"
-    },
-    {
       "id": "aarogyam_flutter_lib_flutter_flow_flutter_flow_icon_button_hovercolor",
       "label": "hoverColor",
       "_origin": "ast",
@@ -22020,28 +22061,6 @@
       "norm_label": "animateonactiontriggerextension",
       "source_file": "aarogyam-flutter/lib/flutter_flow/flutter_flow_util.dart",
       "source_location": "L317"
-    },
-    {
-      "id": "aarogyam_flutter_lib_flutter_flow_flutter_flow_util_ffbuttonwidget",
-      "label": "FFButtonWidget",
-      "_origin": "ast",
-      "community": 51,
-      "community_name": "flutter_flow_icon_button.dart",
-      "file_type": "code",
-      "norm_label": "ffbuttonwidget",
-      "source_file": "aarogyam-flutter/lib/flutter_flow/flutter_flow_util.dart",
-      "source_location": "L213"
-    },
-    {
-      "id": "statelesswidget",
-      "label": "StatelessWidget",
-      "_origin": "ast",
-      "community": 51,
-      "community_name": "flutter_flow_icon_button.dart",
-      "file_type": "code",
-      "norm_label": "statelesswidget",
-      "source_file": null,
-      "source_location": null
     },
     {
       "id": "voidcallback",
@@ -22788,17 +22807,6 @@
       "community_name": "List",
       "file_type": "code",
       "norm_label": "iterable",
-      "source_file": null,
-      "source_location": null
-    },
-    {
-      "id": "library",
-      "label": "library",
-      "_origin": "ast",
-      "community": 57,
-      "community_name": "List",
-      "file_type": "code",
-      "norm_label": "library",
       "source_file": null,
       "source_location": null
     },
@@ -23650,16 +23658,64 @@
       "source_location": null
     },
     {
-      "id": "agents_teamwork_survey_spec_miner_privacy_briefing_key_decisions_made",
-      "label": "Key Decisions Made",
+      "id": "agents_teamwork_survey_explorer_backend_handoff",
+      "label": "survey_explorer_backend/handoff.md",
+      "_origin": "ast",
+      "community": 60,
+      "community_name": "R2: Edge Privacy & PII Sanitization Specification Report",
+      "file_type": "document",
+      "node_kind": "page",
+      "norm_label": "survey_explorer_backend/handoff.md",
+      "source_file": ".agents/teamwork/survey_explorer_backend/handoff.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "agents_teamwork_survey_explorer_backend_handoff_2_logic_chain",
+      "label": "2. Logic Chain",
       "_origin": "ast",
       "community": 60,
       "community_name": "R2: Edge Privacy & PII Sanitization Specification Report",
       "file_type": "document",
       "node_kind": "heading",
-      "norm_label": "key decisions made",
-      "source_file": ".agents/teamwork/survey_spec_miner_privacy/BRIEFING.md",
-      "source_location": "L33"
+      "norm_label": "2. logic chain",
+      "source_file": ".agents/teamwork/survey_explorer_backend/handoff.md",
+      "source_location": "L47"
+    },
+    {
+      "id": "agents_teamwork_survey_explorer_backend_handoff_3_caveats",
+      "label": "3. Caveats",
+      "_origin": "ast",
+      "community": 60,
+      "community_name": "R2: Edge Privacy & PII Sanitization Specification Report",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "3. caveats",
+      "source_file": ".agents/teamwork/survey_explorer_backend/handoff.md",
+      "source_location": "L68"
+    },
+    {
+      "id": "agents_teamwork_survey_explorer_backend_handoff_5_verification_method",
+      "label": "5. Verification Method",
+      "_origin": "ast",
+      "community": 60,
+      "community_name": "R2: Edge Privacy & PII Sanitization Specification Report",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "5. verification method",
+      "source_file": ".agents/teamwork/survey_explorer_backend/handoff.md",
+      "source_location": "L89"
+    },
+    {
+      "id": "agents_teamwork_survey_explorer_backend_handoff_handoff_report_survey_explorer_backend_vision_architecture",
+      "label": "Handoff Report: Survey Explorer - Backend Vision Architecture",
+      "_origin": "ast",
+      "community": 60,
+      "community_name": "R2: Edge Privacy & PII Sanitization Specification Report",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "handoff report: survey explorer - backend vision architecture",
+      "source_file": ".agents/teamwork/survey_explorer_backend/handoff.md",
+      "source_location": "L1"
     },
     {
       "id": "agents_teamwork_survey_spec_miner_privacy_spec_report",
@@ -23782,54 +23838,6 @@
       "source_location": "L49"
     },
     {
-      "id": "agents_teamwork_survey_spec_miner_privacy_spec_report_7_1_clinical_entity_differentiation",
-      "label": "7.1 Clinical Entity Differentiation",
-      "_origin": "ast",
-      "community": 60,
-      "community_name": "R2: Edge Privacy & PII Sanitization Specification Report",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "7.1 clinical entity differentiation",
-      "source_file": ".agents/teamwork/survey_spec_miner_privacy/spec_report.md",
-      "source_location": "L179"
-    },
-    {
-      "id": "agents_teamwork_survey_spec_miner_privacy_spec_report_7_2_multilingual_anchor_heuristics",
-      "label": "7.2 Multilingual Anchor Heuristics",
-      "_origin": "ast",
-      "community": 60,
-      "community_name": "R2: Edge Privacy & PII Sanitization Specification Report",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "7.2 multilingual anchor heuristics",
-      "source_file": ".agents/teamwork/survey_spec_miner_privacy/spec_report.md",
-      "source_location": "L192"
-    },
-    {
-      "id": "agents_teamwork_survey_spec_miner_privacy_spec_report_7_3_synthetic_token_generation",
-      "label": "7.3 Synthetic Token Generation",
-      "_origin": "ast",
-      "community": 60,
-      "community_name": "R2: Edge Privacy & PII Sanitization Specification Report",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "7.3 synthetic token generation",
-      "source_file": ".agents/teamwork/survey_spec_miner_privacy/spec_report.md",
-      "source_location": "L207"
-    },
-    {
-      "id": "agents_teamwork_survey_spec_miner_privacy_spec_report_7_formal_specification_patient_name_demographic_de_identification",
-      "label": "7. Formal Specification: Patient Name & Demographic De-identification",
-      "_origin": "ast",
-      "community": 60,
-      "community_name": "R2: Edge Privacy & PII Sanitization Specification Report",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "7. formal specification: patient name & demographic de-identification",
-      "source_file": ".agents/teamwork/survey_spec_miner_privacy/spec_report.md",
-      "source_location": "L177"
-    },
-    {
       "id": "agents_teamwork_survey_spec_miner_privacy_spec_report_8_1_cryptographic_integrity_framework",
       "label": "8.1 Cryptographic Integrity Framework",
       "_origin": "ast",
@@ -23890,18 +23898,6 @@
       "source_location": "L445"
     },
     {
-      "id": "agents_teamwork_survey_spec_miner_privacy_spec_report_negative_filter_doctor_safeguard",
-      "label": "Negative Filter (Doctor Safeguard):",
-      "_origin": "ast",
-      "community": 60,
-      "community_name": "R2: Edge Privacy & PII Sanitization Specification Report",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "negative filter (doctor safeguard):",
-      "source_file": ".agents/teamwork/survey_spec_miner_privacy/spec_report.md",
-      "source_location": "L203"
-    },
-    {
       "id": "agents_teamwork_survey_spec_miner_privacy_spec_report_r2_edge_privacy_pii_sanitization_specification_report",
       "label": "R2: Edge Privacy & PII Sanitization Specification Report",
       "_origin": "ast",
@@ -23912,17 +23908,6 @@
       "norm_label": "r2: edge privacy & pii sanitization specification report",
       "source_file": ".agents/teamwork/survey_spec_miner_privacy/spec_report.md",
       "source_location": "L1"
-    },
-    {
-      "id": "backend_app_rationale_151",
-      "label": "Endpoint to de-identify raw text before processing.",
-      "_origin": "ast",
-      "community": 60,
-      "community_name": "R2: Edge Privacy & PII Sanitization Specification Report",
-      "file_type": "rationale",
-      "norm_label": "endpoint to de-identify raw text before processing.",
-      "source_file": "backend/app.py",
-      "source_location": "L151"
     },
     {
       "id": "backend_app_rationale_91",
@@ -24596,6 +24581,17 @@
       "source_location": null
     },
     {
+      "id": "aarogyam_flutter_lib_backend_schema_util_firestore_util_fffirebasestruct",
+      "label": "FFFirebaseStruct",
+      "_origin": "ast",
+      "community": 66,
+      "community_name": "schema_util.dart",
+      "file_type": "code",
+      "norm_label": "fffirebasestruct",
+      "source_file": "aarogyam-flutter/lib/backend/schema/util/firestore_util.dart",
+      "source_location": "L16"
+    },
+    {
       "id": "aarogyam_flutter_lib_backend_schema_util_schema_util",
       "label": "schema_util.dart",
       "_origin": "ast",
@@ -24605,6 +24601,17 @@
       "norm_label": "schema_util.dart",
       "source_file": "aarogyam-flutter/lib/backend/schema/util/schema_util.dart",
       "source_location": null
+    },
+    {
+      "id": "aarogyam_flutter_lib_backend_schema_util_schema_util_basestruct",
+      "label": "BaseStruct",
+      "_origin": "ast",
+      "community": 66,
+      "community_name": "schema_util.dart",
+      "file_type": "code",
+      "norm_label": "basestruct",
+      "source_file": "aarogyam-flutter/lib/backend/schema/util/schema_util.dart",
+      "source_location": "L16"
     },
     {
       "id": "aarogyam_flutter_lib_backend_schema_util_schema_util_getcolorslist",
@@ -24662,6 +24669,61 @@
       "source_location": "L17"
     },
     {
+      "id": "aarogyam_flutter_lib_core_debug_debug_types_debugloggable",
+      "label": "DebugLoggable",
+      "_origin": "ast",
+      "community": 66,
+      "community_name": "schema_util.dart",
+      "file_type": "code",
+      "norm_label": "debugloggable",
+      "source_file": "aarogyam-flutter/lib/core/debug/debug_types.dart",
+      "source_location": "L9"
+    },
+    {
+      "id": "aarogyam_flutter_lib_flutter_flow_debug_util",
+      "label": "debug_util.dart",
+      "_origin": "ast",
+      "community": 66,
+      "community_name": "schema_util.dart",
+      "file_type": "code",
+      "norm_label": "debug_util.dart",
+      "source_file": "aarogyam-flutter/lib/flutter_flow/debug_util.dart",
+      "source_location": null
+    },
+    {
+      "id": "aarogyam_flutter_lib_flutter_flow_form_field_controller",
+      "label": "form_field_controller.dart",
+      "_origin": "ast",
+      "community": 66,
+      "community_name": "schema_util.dart",
+      "file_type": "code",
+      "norm_label": "form_field_controller.dart",
+      "source_file": "aarogyam-flutter/lib/flutter_flow/form_field_controller.dart",
+      "source_location": null
+    },
+    {
+      "id": "aarogyam_flutter_lib_flutter_flow_form_field_controller_formfieldcontroller",
+      "label": "FormFieldController",
+      "_origin": "ast",
+      "community": 66,
+      "community_name": "schema_util.dart",
+      "file_type": "code",
+      "norm_label": "formfieldcontroller",
+      "source_file": "aarogyam-flutter/lib/flutter_flow/form_field_controller.dart",
+      "source_location": "L6"
+    },
+    {
+      "id": "core_debug_debug_types_dart",
+      "label": "/core/debug/debug_types.dart",
+      "_origin": "ast",
+      "community": 66,
+      "community_name": "schema_util.dart",
+      "file_type": "code",
+      "norm_label": "/core/debug/debug_types.dart",
+      "source_file": null,
+      "source_location": null
+    },
+    {
       "id": "core_utils_firestore_helpers_dart",
       "label": "/core/utils/firestore_helpers.dart",
       "_origin": "ast",
@@ -24702,6 +24764,28 @@
       "community_name": "schema_util.dart",
       "file_type": "code",
       "norm_label": "package:from_css_color/from_css_color.dart",
+      "source_file": null,
+      "source_location": null
+    },
+    {
+      "id": "t",
+      "label": "T?",
+      "_origin": "ast",
+      "community": 66,
+      "community_name": "schema_util.dart",
+      "file_type": "code",
+      "norm_label": "t?",
+      "source_file": null,
+      "source_location": null
+    },
+    {
+      "id": "valuenotifier",
+      "label": "ValueNotifier",
+      "_origin": "ast",
+      "community": 66,
+      "community_name": "schema_util.dart",
+      "file_type": "code",
+      "norm_label": "valuenotifier",
       "source_file": null,
       "source_location": null
     },
@@ -26303,26 +26387,26 @@
       "source_location": "L5"
     },
     {
-      "id": "aarogyam_flutter_lib_flutter_flow_flutter_flow_checkbox_group_flutterflowcheckboxgroup",
-      "label": "FlutterFlowCheckboxGroup",
+      "id": "aarogyam_flutter_lib_custom_code_widgets_audio_player_widget_audioplayerwidget",
+      "label": "AudioPlayerWidget",
       "_origin": "ast",
       "community": 72,
       "community_name": "State",
       "file_type": "code",
-      "norm_label": "flutterflowcheckboxgroup",
-      "source_file": "aarogyam-flutter/lib/flutter_flow/flutter_flow_checkbox_group.dart",
-      "source_location": "L6"
+      "norm_label": "audioplayerwidget",
+      "source_file": "aarogyam-flutter/lib/custom_code/widgets/audio_player_widget.dart",
+      "source_location": "L10"
     },
     {
-      "id": "aarogyam_flutter_lib_flutter_flow_flutter_flow_checkbox_group_flutterflowcheckboxgroupstate",
-      "label": "_FlutterFlowCheckboxGroupState",
+      "id": "aarogyam_flutter_lib_custom_code_widgets_audio_player_widget_audioplayerwidgetstate",
+      "label": "_AudioPlayerWidgetState",
       "_origin": "ast",
       "community": 72,
       "community_name": "State",
       "file_type": "code",
-      "norm_label": "_flutterflowcheckboxgroupstate",
-      "source_file": "aarogyam-flutter/lib/flutter_flow/flutter_flow_checkbox_group.dart",
-      "source_location": "L45"
+      "norm_label": "_audioplayerwidgetstate",
+      "source_file": "aarogyam-flutter/lib/custom_code/widgets/audio_player_widget.dart",
+      "source_location": "L26"
     },
     {
       "id": "aarogyam_flutter_lib_flutter_flow_flutter_flow_util_safesetstateextension",
@@ -27348,17 +27432,6 @@
       "norm_label": "stop",
       "source_file": "aarogyam-flutter/lib/core/services/audio_service.dart",
       "source_location": "L82"
-    },
-    {
-      "id": "audioplayer",
-      "label": "AudioPlayer",
-      "_origin": "ast",
-      "community": 77,
-      "community_name": "audio_service.dart",
-      "file_type": "code",
-      "norm_label": "audioplayer",
-      "source_file": null,
-      "source_location": null
     },
     {
       "id": "package_audioplayers_audioplayers_dart",
@@ -28644,6 +28717,17 @@
       "community_name": "core.dart",
       "file_type": "code",
       "norm_label": "debug/debug_types.dart",
+      "source_file": null,
+      "source_location": null
+    },
+    {
+      "id": "library",
+      "label": "library",
+      "_origin": "ast",
+      "community": 83,
+      "community_name": "core.dart",
+      "file_type": "code",
+      "norm_label": "library",
       "source_file": null,
       "source_location": null
     },
@@ -30879,6 +30963,18 @@
       "type": "external"
     },
     {
+      "id": "os",
+      "label": "os",
+      "_origin": "semantic",
+      "community": 10,
+      "community_name": "test_app.py",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "os",
+      "source_file": "",
+      "type": "external"
+    },
+    {
       "id": "pytest",
       "label": "pytest",
       "_origin": "semantic",
@@ -30891,6 +30987,18 @@
       "type": "external"
     },
     {
+      "id": "sys",
+      "label": "sys",
+      "_origin": "semantic",
+      "community": 10,
+      "community_name": "test_app.py",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "sys",
+      "source_file": "",
+      "type": "external"
+    },
+    {
       "id": "unittest_mock",
       "label": "unittest_mock",
       "_origin": "semantic",
@@ -30899,6 +31007,54 @@
       "external": true,
       "file_type": "concept",
       "norm_label": "unittest_mock",
+      "source_file": "",
+      "type": "external"
+    },
+    {
+      "id": "flask",
+      "label": "flask",
+      "_origin": "semantic",
+      "community": 105,
+      "community_name": "test_dadi_ma.py",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "flask",
+      "source_file": "",
+      "type": "external"
+    },
+    {
+      "id": "logging",
+      "label": "logging",
+      "_origin": "semantic",
+      "community": 105,
+      "community_name": "test_dadi_ma.py",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "logging",
+      "source_file": "",
+      "type": "external"
+    },
+    {
+      "id": "re",
+      "label": "re",
+      "_origin": "semantic",
+      "community": 105,
+      "community_name": "test_dadi_ma.py",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "re",
+      "source_file": "",
+      "type": "external"
+    },
+    {
+      "id": "typing",
+      "label": "typing",
+      "_origin": "semantic",
+      "community": 105,
+      "community_name": "test_dadi_ma.py",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "typing",
       "source_file": "",
       "type": "external"
     },
@@ -31012,34 +31168,10 @@
       "type": "external"
     },
     {
-      "id": "os",
-      "label": "os",
-      "_origin": "semantic",
-      "community": 161,
-      "community_name": "download_granite.py",
-      "external": true,
-      "file_type": "concept",
-      "norm_label": "os",
-      "source_file": "",
-      "type": "external"
-    },
-    {
-      "id": "sys",
-      "label": "sys",
-      "_origin": "semantic",
-      "community": 161,
-      "community_name": "download_granite.py",
-      "external": true,
-      "file_type": "concept",
-      "norm_label": "sys",
-      "source_file": "",
-      "type": "external"
-    },
-    {
       "id": "base64",
       "label": "base64",
       "_origin": "semantic",
-      "community": 34,
+      "community": 50,
       "community_name": "app.py",
       "external": true,
       "file_type": "concept",
@@ -31051,7 +31183,7 @@
       "id": "dotenv",
       "label": "dotenv",
       "_origin": "semantic",
-      "community": 34,
+      "community": 50,
       "community_name": "app.py",
       "external": true,
       "file_type": "concept",
@@ -31060,22 +31192,10 @@
       "type": "external"
     },
     {
-      "id": "flask",
-      "label": "flask",
-      "_origin": "semantic",
-      "community": 34,
-      "community_name": "app.py",
-      "external": true,
-      "file_type": "concept",
-      "norm_label": "flask",
-      "source_file": "",
-      "type": "external"
-    },
-    {
       "id": "flask_cors",
       "label": "flask_cors",
       "_origin": "semantic",
-      "community": 34,
+      "community": 50,
       "community_name": "app.py",
       "external": true,
       "file_type": "concept",
@@ -31084,50 +31204,14 @@
       "type": "external"
     },
     {
-      "id": "logging",
-      "label": "logging",
-      "_origin": "semantic",
-      "community": 34,
-      "community_name": "app.py",
-      "external": true,
-      "file_type": "concept",
-      "norm_label": "logging",
-      "source_file": "",
-      "type": "external"
-    },
-    {
-      "id": "re",
-      "label": "re",
-      "_origin": "semantic",
-      "community": 34,
-      "community_name": "app.py",
-      "external": true,
-      "file_type": "concept",
-      "norm_label": "re",
-      "source_file": "",
-      "type": "external"
-    },
-    {
       "id": "requests",
       "label": "requests",
       "_origin": "semantic",
-      "community": 34,
+      "community": 50,
       "community_name": "app.py",
       "external": true,
       "file_type": "concept",
       "norm_label": "requests",
-      "source_file": "",
-      "type": "external"
-    },
-    {
-      "id": "typing",
-      "label": "typing",
-      "_origin": "semantic",
-      "community": 34,
-      "community_name": "app.py",
-      "external": true,
-      "file_type": "concept",
-      "norm_label": "typing",
       "source_file": "",
       "type": "external"
     },
@@ -38407,6 +38491,72 @@
       "confidence_score": 1.0,
       "source_file": ".agents/teamwork/survey_spec_miner_privacy/DISPATCH.md",
       "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "agents_teamwork_survey_spec_miner_privacy_handoff",
+      "target": "agents_teamwork_survey_spec_miner_privacy_handoff_handoff_report_privacy_spec_miner_r2",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agents/teamwork/survey_spec_miner_privacy/handoff.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "agents_teamwork_survey_spec_miner_privacy_handoff_handoff_report_privacy_spec_miner_r2",
+      "target": "agents_teamwork_survey_spec_miner_privacy_handoff_2_logic_chain",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agents/teamwork/survey_spec_miner_privacy/handoff.md",
+      "source_location": "L16",
+      "weight": 1.0
+    },
+    {
+      "source": "agents_teamwork_survey_spec_miner_privacy_handoff_handoff_report_privacy_spec_miner_r2",
+      "target": "agents_teamwork_survey_spec_miner_privacy_handoff_3_caveats",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agents/teamwork/survey_spec_miner_privacy/handoff.md",
+      "source_location": "L22",
+      "weight": 1.0
+    },
+    {
+      "source": "agents_teamwork_survey_spec_miner_privacy_handoff_handoff_report_privacy_spec_miner_r2",
+      "target": "agents_teamwork_survey_spec_miner_privacy_handoff_4_conclusion",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agents/teamwork/survey_spec_miner_privacy/handoff.md",
+      "source_location": "L26",
+      "weight": 1.0
+    },
+    {
+      "source": "agents_teamwork_survey_spec_miner_privacy_handoff_handoff_report_privacy_spec_miner_r2",
+      "target": "agents_teamwork_survey_spec_miner_privacy_handoff_1_observation",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agents/teamwork/survey_spec_miner_privacy/handoff.md",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "agents_teamwork_survey_spec_miner_privacy_handoff_handoff_report_privacy_spec_miner_r2",
+      "target": "agents_teamwork_survey_spec_miner_privacy_handoff_5_verification_method",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".agents/teamwork/survey_spec_miner_privacy/handoff.md",
+      "source_location": "L35",
       "weight": 1.0
     },
     {
@@ -69352,6 +69502,18 @@
       "context": "mask_pii()",
       "source_file": ".agents/teamwork/survey_spec_miner_privacy/BRIEFING.md",
       "source_location": "L34",
+      "weight": 1.0
+    },
+    {
+      "source": "agents_teamwork_survey_spec_miner_privacy_handoff_1_observation",
+      "target": "backend_app_mask_pii",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "context": "mask_pii()",
+      "source_file": ".agents/teamwork/survey_spec_miner_privacy/handoff.md",
+      "source_location": "L14",
       "weight": 1.0
     },
     {

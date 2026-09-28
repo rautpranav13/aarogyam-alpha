@@ -1,13 +1,13 @@
 # Graph Report - aarogyam  (2026-09-28)
 
 ## Corpus Check
-- 185 files · ~413,885 words
+- 186 files · ~415,018 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 56 file(s) not represented in the graph (top: .xml 9, (none) 7, .ttf 6)
 
 ## Summary
-- 2796 nodes · 3470 edges · 171 communities (132 shown, 39 thin omitted)
-- Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 47 edges (avg confidence: 0.94)
+- 2803 nodes · 3477 edges · 167 communities (131 shown, 36 thin omitted)
+- Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 48 edges (avg confidence: 0.94)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
@@ -50,7 +50,7 @@
 - a_i_disclaimer_widget.dart
 - auth_util.dart
 - base_model.dart
-- app.py
+- google_auth.dart
 - set_reminder_widget.dart
 - set_reminder_model.dart
 - allergies_widget.dart
@@ -66,7 +66,7 @@
 - auth_welcome_screen_widget.dart
 - read.dart
 - SQLite Database Manager
-- digitize_rx
+- app.py
 - flutter_flow_icon_button.dart
 - package:flutter/material.dart
 - report_sanner_model.dart
@@ -117,7 +117,7 @@
 - Launch Screen Assets
 - iOS Bridging Header
 - API Call Options
-- user_info_model.dart
+- Handoff Report: Privacy Spec Miner (R2)
 - Dynamic Model Debugging
 - Function Validation
 - Generic Function Validation
@@ -135,7 +135,7 @@
 - Video Asset Management
 - iOS Application Icons
 - Web Launcher Icons
-- BaseStruct
+- 7. Formal Specification: Patient Name & Demographic De-identification
 - Vision AI Model
 - Nullable Boolean Type
 - Root Application Route
@@ -172,16 +172,12 @@
 - 9.1 Endpoint: `POST /api/redact-pii`
 - 6. Formal Specification: Phone Number Sanitization
 - Progress Log - Project Orchestrator
-- download_granite.py
+- StatelessWidget
 - sqlite_row.dart
-- T?
 - Progress
 - Progress: Client Architecture Survey
 - Progress — Privacy Spec Miner
 - Dispatch Log
-- QueryExtension
-- UsersRecordDocumentEquality
-- DateTime?
 
 ## God Nodes (most connected - your core abstractions)
 1. `VernacularService` - 30 edges
@@ -189,23 +185,23 @@
 3. `BaseModel` - 23 edges
 4. ``backend/tests/test_app.py`:` - 14 edges
 5. `digitize_rx()` - 13 edges
-6. `verify_strip()` - 12 edges
-7. `R2: Edge Privacy & PII Sanitization Specification Report` - 12 edges
-8. `AuthManager` - 11 edges
-9. `mask_pii()` - 11 edges
+6. `mask_pii()` - 12 edges
+7. `verify_strip()` - 12 edges
+8. `R2: Edge Privacy & PII Sanitization Specification Report` - 12 edges
+9. `AuthManager` - 11 edges
 10. `BRIEFING — 2026-09-28T00:57:40Z` - 11 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `2. Logic Chain` --references--> `mask_pii()`  [INFERRED]
-  .agents/teamwork/survey_explorer_backend/handoff.md → backend/app.py
-- `Investigation State` --references--> `digitize_rx()`  [INFERRED]
-  .agents/teamwork/survey_explorer_backend/BRIEFING.md → backend/app.py
 - `3.3 Multimodal Prompt Formulation` --references--> `_clean_base64()`  [INFERRED]
   .agents/teamwork/survey_explorer_backend/survey_report.md → backend/app.py
-- `4. Conclusion` --references--> `mask_pii()`  [INFERRED]
+- `Key Decisions Made` --references--> `mask_pii()`  [INFERRED]
+  .agents/teamwork/survey_spec_miner_privacy/BRIEFING.md → backend/app.py
+- `1. Observation` --references--> `mask_pii()`  [INFERRED]
+  .agents/teamwork/survey_spec_miner_privacy/handoff.md → backend/app.py
+- `Investigation State` --references--> `digitize_rx()`  [INFERRED]
+  .agents/teamwork/survey_explorer_backend/BRIEFING.md → backend/app.py
+- `2. Logic Chain` --references--> `mask_pii()`  [INFERRED]
   .agents/teamwork/survey_explorer_backend/handoff.md → backend/app.py
-- `7.1 Gap Analysis` --references--> `mask_pii()`  [INFERRED]
-  .agents/teamwork/survey_explorer_backend/survey_report.md → backend/app.py
 
 ## Import Cycles
 - None detected.
@@ -215,7 +211,7 @@
 - **IBM Service Integration** — ibm_watsonx_ai, ibm_watson_tts, backend_requirements [EXTRACTED 0.90]
 - **Aarogyam 5-Step Core Flow** — backend_api_digitize_rx, backend_api_vernacular_tts, sqlite_dbaarogyam, backend_api_verify_strip [EXTRACTED 1.00]
 
-## Communities (171 total, 39 thin omitted)
+## Communities (167 total, 36 thin omitted)
 
 ### Community 0 - "app_localizations.dart"
 Cohesion: 0.01
@@ -258,12 +254,12 @@ Cohesion: 0.04
 Nodes (47): appNavigatorKey, appState, _buildPage, clearRedirectLocation, createRouter, errorRoute, getCurrentLocation, getRedirectLocation (+39 more)
 
 ### Community 10 - "test_app.py"
-Cohesion: 0.08
-Nodes (34): `backend/tests/test_app.py`:, client(), fixture, Unit and integration tests for the Project Alpha production backend. Run with:…, Verify /api/digitize-rx successfully parses prescriptions when WatsonX is…, Verify /api/verify-strip returns 400 when missing required fields., Verify /api/verify-strip returns structured verification when WatsonX is…, Verify /api/verify-strip triggers BLOCK_CONSUMPTION when packaging does not… (+26 more)
+Cohesion: 0.07
+Nodes (37): `backend/tests/test_app.py`:, Utility to download and cache IBM Granite Vision 3.2 2B weights locally from…, client(), fixture, Unit and integration tests for the Project Alpha production backend. Run with:…, Verify /api/digitize-rx successfully parses prescriptions when WatsonX is…, Verify /api/verify-strip returns 400 when missing required fields., Verify /api/verify-strip returns structured verification when WatsonX is… (+29 more)
 
 ### Community 11 - "users_record.dart"
 Cohesion: 0.05
-Nodes (38): collection, _createdTime, createUsersRecordData, _displayName, _email, equals, firestoreData, fromSnapshot (+30 more)
+Nodes (42): collection, _createdTime, createUsersRecordData, _displayName, _email, equals, firestoreData, fromSnapshot (+34 more)
 
 ### Community 12 - "allergies_model.dart"
 Cohesion: 0.08
@@ -274,8 +270,8 @@ Cohesion: 0.06
 Nodes (35): beginPhoneAuth, createAccountWithEmail, deleteUser, handlePhoneAuthStateChanges, onCodeSent, phoneAuthError, phoneAuthManager, phoneAuthVerificationCode (+27 more)
 
 ### Community 14 - "backend.dart"
-Cohesion: 0.06
-Nodes (35): builder, data, dataStream, docSnapshot, docSnapshotStream, FFFirestorePage, filterArrayContainsAny, filterIn (+27 more)
+Cohesion: 0.05
+Nodes (37): builder, data, dataStream, docSnapshot, docSnapshotStream, FFFirestorePage, filterArrayContainsAny, filterIn (+29 more)
 
 ### Community 15 - "main.dart"
 Cohesion: 0.06
@@ -311,7 +307,7 @@ Nodes (23): action, ApiPagingParams, call, detectedText, DigitizeRxAPICall, esca
 
 ### Community 23 - "flutter_flow_checkbox_group.dart"
 Cohesion: 0.09
-Nodes (21): activeColor, build, checkboxBorderColor, checkboxBorderRadius, checkColor, controller, createState, initialized (+13 more)
+Nodes (23): activeColor, build, checkboxBorderColor, checkboxBorderRadius, checkColor, controller, createState, FlutterFlowCheckboxGroup (+15 more)
 
 ### Community 24 - "reminder_page_widget.dart"
 Cohesion: 0.14
@@ -322,8 +318,8 @@ Cohesion: 0.10
 Nodes (21): dispose, initState, ReminderListExpandedModel, switchRemainderModels, toWidgetClassDebugData, createState, didChangeDependencies, didPop (+13 more)
 
 ### Community 26 - "package:flutter/foundation.dart"
-Cohesion: 0.14
-Nodes (15): auth, credential, _googleSignIn, googleSignInFunc, signOutWithGoogle, extractMedicationDetails, textAudio, updateMedicationsDatabase (+7 more)
+Cohesion: 0.26
+Nodes (9): extractMedicationDetails, textAudio, updateMedicationsDatabase, dart:convert, dart:io, package:flutter/foundation.dart, package:html/parser.dart, package:path_provider/path_provider.dart (+1 more)
 
 ### Community 27 - "Debug Data Types"
 Cohesion: 0.09
@@ -334,8 +330,8 @@ Cohesion: 0.14
 Nodes (15): ReminderEmptyModel, createState, didChangeDependencies, didPop, didPopNext, didPush, didPushNext, dispose (+7 more)
 
 ### Community 29 - "switch_remainder_widget.dart"
-Cohesion: 0.11
-Nodes (19): SwitchRemainderModel, build, createState, didChangeDependencies, didPop, didPopNext, didPush, didPushNext (+11 more)
+Cohesion: 0.08
+Nodes (26): SwitchRemainderModel, build, createState, didChangeDependencies, didPop, didPopNext, didPush, didPushNext (+18 more)
 
 ### Community 30 - "reminder_list_collapsed_widget.dart"
 Cohesion: 0.10
@@ -350,12 +346,12 @@ Cohesion: 0.09
 Nodes (21): authenticatedUserStream, _authManager, build, builder, currentJwtToken, currentPhoneNumber, currentUserDisplayName, currentUserDocument (+13 more)
 
 ### Community 33 - "base_model.dart"
-Cohesion: 0.10
-Nodes (19): _context, debugBackendQueries, debugGeneratorVariables, dispose, init, initState, _isInitialized, isRouteVisible (+11 more)
+Cohesion: 0.11
+Nodes (18): _context, debugBackendQueries, debugGeneratorVariables, dispose, init, initState, _isInitialized, isRouteVisible (+10 more)
 
-### Community 34 - "app.py"
-Cohesion: 0.09
-Nodes (25): _get_demo_rx_response(), _get_demo_verify_response(), health(), home(), Aarogyam: Project Alpha — Consolidated Production Gateway Powered by IBM…, Health check endpoint returning service status, model configuration, and…, Returns a clinical dataset for offline resilience and demonstration., Fallback verifier logic. (+17 more)
+### Community 34 - "google_auth.dart"
+Cohesion: 0.29
+Nodes (6): auth, credential, _googleSignIn, googleSignInFunc, signOutWithGoogle, package:google_sign_in/google_sign_in.dart
 
 ### Community 35 - "set_reminder_widget.dart"
 Cohesion: 0.10
@@ -383,7 +379,7 @@ Nodes (17): appleCredential, appleSignIn, bytes, charset, digest, displayName, g
 
 ### Community 41 - "audio_player_widget.dart"
 Cohesion: 0.15
-Nodes (13): _audioPlayer, AudioPlayerWidget, _AudioPlayerWidgetState, build, createState, dispose, filePath, height (+5 more)
+Nodes (12): _audioPlayer, build, createState, dispose, filePath, height, initState, _isLoading (+4 more)
 
 ### Community 42 - "Firebase User Provider"
 Cohesion: 0.12
@@ -417,13 +413,13 @@ Nodes (11): database, hour, id, message, minute, performReadmedications, query, 
 Cohesion: 0.12
 Nodes (15): _database, initialize, insertReminder, _instance, readmedications, SQLiteManager, updateremainder, updateturnedon (+7 more)
 
-### Community 50 - "digitize_rx"
-Cohesion: 0.12
-Nodes (24): 1. Observation, 2. Logic Chain, 3. Caveats, 4. Conclusion, 5. Verification Method, Handoff Report: Survey Explorer - Backend Vision Architecture, 3.1 SDK & Model Configuration, 3.2 Client Instantiation (+16 more)
+### Community 50 - "app.py"
+Cohesion: 0.10
+Nodes (32): 1. Observation, 4. Conclusion, 3.4 Fallback Execution Path, 5.3 Exception Handling Hierarchy, 7.1 Gap Analysis, _clean_base64(), digitize_rx(), _get_demo_rx_response() (+24 more)
 
 ### Community 51 - "flutter_flow_icon_button.dart"
-Cohesion: 0.10
-Nodes (19): AuthUserStreamWidget, borderColor, borderRadius, borderWidth, build, buttonSize, disabledColor, fillColor (+11 more)
+Cohesion: 0.12
+Nodes (15): borderColor, borderRadius, borderWidth, build, buttonSize, disabledColor, fillColor, hoverColor (+7 more)
 
 ### Community 52 - "package:flutter/material.dart"
 Cohesion: 0.16
@@ -446,8 +442,8 @@ Cohesion: 0.13
 Nodes (14): hour, id, medications, message, minute, performInsertReminder, performUpdateremainder, performUpdateturnedon (+6 more)
 
 ### Community 57 - "List"
-Cohesion: 0.18
-Nodes (11): _WhereMapExtension, core_extensions, FFListNullsExtension, FFMapNullsExtension, withoutNulls, ListAddExtension, ListDivideExtension, Iterable (+3 more)
+Cohesion: 0.20
+Nodes (10): _WhereMapExtension, core_extensions, FFListNullsExtension, FFMapNullsExtension, withoutNulls, ListAddExtension, ListDivideExtension, Iterable (+2 more)
 
 ### Community 58 - "actions/index.dart"
 Cohesion: 0.33
@@ -458,8 +454,8 @@ Cohesion: 0.14
 Nodes (13): /authentication/auth_create/auth_create_widget.dart, /authentication/auth_forgot_password/auth_forgot_password_widget.dart, /authentication/auth_home/auth_home_widget.dart, /authentication/auth_login/auth_login_widget.dart, /authentication/auth_user_info/auth_user_info_widget.dart, /authentication/auth_welcome_screen/auth_welcome_screen_widget.dart, /main_pages/blister_verifier/blister_verifier_widget.dart, /main_pages/dadi_ma/dadi_ma_widget.dart (+5 more)
 
 ### Community 60 - "R2: Edge Privacy & PII Sanitization Specification Report"
-Cohesion: 0.09
-Nodes (25): Key Decisions Made, 10.1 Edge Client Processing Flow (`aarogyam-flutter`), 10.2 Backend Fallback Defense-in-Depth (`backend/app.py`), 10. Edge vs. Backend Architecture & Execution Protocol, 11. Verification & Testing Requirements (R4 Traceability), 1. Executive Summary & Objective, 2.1 Existing Codebase Findings, 2. Current Baseline & Architectural Gap Analysis (+17 more)
+Cohesion: 0.10
+Nodes (21): 2. Logic Chain, 3. Caveats, 5. Verification Method, Handoff Report: Survey Explorer - Backend Vision Architecture, 10.1 Edge Client Processing Flow (`aarogyam-flutter`), 10.2 Backend Fallback Defense-in-Depth (`backend/app.py`), 10. Edge vs. Backend Architecture & Execution Protocol, 11. Verification & Testing Requirements (R4 Traceability) (+13 more)
 
 ### Community 61 - "auth_login_widget.dart"
 Cohesion: 0.20
@@ -482,8 +478,8 @@ Cohesion: 0.18
 Nodes (12): AuthCreateModel, AuthCreateWidget, _AuthCreateWidgetState, build, createState, dispose, _formKey, initState (+4 more)
 
 ### Community 66 - "schema_util.dart"
-Cohesion: 0.20
-Nodes (9): getColorsList, getSchemaColor, serialize, toDebugSerializableMap, toSerializableMap, /core/utils/firestore_helpers.dart, /core/utils/list_extensions.dart, package:collection/collection.dart (+1 more)
+Cohesion: 0.11
+Nodes (16): FFFirebaseStruct, BaseStruct, getColorsList, getSchemaColor, serialize, toDebugSerializableMap, toSerializableMap, DebugLoggable (+8 more)
 
 ### Community 67 - "types/uploaded_file.dart"
 Cohesion: 0.17
@@ -507,7 +503,7 @@ Nodes (58): afternoon, afternoonTime, audioBase64, clinicHospital, confidenceSco
 
 ### Community 72 - "State"
 Cohesion: 0.18
-Nodes (15): BaseModel, FlutterFlowCheckboxGroup, _FlutterFlowCheckboxGroupState, SafeSetStateExtension, DadiMaModel, DadiMaWidget, _DadiMaWidgetState, ReminderPageModel (+7 more)
+Nodes (15): BaseModel, AudioPlayerWidget, _AudioPlayerWidgetState, SafeSetStateExtension, DadiMaModel, DadiMaWidget, _DadiMaWidgetState, ReminderPageModel (+7 more)
 
 ### Community 73 - "medication_storage_service.dart"
 Cohesion: 0.07
@@ -526,8 +522,8 @@ Cohesion: 0.20
 Nodes (9): getCurrentTimestamp, getJsonField, isForList, null, _parseJsonPath, path, regex, segments (+1 more)
 
 ### Community 77 - "audio_service.dart"
-Cohesion: 0.12
-Nodes (14): getStreamedResponse, AudioService, _currentlyPlayingText, dispose, _getBackendUrl, instance, _isPlaying, _player (+6 more)
+Cohesion: 0.13
+Nodes (13): getStreamedResponse, AudioService, _currentlyPlayingText, dispose, _getBackendUrl, instance, _isPlaying, _player (+5 more)
 
 ### Community 78 - "Firebase Storage Manager"
 Cohesion: 0.25
@@ -550,8 +546,8 @@ Cohesion: 0.08
 Nodes (24): actionRequired, audioText, AyurvedicRemedy, category, DadiMaChatMessage, DadiMaDailyGuidance, DadiMaSender, description (+16 more)
 
 ### Community 83 - "core.dart"
-Cohesion: 0.25
-Nodes (7): core, base_model.dart, debug/debug_types.dart, types/lat_lng.dart, types/uploaded_file.dart, utils/firestore_helpers.dart, utils/list_extensions.dart
+Cohesion: 0.22
+Nodes (8): core, base_model.dart, debug/debug_types.dart, library, types/lat_lng.dart, types/uploaded_file.dart, utils/firestore_helpers.dart, utils/list_extensions.dart
 
 ### Community 84 - "Localization Delegates"
 Cohesion: 0.29
@@ -597,25 +593,25 @@ Nodes (23): BlisterVerificationResult, MedicineItem, BlisterVerifierModel, Blist
 Cohesion: 0.67
 Nodes (3): App Launcher Icon, Flutter Client Documentation, Contributing Guide
 
-### Community 101 - "user_info_model.dart"
-Cohesion: 0.25
-Nodes (7): countControllerValue1, countControllerValue2, countControllerValue3, dropDownValue, initState, int?, user_info_widget.dart
+### Community 101 - "Handoff Report: Privacy Spec Miner (R2)"
+Cohesion: 0.29
+Nodes (6): 1. Observation, 2. Logic Chain, 3. Caveats, 4. Conclusion, 5. Verification Method, Handoff Report: Privacy Spec Miner (R2)
 
 ### Community 105 - "test_dadi_ma.py"
-Cohesion: 0.15
-Nodes (20): `backend/tests/test_dadi_ma.py`:, check_emergency_red_flags(), dadi_ma_remedies(), format_dadi_ma_response(), Any, Finds matching home remedies based on keywords., Offline / Fallback Conversational Engine for Dadi-Ma. Generates warm,…, Checks if user query contains life-threatening red-flag symptoms using regex… (+12 more)
+Cohesion: 0.10
+Nodes (31): `backend/tests/test_dadi_ma.py`:, check_emergency_red_flags(), dadi_ma_chat(), dadi_ma_daily_greeting(), dadi_ma_explain_prescription(), dadi_ma_remedies(), format_dadi_ma_response(), get_dadi_ma_greeting() (+23 more)
 
-### Community 124 - "BaseStruct"
-Cohesion: 0.67
-Nodes (3): FFFirebaseStruct, BaseStruct, DebugLoggable
+### Community 124 - "7. Formal Specification: Patient Name & Demographic De-identification"
+Cohesion: 0.40
+Nodes (5): 7.1 Clinical Entity Differentiation, 7.2 Multilingual Anchor Heuristics, 7.3 Synthetic Token Generation, 7. Formal Specification: Patient Name & Demographic De-identification, Negative Filter (Doctor Safeguard):
 
 ### Community 128 - "/flutter_flow/flutter_flow_util.dart"
 Cohesion: 0.22
 Nodes (7): a_i_disclaimer_widget.dart, initState, toWidgetClassDebugData, initState, toWidgetClassDebugData, /flutter_flow/flutter_flow_util.dart, reminder_empty_widget.dart
 
 ### Community 129 - "Aarogyam Backend & Cloud Vision Architecture Survey Report"
-Cohesion: 0.13
-Nodes (14): 1. Executive Summary, 2.1 Core Gateway Endpoints (`backend/app.py`), 2.2 Conversational & Clinical Blueprint (`backend/dadi_ma_service.py`), 2. Existing Vision & Multimodal Endpoints, 5.1 Timeout Configuration, 5.2 Markdown Code Fence Stripping, 5. Error Handling, Network Timeouts, and Resilience, 6.1 Test Execution Status (+6 more)
+Cohesion: 0.11
+Nodes (18): 1. Executive Summary, 2.1 Core Gateway Endpoints (`backend/app.py`), 2.2 Conversational & Clinical Blueprint (`backend/dadi_ma_service.py`), 2. Existing Vision & Multimodal Endpoints, 3.1 SDK & Model Configuration, 3.2 Client Instantiation, 3.3 Multimodal Prompt Formulation, 3. IBM Granite Vision & WatsonX Integration Architecture (+10 more)
 
 ### Community 130 - "package:flutter_dotenv/flutter_dotenv.dart"
 Cohesion: 0.18
@@ -694,8 +690,8 @@ Cohesion: 0.25
 Nodes (7): 2026-09-28T00:57:33Z, Authoritative Inputs, Context, Objective, Scope & Instructions, Task Dispatch: Survey Explorer - Flutter Client Architecture, Working Directory
 
 ### Community 154 - "BRIEFING — 2026-09-28T00:57:33Z"
-Cohesion: 0.25
-Nodes (7): Artifact Index, BRIEFING — 2026-09-28T00:57:33Z, Current Parent, 🔒 Key Constraints, Mission, 🔒 My Identity, Task Summary
+Cohesion: 0.22
+Nodes (8): Artifact Index, BRIEFING — 2026-09-28T00:57:33Z, Current Parent, 🔒 Key Constraints, Key Decisions Made, Mission, 🔒 My Identity, Task Summary
 
 ### Community 155 - "Task Dispatch: Spec Miner - Edge Privacy & PII Sanitization Specifications"
 Cohesion: 0.25
@@ -721,17 +717,13 @@ Nodes (6): 6.1 Format & Structural Specification, 6.2 Regex Patterns, 6.3 Redact
 Cohesion: 0.40
 Nodes (4): Active Subagents, Current Status, Iteration Status, Progress Log - Project Orchestrator
 
-### Community 161 - "download_granite.py"
-Cohesion: 0.40
-Nodes (3): Utility to download and cache IBM Granite Vision 3.2 2B weights locally from…, os, sys
+### Community 161 - "StatelessWidget"
+Cohesion: 0.50
+Nodes (4): AuthUserStreamWidget, FlutterFlowIconButton, FFButtonWidget, StatelessWidget
 
 ### Community 162 - "sqlite_row.dart"
 Cohesion: 0.50
 Nodes (3): ReadmedicationsRow, data, SqliteRow
-
-### Community 163 - "T?"
-Cohesion: 0.50
-Nodes (3): FormFieldController, T?, ValueNotifier
 
 ### Community 164 - "Progress"
 Cohesion: 0.50
@@ -746,19 +738,19 @@ Cohesion: 0.50
 Nodes (3): Completed, Progress — Privacy Spec Miner, Status
 
 ## Knowledge Gaps
-- **1936 isolated node(s):** `qs`, `_unauthenticatedResponse`, `functions`, `admin`, `name` (+1931 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 2246 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
-- **39 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **1940 isolated node(s):** `qs`, `_unauthenticatedResponse`, `functions`, `admin`, `name` (+1935 more)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 2251 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **36 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `VernacularService` connect `VernacularService` to `dadi_ma_widget_test.dart`, `State`, `multilingual_screens_test.dart`, `package:shared_preferences/shared_preferences.dart`, `reminder_page_widget_test.dart`, `dadi_ma_widget.dart`, `main.dart`, `vernacular_service.dart`, `report_sanner_widget_test.dart`, `home_page_widget.dart`, `home_page_widget_test.dart`, `reminder_page_widget.dart`, `report_sanner_widget.dart`, `blister_verifier_widget.dart`?**
-  _High betweenness centrality (0.007) - this node is a cross-community bridge._
 - **Why does `MLKitOcrService` connect `mlkit_ocr_service.dart` to `report_sanner_widget.dart`, `blister_verifier_widget.dart`?**
   _High betweenness centrality (0.007) - this node is a cross-community bridge._
+- **Why does `VernacularService` connect `VernacularService` to `dadi_ma_widget_test.dart`, `State`, `multilingual_screens_test.dart`, `package:shared_preferences/shared_preferences.dart`, `reminder_page_widget_test.dart`, `dadi_ma_widget.dart`, `main.dart`, `vernacular_service.dart`, `report_sanner_widget_test.dart`, `home_page_widget.dart`, `home_page_widget_test.dart`, `reminder_page_widget.dart`, `report_sanner_widget.dart`, `blister_verifier_widget.dart`?**
+  _High betweenness centrality (0.007) - this node is a cross-community bridge._
 - **What connects `qs`, `_unauthenticatedResponse`, `functions` to the rest of the system?**
-  _1936 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _1940 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `app_localizations.dart` be split into smaller, more focused modules?**
   _Cohesion score 0.013793103448275862 - nodes in this community are weakly interconnected._
 - **Should `app_localizations_en.dart` be split into smaller, more focused modules?**

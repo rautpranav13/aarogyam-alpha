@@ -10,8 +10,8 @@ import 'package:provider/provider.dart';
 import 'package:aarogyam/core/services/vernacular_service.dart';
 
 Widget _wrapWithMaterial(Widget child) {
-  return ChangeNotifierProvider<VernacularService>(
-    create: (_) => VernacularService(),
+  return ChangeNotifierProvider<VernacularService>.value(
+    value: VernacularService(),
     child: MaterialApp(
       home: child,
       theme: ThemeData(colorSchemeSeed: const Color(0xFF00897B)),
@@ -41,20 +41,24 @@ FIRST_AID_API_URL=https://test.firstaid.api
 
   group('AuthWelcomeScreen', () {
     testWidgets('renders without crashing', (WidgetTester tester) async {
+      tester.view.physicalSize = const Size(1080, 2400);
+      tester.view.devicePixelRatio = 1.0;
+      addTearDown(tester.view.resetPhysicalSize);
+
       await tester.pumpWidget(_wrapWithMaterial(const AuthWelcomeScreenWidget()));
       await tester.pump();
-      // Should not throw
       expect(find.byType(AuthWelcomeScreenWidget), findsOneWidget);
     });
 
     testWidgets('has a sign-in button', (WidgetTester tester) async {
+      tester.view.physicalSize = const Size(1080, 2400);
+      tester.view.devicePixelRatio = 1.0;
+      addTearDown(tester.view.resetPhysicalSize);
+
       await tester.pumpWidget(_wrapWithMaterial(const AuthWelcomeScreenWidget()));
       await tester.pump();
-      // Look for any FilledButton, ElevatedButton, OutlinedButton, or TextButton
-      final buttons = find.byWidgetPredicate(
-        (w) => w is ButtonStyleButton,
-      );
-      expect(buttons, findsAtLeastNWidgets(1));
+      expect(find.byType(AuthWelcomeScreenWidget), findsOneWidget);
+      expect(find.byType(FilledButton), findsWidgets);
     });
   });
 }

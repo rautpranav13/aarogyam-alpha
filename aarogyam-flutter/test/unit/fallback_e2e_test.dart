@@ -101,14 +101,17 @@ class EdgePiiOracle {
     });
 
     // 2. Mobile (Indian 10-digit starting with 6-9)
-    final phoneRegex = RegExp(r'(?:\+91[\-\s]?|0)?([6-9]\d{9})\b');
+    final phoneRegex = RegExp(r'(?:\+91[\s-]?|0)?([6-9]\d{9})\b');
     masked = masked.replaceAllMapped(phoneRegex, (match) {
       phoneCount++;
       return '[MASKED-PHONE-XXXX]';
     });
 
     // 3. Patient Name
-    final nameRegex = RegExp(r'(?i)(?:patient(?:\s+name)?|मरीज(?:\s+का\s+नाम)?|रुग्णाचे\s+नाव)\s*[:\-\s]\s*([A-Za-z\s]+?)(?=,|\n|Age|Sex|Gender|$)');
+    final nameRegex = RegExp(
+      r'(?:patient(?:\s+name)?|pt\.?\s*name|pt\b|मरीज(?:\s+का\s+नाम)?|रुग्णाचे\s+नाव)\s*[:\s-]\s*([A-Za-z\s]+?)(?=,|\n|Age|Sex|Gender|UID|Aadhaar|\.|$)',
+      caseSensitive: false,
+    );
     masked = masked.replaceAllMapped(nameRegex, (match) {
       final candidateName = match.group(1)!.trim();
       if (candidateName.contains('Dr.') || candidateName.contains('Doctor')) {
@@ -252,11 +255,11 @@ void main() {
       final vern = VernacularService();
       await vern.initialize();
 
-      expect(vern.t('morningSlot'), equals('सुबह'));
+      expect(vern.slotName('Morning'), contains('सुबह'));
       await vern.setLanguage(AppLanguage.marathi);
-      expect(vern.t('morningSlot'), equals('सकाळ'));
+      expect(vern.slotName('Morning'), contains('सकाळ'));
       await vern.setLanguage(AppLanguage.english);
-      expect(vern.t('morningSlot'), equals('Morning'));
+      expect(vern.slotName('Morning'), equals('Morning'));
     });
 
     test('F5: Verification result fallback preserves safe error handling for missing target', () {
@@ -353,12 +356,10 @@ void main() {
       final record = PrescriptionRecord(
         id: 'rx_test_1',
         doctorName: 'Dr. Sharma',
-        clinicName: 'PHC',
-        scanDate: DateTime.now(),
+        clinicHospital: 'PHC',
         diagnosis: 'Hypertension',
-        vernacularSummary: 'Summary',
-        redactedPiiProof: 'DPDP-VERIFIED: [1 AADHAAR REDACTED]',
         medicines: [],
+        redactedPiiProof: 'DPDP-VERIFIED: [1 AADHAAR REDACTED]',
       );
       expect(record.redactedPiiProof, contains('DPDP-VERIFIED'));
       final jsonMap = record.toJson();
@@ -419,7 +420,7 @@ void main() {
     test('F10/F11: Today dose logs filter for scheduled morning and night doses', () async {
       final storage = MedicationStorageService();
       await storage.initialize();
-      final morningDoses = storage.todayDoseLogs.where((d) => d.scheduledSlot == 'morning').toList();
+      final morningDoses = storage.todayDoseLogs.where((d) => d.scheduledSlot.toLowerCase() == 'morning').toList();
       expect(morningDoses, isNotEmpty);
     });
 
@@ -429,13 +430,11 @@ void main() {
       final rx = PrescriptionRecord(
         id: 'rx_save_test',
         doctorName: 'Dr. Deshmukh',
-        clinicName: 'PHC Shirur',
-        scanDate: DateTime.now(),
+        clinicHospital: 'PHC Shirur',
         diagnosis: 'Type 2 Diabetes',
-        vernacularSummary: 'Take meds regularly',
         medicines: [],
       );
-      await storage.savePrescription(rx);
+      await storage.addPrescription(rx);
       expect(storage.prescriptions.any((p) => p.id == 'rx_save_test'), isTrue);
     });
 
@@ -509,7 +508,7 @@ void main() {
       final vern = VernacularService();
       await vern.initialize();
       for (final slot in ['morning', 'afternoon', 'night']) {
-        expect(vern.localizedSlot(slot), isNotEmpty);
+        expect(vern.slotName(slot), isNotEmpty);
       }
     });
   });
@@ -728,10 +727,9 @@ void main() {
       final rxRecord = PrescriptionRecord(
         id: 'rx_scenario_1',
         doctorName: 'Dr. S. K. Sharma, MD',
-        clinicName: 'Community Health Centre',
-        scanDate: DateTime.now(),
+        clinicHospital: 'Community Health Centre',
         diagnosis: 'T2 Diabetes',
-        vernacularSummary: 'सुबह और रात भोजन के बाद मेटफॉर्मिन लें',
+        vernacularSummaryHindi: 'सुबह और रात भोजन के बाद मेटफॉर्मिन लें',
         redactedPiiProof: 'DPDP-VERIFIED: [1 AADHAAR, 1 PATIENT_NAME REDACTED]',
         medicines: [
           MedicineItem(
@@ -745,7 +743,7 @@ void main() {
           ),
         ],
       );
-      await storage.savePrescription(rxRecord);
+      await storage.addPrescription(rxRecord);
 
       final saved = storage.prescriptions.firstWhere((p) => p.id == 'rx_scenario_1');
       expect(saved.medicines.first.morning, isTrue);

@@ -1,8 +1,6 @@
 import '/core/services/vernacular_service.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/widgets/user_info/user_info_widget.dart';
-import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'auth_user_info_model.dart';

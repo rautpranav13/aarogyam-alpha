@@ -1,7 +1,5 @@
 import '/app_state.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'user_info_model.dart';
 export 'user_info_model.dart';

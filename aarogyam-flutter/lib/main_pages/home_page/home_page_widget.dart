@@ -106,38 +106,26 @@ class _HomePageWidgetState extends State<HomePageWidget> {
         backgroundColor: AppColors.surface,
         elevation: 0,
         scrolledUnderElevation: 1,
-        titleSpacing: 16,
+        titleSpacing: 12,
         title: Row(
+          mainAxisSize: MainAxisSize.min,
           children: [
             Container(
-              padding: const EdgeInsets.all(8),
+              padding: const EdgeInsets.all(6),
               decoration: BoxDecoration(
                 color: AppColors.primaryLight,
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(10),
               ),
-              child: const Icon(Icons.health_and_safety_rounded, color: AppColors.primary, size: 24),
+              child: const Icon(Icons.health_and_safety_rounded, color: AppColors.primary, size: 20),
             ),
-            const SizedBox(width: 12),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  vernService.t('appName'),
-                  style: GoogleFonts.poppins(
-                    fontSize: 19,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.textPrimary,
-                  ),
-                ),
-                Text(
-                  vernService.t('appSubtitle'),
-                  style: GoogleFonts.manrope(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w500,
-                    color: AppColors.textSecondary,
-                  ),
-                ),
-              ],
+            const SizedBox(width: 8),
+            Text(
+              vernService.t('appName'),
+              style: GoogleFonts.poppins(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: AppColors.textPrimary,
+              ),
             ),
           ],
         ),
@@ -145,7 +133,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
           // Language Switcher Dropdown
           Container(
             margin: const EdgeInsets.symmetric(vertical: 8),
-            padding: const EdgeInsets.symmetric(horizontal: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 8),
             decoration: BoxDecoration(
               color: AppColors.surfaceAlt,
               borderRadius: BorderRadius.circular(20),
@@ -154,7 +142,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
             child: DropdownButtonHideUnderline(
               child: DropdownButton<AppLanguage>(
                 value: vernService.currentLanguage,
-                icon: const Icon(Icons.arrow_drop_down, color: AppColors.primary, size: 20),
+                icon: const Icon(Icons.arrow_drop_down, color: AppColors.primary, size: 18),
                 dropdownColor: AppColors.surface,
                 borderRadius: BorderRadius.circular(16),
                 items: const [
@@ -179,9 +167,11 @@ class _HomePageWidgetState extends State<HomePageWidget> {
               ),
             ),
           ),
-          const SizedBox(width: 4),
+          const SizedBox(width: 2),
           // Profile & Settings Button
           IconButton(
+            padding: EdgeInsets.zero,
+            constraints: const BoxConstraints(minWidth: 36, minHeight: 36),
             tooltip: 'Profile',
             icon: Container(
               padding: const EdgeInsets.all(6),
@@ -189,13 +179,15 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                 color: AppColors.primaryLight,
                 shape: BoxShape.circle,
               ),
-              child: const Icon(Icons.person_rounded, color: AppColors.primary, size: 22),
+              child: const Icon(Icons.person_rounded, color: AppColors.primary, size: 20),
             ),
             onPressed: () => context.pushNamed('ProfilePageCopy'),
           ),
-          const SizedBox(width: 4),
+          const SizedBox(width: 2),
           // SOS Emergency Button
           IconButton(
+            padding: EdgeInsets.zero,
+            constraints: const BoxConstraints(minWidth: 36, minHeight: 36),
             tooltip: 'Emergency SOS',
             icon: Container(
               padding: const EdgeInsets.all(6),
@@ -203,7 +195,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                 color: AppColors.errorLight,
                 shape: BoxShape.circle,
               ),
-              child: const Icon(Icons.sos, color: AppColors.error, size: 22),
+              child: const Icon(Icons.sos, color: AppColors.error, size: 20),
             ),
             onPressed: () => _triggerEmergencySos(context, vernService),
           ),
@@ -249,7 +241,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                     child: Text(
                       vernService.t('timelineHeader'),
                       style: GoogleFonts.poppins(
-                        fontSize: 16,
+                        fontSize: 15,
                         fontWeight: FontWeight.bold,
                         color: AppColors.textPrimary,
                       ),
@@ -257,15 +249,25 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
-                  TextButton.icon(
-                    onPressed: () => context.pushNamed('ReminderPage'),
-                    icon: const Icon(Icons.calendar_month, size: 16, color: AppColors.primary),
-                    label: Text(
-                      vernService.t('viewAll'),
-                      style: GoogleFonts.manrope(
-                        fontSize: 13,
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.primary,
+                  InkWell(
+                    onTap: () => context.pushNamed('ReminderPage'),
+                    borderRadius: BorderRadius.circular(8),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Icon(Icons.calendar_month, size: 16, color: AppColors.primary),
+                          const SizedBox(width: 4),
+                          Text(
+                            vernService.t('viewAll'),
+                            style: GoogleFonts.manrope(
+                              fontSize: 13,
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.primary,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),

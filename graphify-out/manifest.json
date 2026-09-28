@@ -168,10 +168,10 @@
     "semantic_hash": "6087876ab75f917efc5ae27c0830d749"
   },
   "aarogyam-flutter/lib/authentication/auth_create/auth_create_widget.dart": {
-    "mtime": 1788980113.611293,
-    "seen": 1790542799.236804,
-    "ast_hash": "4095a0190c9b98b4d0be2db9f7bf96bb",
-    "semantic_hash": "4095a0190c9b98b4d0be2db9f7bf96bb"
+    "mtime": 1790557609.9917905,
+    "seen": 1790557966.03392,
+    "ast_hash": "ef44ff0b3aa0f17fe81a30346212e159",
+    "semantic_hash": ""
   },
   "aarogyam-flutter/lib/authentication/auth_forgot_password/auth_forgot_password_model.dart": {
     "mtime": 1788978181.54079,
@@ -180,10 +180,10 @@
     "semantic_hash": "09408a74b7a4387ff59f57a14e1eb6c9"
   },
   "aarogyam-flutter/lib/authentication/auth_forgot_password/auth_forgot_password_widget.dart": {
-    "mtime": 1788978193.8467448,
-    "seen": 1790542799.236806,
-    "ast_hash": "54258fcb22d48ad3965cf1b46f604d88",
-    "semantic_hash": "54258fcb22d48ad3965cf1b46f604d88"
+    "mtime": 1790557622.9862328,
+    "seen": 1790557966.0339231,
+    "ast_hash": "9ce397dc34b3a4368f433643739f220d",
+    "semantic_hash": ""
   },
   "aarogyam-flutter/lib/authentication/auth_home/auth_home_model.dart": {
     "mtime": 1789231233.5484774,
@@ -204,10 +204,10 @@
     "semantic_hash": "33b70a1037dda8a2c61096fe97264b3f"
   },
   "aarogyam-flutter/lib/authentication/auth_login/auth_login_widget.dart": {
-    "mtime": 1789231233.740298,
-    "seen": 1790542799.236809,
-    "ast_hash": "aade9d17fd7f3f632c1c69cd76b8f1ee",
-    "semantic_hash": "aade9d17fd7f3f632c1c69cd76b8f1ee"
+    "mtime": 1790557591.8080113,
+    "seen": 1790557966.0339258,
+    "ast_hash": "bde566723794983b895401ea8c8d7c03",
+    "semantic_hash": ""
   },
   "aarogyam-flutter/lib/authentication/auth_user_info/auth_user_info_model.dart": {
     "mtime": 1788978229.1109116,
@@ -216,10 +216,10 @@
     "semantic_hash": "c9691567eefd606dfde4014394dd35d6"
   },
   "aarogyam-flutter/lib/authentication/auth_user_info/auth_user_info_widget.dart": {
-    "mtime": 1788978238.0335598,
-    "seen": 1790542799.2368152,
-    "ast_hash": "380d5dbace2d20337294724ba5c4a51c",
-    "semantic_hash": "380d5dbace2d20337294724ba5c4a51c"
+    "mtime": 1790557816.2634008,
+    "seen": 1790557966.033928,
+    "ast_hash": "bb3e93611ad1b381209385c869e83939",
+    "semantic_hash": ""
   },
   "aarogyam-flutter/lib/authentication/auth_welcome_screen/auth_welcome_screen_model.dart": {
     "mtime": 1789231233.529208,
@@ -228,10 +228,10 @@
     "semantic_hash": "e2536c0f18185a93c7e43006fa44ebf5"
   },
   "aarogyam-flutter/lib/authentication/auth_welcome_screen/auth_welcome_screen_widget.dart": {
-    "mtime": 1789302197.5068445,
-    "seen": 1790542799.236816,
-    "ast_hash": "98bd7b1dac7f8144ff1ec01a3d31afab",
-    "semantic_hash": "98bd7b1dac7f8144ff1ec01a3d31afab"
+    "mtime": 1790557566.3480897,
+    "seen": 1790557966.03393,
+    "ast_hash": "ad4ebb0f3edc4d58c7bc12648f1fb48e",
+    "semantic_hash": ""
   },
   "aarogyam-flutter/lib/backend/api_requests/api_calls.dart": {
     "mtime": 1790557048.1466641,
@@ -450,9 +450,9 @@
     "semantic_hash": "8795d27de955c7ae7446adf070c86f03"
   },
   "aarogyam-flutter/lib/flutter_flow/flutter_flow_util.dart": {
-    "mtime": 1790543216.2449827,
-    "seen": 1790543253.097708,
-    "ast_hash": "51a808c2295354fbb4394a346e06e3d9",
+    "mtime": 1790557490.3195188,
+    "seen": 1790557966.033974,
+    "ast_hash": "ea08596ff5be0422ae7d900d95e1e96c",
     "semantic_hash": ""
   },
   "aarogyam-flutter/lib/flutter_flow/flutter_flow_widgets.dart": {
@@ -504,28 +504,28 @@
     "semantic_hash": ""
   },
   "aarogyam-flutter/lib/l10n/app_localizations.dart": {
-    "mtime": 1790557246.6887074,
-    "seen": 1790557354.676254,
+    "mtime": 1790557461.1765742,
+    "seen": 1790557966.033983,
     "ast_hash": "0cec3ca622d8e2ad0115290c78273c35",
     "semantic_hash": "0cec3ca622d8e2ad0115290c78273c35"
   },
   "aarogyam-flutter/lib/l10n/app_localizations_en.dart": {
-    "mtime": 1790557246.6812735,
-    "seen": 1790557354.676255,
+    "mtime": 1790557461.1721144,
+    "seen": 1790557966.033984,
     "ast_hash": "559cee2032fd1274e99419d982288c8c",
     "semantic_hash": "559cee2032fd1274e99419d982288c8c"
   },
   "aarogyam-flutter/lib/l10n/app_localizations_hi.dart": {
-    "mtime": 1790557246.6832843,
-    "seen": 1790557354.676256,
-    "ast_hash": "975daa3fc4d51e571532599ee66fec41",
-    "semantic_hash": "975daa3fc4d51e571532599ee66fec41"
+    "mtime": 1790557461.173356,
+    "seen": 1790557966.0339851,
+    "ast_hash": "e5fb78c3bb9231f27351cbf53a92d2e8",
+    "semantic_hash": ""
   },
   "aarogyam-flutter/lib/l10n/app_localizations_mr.dart": {
-    "mtime": 1790557246.6853127,
-    "seen": 1790557354.6762571,
-    "ast_hash": "48b51c24668aa0861033fffd2e8e4e72",
-    "semantic_hash": "48b51c24668aa0861033fffd2e8e4e72"
+    "mtime": 1790557461.1745224,
+    "seen": 1790557966.033986,
+    "ast_hash": "38e986eef63c306528dc13f9ea7ac084",
+    "semantic_hash": ""
   },
   "aarogyam-flutter/lib/l10n/l10n.dart": {
     "mtime": 1788976984.170992,
@@ -534,9 +534,9 @@
     "semantic_hash": "400e4526873daf621a701a84251346a7"
   },
   "aarogyam-flutter/lib/main.dart": {
-    "mtime": 1790556980.6161463,
-    "seen": 1790557354.676258,
-    "ast_hash": "247c57a494e0e11746393f89ed2f9bff",
+    "mtime": 1790557810.1728866,
+    "seen": 1790557966.033987,
+    "ast_hash": "e64a9cf54cf3116f826a8f90b2c8dc9d",
     "semantic_hash": ""
   },
   "aarogyam-flutter/lib/main_pages/blister_verifier/blister_verifier_model.dart": {
@@ -558,9 +558,9 @@
     "semantic_hash": ""
   },
   "aarogyam-flutter/lib/main_pages/home_page/home_page_widget.dart": {
-    "mtime": 1790556991.09348,
-    "seen": 1790557354.676264,
-    "ast_hash": "7b47541dd2ea7936750778eaf04795d1",
+    "mtime": 1790557782.3094468,
+    "seen": 1790557966.033993,
+    "ast_hash": "20c5e19057af4530c48a1473889c1994",
     "semantic_hash": ""
   },
   "aarogyam-flutter/lib/main_pages/profile_page/allergies/allergies_model.dart": {
@@ -582,9 +582,9 @@
     "semantic_hash": ""
   },
   "aarogyam-flutter/lib/main_pages/profile_page/profile_page_copy/profile_page_copy_widget.dart": {
-    "mtime": 1790543103.3216045,
-    "seen": 1790543202.5693388,
-    "ast_hash": "d18453003b70354e9d0bb905ab23f1c4",
+    "mtime": 1790557774.5324447,
+    "seen": 1790557966.033997,
+    "ast_hash": "f9151e6829d12d58dff76073cf7f213c",
     "semantic_hash": ""
   },
   "aarogyam-flutter/lib/main_pages/reminder_page/reminder_page_model.dart": {
@@ -702,10 +702,10 @@
     "semantic_hash": "dd36d1466fab5e156c9d2cf65520c119"
   },
   "aarogyam-flutter/lib/widgets/user_info/user_info_widget.dart": {
-    "mtime": 1789326034.3758178,
-    "seen": 1790542799.236903,
-    "ast_hash": "4b5395def544a3432d5f7054fd687109",
-    "semantic_hash": "4b5395def544a3432d5f7054fd687109"
+    "mtime": 1790557861.591624,
+    "seen": 1790557966.034018,
+    "ast_hash": "ec4ee150b36ad070f9d787f1e0bb8280",
+    "semantic_hash": ""
   },
   "aarogyam-flutter/test/integration/app_smoke_test.dart": {
     "mtime": 1789414472.5670483,
@@ -750,10 +750,10 @@
     "semantic_hash": "fb07f075d84ba4a532362583670e9309"
   },
   "aarogyam-flutter/test/widget/auth_welcome_screen_test.dart": {
-    "mtime": 1789414457.4343796,
-    "seen": 1790542799.23691,
-    "ast_hash": "6a04af89c7664be88b9ae499f2fb1c55",
-    "semantic_hash": "6a04af89c7664be88b9ae499f2fb1c55"
+    "mtime": 1790557880.2806742,
+    "seen": 1790557966.034032,
+    "ast_hash": "70a402ce40495f836d1ceb4d0b4d28ea",
+    "semantic_hash": ""
   },
   "aarogyam-flutter/test/widget/reminder_widget_test.dart": {
     "mtime": 1789419487.5692341,
@@ -1188,9 +1188,9 @@
     "semantic_hash": ""
   },
   "aarogyam-flutter/lib/core/services/audio_service.dart": {
-    "mtime": 1790544426.5619395,
-    "seen": 1790544432.9854221,
-    "ast_hash": "0222ae2075e91f07047154e67b3b6347",
+    "mtime": 1790557732.1588488,
+    "seen": 1790557966.033953,
+    "ast_hash": "b3a04caf957905b9503ee8a577b09ff5",
     "semantic_hash": ""
   },
   "backend/scripts/download_granite.py": {
@@ -1230,9 +1230,9 @@
     "semantic_hash": ""
   },
   "aarogyam-flutter/lib/core/services/medication_storage_service.dart": {
-    "mtime": 1790557092.8590226,
-    "seen": 1790557354.6762261,
-    "ast_hash": "5f58403817d08476a94fa531f9898263",
+    "mtime": 1790557940.979257,
+    "seen": 1790557966.033955,
+    "ast_hash": "6b45db34cb21ad7797d7e8f4a4f48680",
     "semantic_hash": ""
   },
   "aarogyam-flutter/lib/core/services/mlkit_ocr_service.dart": {
@@ -1242,9 +1242,9 @@
     "semantic_hash": ""
   },
   "aarogyam-flutter/lib/core/services/vernacular_service.dart": {
-    "mtime": 1790557326.1818473,
-    "seen": 1790557354.676228,
-    "ast_hash": "f9e7d3904d1ff4df67dcc339556d9216",
+    "mtime": 1790557932.3244653,
+    "seen": 1790557966.033957,
+    "ast_hash": "cd6a60aaec128e8dcf6bf5e434fdcd6c",
     "semantic_hash": ""
   },
   "aarogyam-flutter/test/unit/services_test.dart": {
@@ -1272,27 +1272,27 @@
     "semantic_hash": ""
   },
   "aarogyam-flutter/lib/core/models/dadi_ma_models.dart": {
-    "mtime": 1790556889.901656,
-    "seen": 1790557354.676221,
-    "ast_hash": "2bfa874cdd1d4643236e8262e83c89ba",
+    "mtime": 1790557823.6352904,
+    "seen": 1790557966.033949,
+    "ast_hash": "f99f968d652c2ef0915088dbe9be0c74",
     "semantic_hash": ""
   },
   "aarogyam-flutter/lib/core/services/dadi_ma_service.dart": {
-    "mtime": 1790557055.3326669,
-    "seen": 1790557354.6762261,
-    "ast_hash": "10126fb3affc348132ca1cdc90d4bb19",
+    "mtime": 1790557837.8157046,
+    "seen": 1790557966.0339541,
+    "ast_hash": "501273f7b522368cdd071d58f286171c",
     "semantic_hash": ""
   },
   "aarogyam-flutter/lib/main_pages/dadi_ma/dadi_ma_model.dart": {
-    "mtime": 1790556932.2479458,
-    "seen": 1790557354.6762612,
-    "ast_hash": "e135afea0a1c339861c17f1fecd1ca9d",
+    "mtime": 1790557848.406577,
+    "seen": 1790557966.0339909,
+    "ast_hash": "506b9e44412bef24555a891c46503c98",
     "semantic_hash": ""
   },
   "aarogyam-flutter/lib/main_pages/dadi_ma/dadi_ma_widget.dart": {
-    "mtime": 1790557159.6962945,
-    "seen": 1790557354.676262,
-    "ast_hash": "cc8f7add57b7e67c03f34cc2ac8286ec",
+    "mtime": 1790557854.2619374,
+    "seen": 1790557966.033992,
+    "ast_hash": "f5a2863d9d57e779187cc97a97c8d83a",
     "semantic_hash": ""
   },
   "aarogyam-flutter/test/unit/dadi_ma_service_test.dart": {
@@ -1332,9 +1332,9 @@
     "semantic_hash": ""
   },
   ".agents/teamwork/BRIEFING.md": {
-    "mtime": 1790557072.1807406,
-    "seen": 1790557354.676314,
-    "ast_hash": "ec8deb5094456dba4bebdb8669ab450e",
+    "mtime": 1790557862.2941828,
+    "seen": 1790557966.0340512,
+    "ast_hash": "839bc87cd09bdf147d9c66e611889fec",
     "semantic_hash": ""
   },
   ".agents/teamwork/ORIGINAL_REQUEST.md": {
@@ -1350,9 +1350,9 @@
     "semantic_hash": ""
   },
   ".agents/teamwork/orchestrator/BRIEFING.md": {
-    "mtime": 1790557058.6360228,
-    "seen": 1790557354.676317,
-    "ast_hash": "5ce8c537028113dda8379dd06c6ffc9b",
+    "mtime": 1790557848.5727298,
+    "seen": 1790557966.03407,
+    "ast_hash": "2cf8fe1484f31c9db455cfbd07e16336",
     "semantic_hash": ""
   },
   ".agents/teamwork/orchestrator/DISPATCH.md": {
@@ -1362,9 +1362,9 @@
     "semantic_hash": ""
   },
   ".agents/teamwork/orchestrator/progress.md": {
-    "mtime": 1790557272.8715992,
-    "seen": 1790557354.676318,
-    "ast_hash": "967d07134841895367dfc02881d85e0a",
+    "mtime": 1790557852.5320754,
+    "seen": 1790557966.0340722,
+    "ast_hash": "c088c81f4a69d6fc41ca8c26efa4c674",
     "semantic_hash": ""
   },
   ".agents/teamwork/survey_explorer_backend/BRIEFING.md": {
@@ -1398,9 +1398,9 @@
     "semantic_hash": ""
   },
   ".agents/teamwork/survey_explorer_client/BRIEFING.md": {
-    "mtime": 1790557069.2646616,
-    "seen": 1790557354.6763232,
-    "ast_hash": "eb358a9c6d88262b2a41b63537dad1b5",
+    "mtime": 1790557457.7821405,
+    "seen": 1790557966.034078,
+    "ast_hash": "1a576d1e513b95fab7d6f0007756114b",
     "semantic_hash": ""
   },
   ".agents/teamwork/survey_explorer_client/DISPATCH.md": {
@@ -1410,9 +1410,9 @@
     "semantic_hash": ""
   },
   ".agents/teamwork/survey_explorer_client/progress.md": {
-    "mtime": 1790557071.7349255,
-    "seen": 1790557354.6763241,
-    "ast_hash": "64a675382c277981000ac1c80acbd0e8",
+    "mtime": 1790557460.7615576,
+    "seen": 1790557966.034081,
+    "ast_hash": "cc966095a2dd085bb61c7e1876a4598b",
     "semantic_hash": ""
   },
   ".agents/teamwork/survey_spec_miner_privacy/BRIEFING.md": {
@@ -1443,6 +1443,174 @@
     "mtime": 1790557363.679733,
     "seen": 1790557375.559254,
     "ast_hash": "932ef1012b021db0b9a745ec7624324f",
+    "semantic_hash": ""
+  },
+  "aarogyam-flutter/test/unit/fallback_e2e_test.dart": {
+    "mtime": 1790557913.5155938,
+    "seen": 1790557966.034025,
+    "ast_hash": "a4f5f6d652c33a9dd30fe3d82902c421",
+    "semantic_hash": ""
+  },
+  "backend/tests/test_e2e_fallback.py": {
+    "mtime": 1790557766.2583861,
+    "seen": 1790557966.034049,
+    "ast_hash": "4474cddc7a7d2595bac2bad32af229d8",
+    "semantic_hash": ""
+  },
+  ".agents/teamwork/e2e_test_writer/BRIEFING.md": {
+    "mtime": 1790557952.075472,
+    "seen": 1790557966.034053,
+    "ast_hash": "18fafc9c6cff25b32d3b0da2017837e2",
+    "semantic_hash": ""
+  },
+  ".agents/teamwork/e2e_test_writer/DISPATCH.md": {
+    "mtime": 1790557535.1096752,
+    "seen": 1790557966.0340538,
+    "ast_hash": "e68367066d3b40b6c41da18f869e9deb",
+    "semantic_hash": ""
+  },
+  ".agents/teamwork/e2e_test_writer/progress.md": {
+    "mtime": 1790557957.1669285,
+    "seen": 1790557966.034055,
+    "ast_hash": "1c556a2344b136d2f6f89755309b2f7a",
+    "semantic_hash": ""
+  },
+  ".agents/teamwork/m1_explorer_1/BRIEFING.md": {
+    "mtime": 1790557812.8015807,
+    "seen": 1790557966.034056,
+    "ast_hash": "10f53f099fd1bf6fc951e9ea1dd00369",
+    "semantic_hash": ""
+  },
+  ".agents/teamwork/m1_explorer_1/DISPATCH.md": {
+    "mtime": 1790557532.7527647,
+    "seen": 1790557966.034057,
+    "ast_hash": "ea22d5600a5033b531866d86a67ec289",
+    "semantic_hash": ""
+  },
+  ".agents/teamwork/m1_explorer_1/handoff.md": {
+    "mtime": 1790557805.0380254,
+    "seen": 1790557966.034058,
+    "ast_hash": "5f64fa6019c657f57011a7338f19bac1",
+    "semantic_hash": ""
+  },
+  ".agents/teamwork/m1_explorer_1/progress.md": {
+    "mtime": 1790557818.0688195,
+    "seen": 1790557966.034059,
+    "ast_hash": "c706b633a07bd93f7945cb5da1e88395",
+    "semantic_hash": ""
+  },
+  ".agents/teamwork/m1_explorer_1/report.md": {
+    "mtime": 1790557795.5322356,
+    "seen": 1790557966.03406,
+    "ast_hash": "ecfb0031dc1423a2208ec7df7be597dd",
+    "semantic_hash": ""
+  },
+  ".agents/teamwork/m1_explorer_2/BRIEFING.md": {
+    "mtime": 1790557806.6002872,
+    "seen": 1790557966.03406,
+    "ast_hash": "0d07e69055d46ea72a74e638583dabbb",
+    "semantic_hash": ""
+  },
+  ".agents/teamwork/m1_explorer_2/DISPATCH.md": {
+    "mtime": 1790557536.4395497,
+    "seen": 1790557966.034061,
+    "ast_hash": "c1101884a242aacbd0b1881549259445",
+    "semantic_hash": ""
+  },
+  ".agents/teamwork/m1_explorer_2/handoff.md": {
+    "mtime": 1790557796.8106084,
+    "seen": 1790557966.0340621,
+    "ast_hash": "3b5c4ab1587f7b7aac35fe6b4216c133",
+    "semantic_hash": ""
+  },
+  ".agents/teamwork/m1_explorer_2/progress.md": {
+    "mtime": 1790557810.6052473,
+    "seen": 1790557966.034063,
+    "ast_hash": "c2777c4ac9a816f443465205d4164457",
+    "semantic_hash": ""
+  },
+  ".agents/teamwork/m1_explorer_2/report.md": {
+    "mtime": 1790557786.0810707,
+    "seen": 1790557966.034063,
+    "ast_hash": "6fb530f8ce0f382b3e1ac4503a62fc0c",
+    "semantic_hash": ""
+  },
+  ".agents/teamwork/m1_explorer_3/BRIEFING.md": {
+    "mtime": 1790557757.0940223,
+    "seen": 1790557966.0340638,
+    "ast_hash": "3cee1e041f369d4f7931ac56dc9ee1da",
+    "semantic_hash": ""
+  },
+  ".agents/teamwork/m1_explorer_3/DISPATCH.md": {
+    "mtime": 1790557537.179087,
+    "seen": 1790557966.034065,
+    "ast_hash": "d58a97770530974d7f966a678ea5e380",
+    "semantic_hash": ""
+  },
+  ".agents/teamwork/m1_explorer_3/handoff.md": {
+    "mtime": 1790557748.2530923,
+    "seen": 1790557966.034066,
+    "ast_hash": "b59240bcc52669c6bc497a3ed51d907d",
+    "semantic_hash": ""
+  },
+  ".agents/teamwork/m1_explorer_3/progress.md": {
+    "mtime": 1790557760.0726075,
+    "seen": 1790557966.034067,
+    "ast_hash": "c558ea90829b997a3a9ddb9eb6dc20dc",
+    "semantic_hash": ""
+  },
+  ".agents/teamwork/m1_explorer_3/report.md": {
+    "mtime": 1790557741.1120684,
+    "seen": 1790557966.034067,
+    "ast_hash": "8bfeba1aafe30fd533e2e527f7a35335",
+    "semantic_hash": ""
+  },
+  ".agents/teamwork/m1_worker/BRIEFING.md": {
+    "mtime": 1790557883.0046287,
+    "seen": 1790557966.0340679,
+    "ast_hash": "647582171b5d1e23bd4ba3fb473b6597",
+    "semantic_hash": ""
+  },
+  ".agents/teamwork/m1_worker/DISPATCH.md": {
+    "mtime": 1790557838.5100303,
+    "seen": 1790557966.034069,
+    "ast_hash": "b13da4abfe417cbef2f9882045d575e5",
+    "semantic_hash": ""
+  },
+  ".agents/teamwork/m1_worker/progress.md": {
+    "mtime": 1790557887.695143,
+    "seen": 1790557966.03407,
+    "ast_hash": "1fea97219692f842e4b12bf4bc135f47",
+    "semantic_hash": ""
+  },
+  ".agents/teamwork/survey_explorer_client/handoff.md": {
+    "mtime": 1790557471.7429001,
+    "seen": 1790557966.03408,
+    "ast_hash": "3bdbbca8355519dc4ff06086f6426ce2",
+    "semantic_hash": ""
+  },
+  ".agents/teamwork/survey_explorer_client/survey_report.md": {
+    "mtime": 1790557450.0997727,
+    "seen": 1790557966.034081,
+    "ast_hash": "2d5bcc95db41dca4829d66a95c2b6e4b",
+    "semantic_hash": ""
+  },
+  "PROJECT.md": {
+    "mtime": 1790557529.2676647,
+    "seen": 1790557966.0340889,
+    "ast_hash": "3c86c468690b078cb636846a709f2889",
+    "semantic_hash": ""
+  },
+  "TEST_INFRA.md": {
+    "mtime": 1790557732.6194966,
+    "seen": 1790557966.034091,
+    "ast_hash": "b12f0bf56b56a131e16394c016963946",
+    "semantic_hash": ""
+  },
+  "TEST_READY.md": {
+    "mtime": 1790557943.1285636,
+    "seen": 1790557966.034091,
+    "ast_hash": "35f469f047db3c6c10f43e20d3df0a91",
     "semantic_hash": ""
   }
 }
