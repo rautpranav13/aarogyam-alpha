@@ -969,6 +969,7 @@ class _DadiMaWidgetState extends State<DadiMaWidget>
                           style: GoogleFonts.poppins(
                             fontWeight: FontWeight.bold,
                             fontSize: 14,
+                            color: AppColors.textPrimary,
                           ),
                         ),
                         Text(
