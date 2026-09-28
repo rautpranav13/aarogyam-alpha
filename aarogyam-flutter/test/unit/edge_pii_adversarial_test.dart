@@ -289,7 +289,7 @@ Rx: Tab Atorvastatin 20mg
     test('Processes 100KB prescription text without ReDoS or memory blowout', () {
       final buffer = StringBuffer();
       // Generate realistic mixed clinical prescription lines totaling ~100KB
-      final singleBlock = '''
+      const singleBlock = '''
 District Hospital Pune | AIIMS Outreach Clinic
 Dr. S. K. Sharma, MD, MBBS, Reg: MMC-12345
 Patient Name: Ramesh Kumar, Age: 54 Yrs, Gender: Male, UHID: UHID-98124
@@ -316,7 +316,7 @@ Rx: Metformin 500mg BD after food, Atorvastatin 20mg HS
       final result = EdgePiiSanitizer.sanitize(massiveText);
       stopwatch.stop();
 
-      print('Processed ${sizeInKb} KB in ${stopwatch.elapsedMilliseconds} ms');
+      print('Processed $sizeInKb KB in ${stopwatch.elapsedMilliseconds} ms');
 
       // Performance check: Must complete within 2000ms (no catastrophic backtracking)
       expect(stopwatch.elapsedMilliseconds, lessThan(3000),

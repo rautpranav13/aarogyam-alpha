@@ -329,7 +329,7 @@ class _BlisterVerifierWidgetState extends State<BlisterVerifierWidget> {
           ),
           const SizedBox(height: 10),
           DropdownButtonFormField<MedicineItem>(
-            initialValue: _selectedMedicine,
+            value: _selectedMedicine,
             isExpanded: true,
             decoration: InputDecoration(
               contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
