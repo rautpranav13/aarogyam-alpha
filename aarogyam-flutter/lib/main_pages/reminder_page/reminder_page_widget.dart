@@ -133,7 +133,7 @@ class _ReminderPageWidgetState extends State<ReminderPageWidget> with SingleTick
                     ),
                     const SizedBox(height: 16),
                     DropdownButtonFormField<String>(
-                      initialValue: foodRelation,
+                      value: foodRelation,
                       decoration: InputDecoration(
                         labelText: vernService.t('foodRelationLabel'),
                         filled: true,
