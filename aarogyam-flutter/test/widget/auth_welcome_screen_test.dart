@@ -6,10 +6,16 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:aarogyam/authentication/auth_welcome_screen/auth_welcome_screen_widget.dart';
 
+import 'package:provider/provider.dart';
+import 'package:aarogyam/core/services/vernacular_service.dart';
+
 Widget _wrapWithMaterial(Widget child) {
-  return MaterialApp(
-    home: child,
-    theme: ThemeData(colorSchemeSeed: const Color(0xFF00897B)),
+  return ChangeNotifierProvider<VernacularService>(
+    create: (_) => VernacularService(),
+    child: MaterialApp(
+      home: child,
+      theme: ThemeData(colorSchemeSeed: const Color(0xFF00897B)),
+    ),
   );
 }
 
@@ -44,9 +50,9 @@ FIRST_AID_API_URL=https://test.firstaid.api
     testWidgets('has a sign-in button', (WidgetTester tester) async {
       await tester.pumpWidget(_wrapWithMaterial(const AuthWelcomeScreenWidget()));
       await tester.pump();
-      // Look for any ElevatedButton, OutlinedButton, or TextButton
+      // Look for any FilledButton, ElevatedButton, OutlinedButton, or TextButton
       final buttons = find.byWidgetPredicate(
-        (w) => w is ElevatedButton || w is OutlinedButton || w is TextButton,
+        (w) => w is ButtonStyleButton,
       );
       expect(buttons, findsAtLeastNWidgets(1));
     });

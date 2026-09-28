@@ -82,13 +82,11 @@ class _ReminderListCollapsedWidgetState
         Padding(
           padding: const EdgeInsets.all(20.0),
           child: Text(
-            FFLocalizations.of(context).getText(
-              'ghu5h69e' /* Reminders */,
-            ),
+            'Daily Reminders',
             style: FlutterFlowTheme.of(context).titleMedium.override(
                   font: GoogleFonts.poppins(),
                   color: FlutterFlowTheme.of(context).primaryBackground,
-                  fontSize: 24.0,
+                  fontSize: 22.0,
                   letterSpacing: 0.0,
                   fontWeight: FontWeight.bold,
                 ),

@@ -20,4 +20,6 @@ export '/authentication/auth_user_info/auth_user_info_widget.dart'
     show AuthUserInfoWidget;
 export '/main_pages/profile_page/allergies/allergies_widget.dart'
     show AllergiesWidget;
-export '/main_pages/chat_bot/chat_bot_widget.dart' show ChatBotWidget;
+export '/main_pages/dadi_ma/dadi_ma_widget.dart'
+    show DadiMaWidget;
+

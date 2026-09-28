@@ -170,28 +170,28 @@ class AppLocalizationsHi extends AppLocalizations {
   String get allergiesSelectTitle => 'अपनी एलर्जी चुनें';
 
   @override
-  String get allergiesFoodTitle => 'खाद्य प्रत्युर्जता';
+  String get allergiesFoodTitle => 'खाद्य एलर्जी (Food Allergies)';
 
   @override
-  String get allergiesPeanuts => 'मूंगफली';
+  String get allergiesPeanuts => 'मूंगफली (Peanuts)';
 
   @override
-  String get allergiesTreeNuts => 'वृक्ष मेवे (जैसे, बादाम, अखरोट)';
+  String get allergiesTreeNuts => 'ट्री नट्स (उदा. बादाम, अखरोट)';
 
   @override
   String get allergiesMilk => 'दूध (लैक्टोज असहिष्णुता या डेयरी एलर्जी)';
 
   @override
-  String get allergiesEggs => 'अंडे';
+  String get allergiesEggs => 'अंडे (Eggs)';
 
   @override
-  String get allergiesShellfish => 'शंख मछली (जैसे, झींगा, केकड़ा, झींगे)';
+  String get allergiesShellfish => 'शेलफिश (उदा. झींगा, केकड़ा, लॉबस्टर)';
 
   @override
-  String get allergiesFish => 'मछली (जैसे, सैल्मन, टूना)';
+  String get allergiesFish => 'मछली (उदा. सैल्मन, टूना)';
 
   @override
-  String get allergiesSoy => 'सोया';
+  String get allergiesSoy => 'सोया (Soy)';
 
   @override
   String get allergiesWheat => 'गेहूँ (ग्लूटेन असहिष्णुता या एलर्जी)';
@@ -203,43 +203,43 @@ class AppLocalizationsHi extends AppLocalizations {
   String get allergiesPollen => 'पराग (घास, पेड़ या फूल)';
 
   @override
-  String get allergiesDustMites => 'धूल के कण';
+  String get allergiesDustMites => 'धूल के कीड़े (डस्ट माइट्स)';
 
   @override
-  String get allergiesMold => 'मोल्ड बीजाणु';
+  String get allergiesMold => 'फफूंद बीजाणु (मोल्ड स्पोर्स)';
 
   @override
-  String get allergiesAnimalDander => 'पशुओं की रूसी (बिल्लियाँ, कुत्ते, आदि)';
+  String get allergiesAnimalDander => 'पालतू पशुओं की रूसी (बिल्ली, कुत्ता)';
 
   @override
-  String get allergiesCockroach => 'कॉकरोच की बीट';
+  String get allergiesCockroach => 'तिलचट्टे के अवशेष';
 
   @override
-  String get allergiesLatex => 'लाटेकस';
+  String get allergiesLatex => 'लेटेक्स (Latex)';
 
   @override
-  String get allergiesMedicationTitle => 'दवा एलर्जी';
+  String get allergiesMedicationTitle => 'दवाओं की एलर्जी (Medication)';
 
   @override
   String get allergiesPenicillin => 'पेनिसिलिन या अन्य एंटीबायोटिक्स';
 
   @override
-  String get allergiesAspirin => 'एस्पिरिन';
+  String get allergiesAspirin => 'एस्पिरिन (Aspirin)';
 
   @override
-  String get allergiesIbuprofen => 'आइबुप्रोफ़ेन';
+  String get allergiesIbuprofen => 'आइबुप्रोफ़ेन (Ibuprofen)';
 
   @override
   String get allergiesSulfa => 'सल्फ़ा दवाएं';
 
   @override
-  String get allergiesAnesthesia => 'एनेस्थीसिया (जैसे, लिडोकेन)';
+  String get allergiesAnesthesia => 'एनेस्थीसिया (उदा. लिडोकेन)';
 
   @override
-  String get allergiesInsectTitle => 'कीट एलर्जी';
+  String get allergiesInsectTitle => 'कीट एलर्जी (Insect)';
 
   @override
-  String get allergiesBeeSting => 'मधुमक्खी के डंक';
+  String get allergiesBeeSting => 'मधुमक्खी का डंक';
 
   @override
   String get allergiesWaspSting => 'ततैया का डंक';
@@ -248,28 +248,28 @@ class AppLocalizationsHi extends AppLocalizations {
   String get allergiesMosquito => 'मच्छर का काटना';
 
   @override
-  String get allergiesFireAnt => 'अग्नि चींटियों के काटने';
+  String get allergiesFireAnt => 'लाल चींटी का डंक';
 
   @override
   String get allergiesChemicalTitle => 'रासायनिक और त्वचा एलर्जी';
 
   @override
-  String get allergiesPerfume => 'इत्र या सुगंध';
+  String get allergiesPerfume => 'इत्र या सुगंध (Fragrance)';
 
   @override
-  String get allergiesSoap => 'साबुन या डिटर्जेंट';
+  String get allergiesSoap => 'साबुन या डिटर्जेंट (Soaps)';
 
   @override
   String get allergiesNickel => 'निकेल (आभूषणों या कपड़ों में)';
 
   @override
-  String get allergiesHairDye => 'बाल रंग या सौंदर्य प्रसाधन';
+  String get allergiesHairDye => 'हेयर डाई या सौंदर्य प्रसाधन';
 
   @override
-  String get allergiesCleaningProducts => 'उत्पादों की सफाई कर रहा हूं';
+  String get allergiesCleaningProducts => 'सफाई उत्पाद (Cleaning Products)';
 
   @override
-  String get allergiesRareTitle => 'दुर्लभ या कम आम एलर्जी';
+  String get allergiesRareTitle => 'दुर्लभ या कम आम एलर्जी (Rare)';
 
   @override
   String get allergiesSunlight => 'सूर्य का प्रकाश (प्रकाश संवेदनशीलता)';
@@ -281,7 +281,7 @@ class AppLocalizationsHi extends AppLocalizations {
   String get allergiesWater => 'जल (एक्वाजेनिक अर्टिकेरिया)';
 
   @override
-  String get allergiesSave => 'बचाना';
+  String get allergiesSave => 'सुरक्षित करें';
 
   @override
   String get allergiesOther => 'अन्य...';

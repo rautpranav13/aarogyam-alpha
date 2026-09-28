@@ -1,4 +1,5 @@
 import '/app_state.dart';
+import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -66,6 +67,7 @@ class _UserInfoWidgetState extends State<UserInfoWidget> {
   @override
   Widget build(BuildContext context) {
     final appState = context.watch<AppState>();
+    final loc = FFLocalizations.of(context);
     // Initialise local state from AppState on first build
     _model.dropDownValue ??=
         appState.genderValue.isNotEmpty ? appState.genderValue : null;
@@ -83,15 +85,27 @@ class _UserInfoWidgetState extends State<UserInfoWidget> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Gender', style: Theme.of(context).textTheme.bodyLarge),
+              Text(
+                loc.getText('userInfoGender'),
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
               DropdownButton<String>(
                 value: _model.dropDownValue,
-                hint: const Text('Gender'),
+                hint: Text(loc.getText('userInfoGender')),
                 underline: const SizedBox.shrink(),
-                items: const [
-                  DropdownMenuItem(value: 'Male', child: Text('Male')),
-                  DropdownMenuItem(value: 'Female', child: Text('Female')),
-                  DropdownMenuItem(value: 'Other', child: Text('Other')),
+                items: [
+                  DropdownMenuItem(
+                    value: 'Male',
+                    child: Text(loc.getText('userInfoMale')),
+                  ),
+                  DropdownMenuItem(
+                    value: 'Female',
+                    child: Text(loc.getText('userInfoFemale')),
+                  ),
+                  DropdownMenuItem(
+                    value: 'Other',
+                    child: Text(loc.getText('userInfoOther')),
+                  ),
                 ],
                 onChanged: (val) {
                   setState(() => _model.dropDownValue = val);
@@ -103,7 +117,7 @@ class _UserInfoWidgetState extends State<UserInfoWidget> {
           const SizedBox(height: 24),
           // Age
           _buildCounterRow(
-            label: 'Age',
+            label: loc.getText('userInfoAge'),
             value: _model.countControllerValue1!,
             min: 1,
             max: 150,
@@ -115,7 +129,7 @@ class _UserInfoWidgetState extends State<UserInfoWidget> {
           const SizedBox(height: 24),
           // Height
           _buildCounterRow(
-            label: 'Height (cm)',
+            label: loc.getText('userInfoHeight'),
             value: _model.countControllerValue2!,
             min: 50,
             max: 250,
@@ -127,7 +141,7 @@ class _UserInfoWidgetState extends State<UserInfoWidget> {
           const SizedBox(height: 24),
           // Weight
           _buildCounterRow(
-            label: 'Weight (kg)',
+            label: loc.getText('userInfoWeight'),
             value: _model.countControllerValue3!,
             min: 30,
             max: 150,
@@ -141,7 +155,7 @@ class _UserInfoWidgetState extends State<UserInfoWidget> {
           ListTile(
             contentPadding: EdgeInsets.zero,
             title: Text(
-              'Allergies (if any)',
+              loc.getText('userInfoAllergies'),
               style: Theme.of(context).textTheme.bodyLarge,
             ),
             trailing: Icon(

@@ -2,6 +2,9 @@ import '/auth/firebase_auth/auth_util.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import '/core/services/vernacular_service.dart';
+import '/l10n/l10n.dart';
 import 'auth_forgot_password_model.dart';
 export 'auth_forgot_password_model.dart';
 
@@ -33,6 +36,36 @@ class _AuthForgotPasswordWidgetState extends State<AuthForgotPasswordWidget> {
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
     final tt = Theme.of(context).textTheme;
+    final vernService = Provider.of<VernacularService>(context);
+    final l10n = AppLocalizations.of(context);
+
+    final title = l10n?.forgotPasswordTitle ??
+        (vernService.currentLanguage == AppLanguage.hindi
+            ? 'पासवर्ड भूल गए'
+            : (vernService.currentLanguage == AppLanguage.marathi
+                ? 'पासवर्ड विसरलात'
+                : 'Forgot Password'));
+
+    final subtitle = l10n?.forgotPasswordSubtitle ??
+        (vernService.currentLanguage == AppLanguage.hindi
+            ? 'हम आपको एक रीसेट लिंक भेजेंगे।'
+            : (vernService.currentLanguage == AppLanguage.marathi
+                ? 'आम्ही तुम्हाला रीसेट लिंक पाठवू.'
+                : 'We will send you a reset link.'));
+
+    final emailLabel = l10n?.forgotPasswordEmail ??
+        (vernService.currentLanguage == AppLanguage.hindi
+            ? 'ईमेल पता'
+            : (vernService.currentLanguage == AppLanguage.marathi
+                ? 'ईमेल पत्ता'
+                : 'Email Address'));
+
+    final sendLinkText = l10n?.forgotPasswordButton ??
+        (vernService.currentLanguage == AppLanguage.hindi
+            ? 'लिंक भेजें'
+            : (vernService.currentLanguage == AppLanguage.marathi
+                ? 'लिंक पाठवा'
+                : 'Send Link'));
 
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
@@ -63,7 +96,7 @@ class _AuthForgotPasswordWidgetState extends State<AuthForgotPasswordWidget> {
                       Padding(
                         padding: const EdgeInsets.fromLTRB(12, 32, 0, 8),
                         child: Text(
-                          'Forgot Password',
+                          title,
                           style: tt.displayMedium?.copyWith(
                             fontFamily: GoogleFonts.outfit().fontFamily,
                           ),
@@ -72,7 +105,7 @@ class _AuthForgotPasswordWidgetState extends State<AuthForgotPasswordWidget> {
                       Padding(
                         padding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
                         child: Text(
-                          'We will send you a reset link.',
+                          subtitle,
                           style: tt.labelLarge?.copyWith(
                             fontFamily: GoogleFonts.manrope().fontFamily,
                             color: cs.onSurfaceVariant,
@@ -86,9 +119,9 @@ class _AuthForgotPasswordWidgetState extends State<AuthForgotPasswordWidget> {
                           controller: _model.emailAddressTextController,
                           focusNode: _model.emailAddressFocusNode,
                           keyboardType: TextInputType.emailAddress,
-                          decoration: const InputDecoration(
-                            labelText: 'Email Address',
-                            border: OutlineInputBorder(),
+                          decoration: InputDecoration(
+                            labelText: emailLabel,
+                            border: const OutlineInputBorder(),
                           ),
                         ),
                       ),
@@ -108,7 +141,7 @@ class _AuthForgotPasswordWidgetState extends State<AuthForgotPasswordWidget> {
                           _model.emailAddressTextController?.text ?? '';
                       if (email.isEmpty) {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Email required!')),
+                          SnackBar(content: Text(vernService.currentLanguage == AppLanguage.english ? 'Email required!' : 'कृपया ईमेल दर्ज करें!')),
                         );
                         return;
                       }
@@ -122,7 +155,7 @@ class _AuthForgotPasswordWidgetState extends State<AuthForgotPasswordWidget> {
                       elevation: 4,
                     ),
                     child: Text(
-                      'Send Link',
+                      sendLinkText,
                       style: GoogleFonts.manrope(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,

@@ -17,16 +17,22 @@ class DigitizeRxAPICall {
   static Future<ApiCallResponse> call({
     String? imageBase64,
     String? imageUrl,
+    String? rawOcrText,
+    bool ocrFailed = false,
     String language = 'hi',
   }) async {
     final Map<String, dynamic> body = {
       'language': language,
+      'ocr_failed': ocrFailed,
     };
     if (imageBase64 != null && imageBase64.isNotEmpty) {
       body['image_base64'] = imageBase64;
     }
     if (imageUrl != null && imageUrl.isNotEmpty) {
       body['image_url'] = imageUrl;
+    }
+    if (rawOcrText != null && rawOcrText.isNotEmpty) {
+      body['raw_ocr_text'] = rawOcrText;
     }
 
     final backendUrl = _getBackendUrl();
@@ -61,6 +67,8 @@ class VerifyStripAPICall {
   static Future<ApiCallResponse> call({
     String? imageBase64,
     String? imageUrl,
+    String? rawOcrText,
+    bool ocrFailed = false,
     required String expectedDrug,
     String expectedStrength = '',
     String language = 'hi',
@@ -69,9 +77,16 @@ class VerifyStripAPICall {
       'expected_drug': expectedDrug,
       'expected_strength': expectedStrength,
       'language': language,
+      'ocr_failed': ocrFailed,
     };
     if (imageBase64 != null && imageBase64.isNotEmpty) {
       body['image_base64'] = imageBase64;
+    }
+    if (imageUrl != null && imageUrl.isNotEmpty) {
+      body['image_url'] = imageUrl;
+    }
+    if (rawOcrText != null && rawOcrText.isNotEmpty) {
+      body['raw_ocr_text'] = rawOcrText;
     }
     if (imageUrl != null && imageUrl.isNotEmpty) {
       body['image_url'] = imageUrl;

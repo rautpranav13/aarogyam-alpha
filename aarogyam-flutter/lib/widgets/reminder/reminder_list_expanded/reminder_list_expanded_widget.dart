@@ -1,6 +1,7 @@
 import '/backend/sqlite/sqlite_manager.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/widgets/reminder/reminder_empty/reminder_empty_widget.dart';
 import '/widgets/reminder/switch_remainder/switch_remainder_widget.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'reminder_list_expanded_model.dart';
@@ -33,7 +34,6 @@ class _ReminderListExpandedWidgetState extends State<ReminderListExpandedWidget>
   @override
   void dispose() {
     _model.maybeDispose();
-
     super.dispose();
   }
 
@@ -75,20 +75,17 @@ class _ReminderListExpandedWidgetState extends State<ReminderListExpandedWidget>
 
   @override
   Widget build(BuildContext context) {
-
     return Column(
       mainAxisSize: MainAxisSize.max,
       children: [
         Padding(
           padding: const EdgeInsets.all(20.0),
           child: Text(
-            FFLocalizations.of(context).getText(
-              'bicnjszb' /* Reminders */,
-            ),
+            'Daily Medication Reminders',
             style: FlutterFlowTheme.of(context).titleMedium.override(
                   font: GoogleFonts.poppins(),
                   color: FlutterFlowTheme.of(context).primaryBackground,
-                  fontSize: 24.0,
+                  fontSize: 22.0,
                   letterSpacing: 0.0,
                   fontWeight: FontWeight.bold,
                 ),
@@ -97,7 +94,6 @@ class _ReminderListExpandedWidgetState extends State<ReminderListExpandedWidget>
         FutureBuilder<List<ReadmedicationsRow>>(
           future: SQLiteManager.instance.readmedications(),
           builder: (context, snapshot) {
-            // Customize what your widget looks like when it's loading.
             if (!snapshot.hasData) {
               return Center(
                 child: SizedBox(
@@ -113,18 +109,12 @@ class _ReminderListExpandedWidgetState extends State<ReminderListExpandedWidget>
             }
             final listViewReadmedicationsRowList = snapshot.data!;
 
-            _model.debugBackendQueries[
-                    'listViewReadmedicationsRowList_ListView_a3bkcda1${listViewReadmedicationsRowList.length > 100 ? ' (first 100)' : ''}'] =
-                debugSerializeParam(
-              listViewReadmedicationsRowList.take(100),
-              ParamType.SqliteRow,
-              isList: true,
-              link:
-                  'https://app.flutterflow.io/project/health-literacy-c97mzb?tab=uiBuilder&page=ReminderListExpanded',
-              name: 'readmedications',
-              nullable: false,
-            );
-            debugLogWidgetClass(_model);
+            if (listViewReadmedicationsRowList.isEmpty) {
+              return const Padding(
+                padding: EdgeInsets.symmetric(vertical: 30.0),
+                child: ReminderEmptyWidget(),
+              );
+            }
 
             return ListView.builder(
               padding: EdgeInsets.zero,
@@ -134,6 +124,11 @@ class _ReminderListExpandedWidgetState extends State<ReminderListExpandedWidget>
               itemBuilder: (context, listViewIndex) {
                 final listViewReadmedicationsRow =
                     listViewReadmedicationsRowList[listViewIndex];
+                final formattedHour =
+                    (listViewReadmedicationsRow.hour ?? '08').padLeft(2, '0');
+                final formattedMinute =
+                    (listViewReadmedicationsRow.minute ?? '00').padLeft(2, '0');
+
                 return Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: Row(
@@ -168,8 +163,9 @@ class _ReminderListExpandedWidgetState extends State<ReminderListExpandedWidget>
                                         font: GoogleFonts.raleway(),
                                         color: FlutterFlowTheme.of(context)
                                             .primaryBackground,
-                                        fontSize: 20.0,
+                                        fontSize: 18.0,
                                         letterSpacing: 0.0,
+                                        fontWeight: FontWeight.bold,
                                       ),
                                 ),
                                 Text(
@@ -182,7 +178,7 @@ class _ReminderListExpandedWidgetState extends State<ReminderListExpandedWidget>
                                       .override(
                                         font: GoogleFonts.manrope(),
                                         color: const Color(0xFF808080),
-                                        fontSize: 16.0,
+                                        fontSize: 14.0,
                                         letterSpacing: 0.0,
                                         fontWeight: FontWeight.normal,
                                       ),
@@ -190,45 +186,60 @@ class _ReminderListExpandedWidgetState extends State<ReminderListExpandedWidget>
                                 Row(
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
+                                    Icon(
+                                      Icons.access_time_filled_rounded,
+                                      color:
+                                          FlutterFlowTheme.of(context).primary,
+                                      size: 16.0,
+                                    ),
+                                    const SizedBox(width: 4.0),
                                     Text(
-                                      '${listViewReadmedicationsRow.hour} ${listViewReadmedicationsRow.minute}',
+                                      '$formattedHour:$formattedMinute',
                                       style: FlutterFlowTheme.of(context)
                                           .bodyMedium
                                           .override(
                                             font: GoogleFonts.manrope(),
                                             color: FlutterFlowTheme.of(context)
                                                 .primaryBackground,
-                                            fontSize: 20.0,
+                                            fontSize: 16.0,
                                             letterSpacing: 0.0,
+                                            fontWeight: FontWeight.w600,
                                           ),
                                     ),
-                                    Icon(
-                                      Icons.timer,
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryBackground,
-                                      size: 24.0,
-                                    ),
-                                  ].divide(const SizedBox(width: 2.0)),
+                                  ],
                                 ),
-                              ].divide(const SizedBox(height: 4.0)),
+                              ],
                             ),
                           ),
-                        ].divide(const SizedBox(width: 4.0)),
+                        ],
                       ),
-                      wrapWithModel(
-                        model: _model.switchRemainderModels.getModel(
-                          listViewReadmedicationsRow.id!.toString(),
-                          listViewIndex,
-                        ),
-                        updateCallback: () => safeSetState(() {}),
-                        child: SwitchRemainderWidget(
-                          key: Key(
-                            'Keyfi2_${listViewReadmedicationsRow.id!.toString()}',
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          IconButton(
+                            icon: const Icon(Icons.shield_outlined,
+                                color: Colors.greenAccent, size: 22),
+                            tooltip: 'Verify Pill Foil',
+                            onPressed: () {
+                              context.pushNamed('BlisterVerifier');
+                            },
                           ),
-                          id: listViewReadmedicationsRow.id!,
-                          title: listViewReadmedicationsRow.title!,
-                          message: listViewReadmedicationsRow.message,
-                        ),
+                          wrapWithModel(
+                            model: _model.switchRemainderModels.getModel(
+                              listViewReadmedicationsRow.id!.toString(),
+                              listViewIndex,
+                            ),
+                            updateCallback: () => safeSetState(() {}),
+                            child: SwitchRemainderWidget(
+                              key: Key(
+                                'Keyfi2_${listViewReadmedicationsRow.id!.toString()}',
+                              ),
+                              id: listViewReadmedicationsRow.id!,
+                              title: listViewReadmedicationsRow.title!,
+                              message: listViewReadmedicationsRow.message,
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),

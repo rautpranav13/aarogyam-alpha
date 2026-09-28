@@ -2,6 +2,9 @@ import '/auth/firebase_auth/auth_util.dart';
 import '/core/router/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import '/core/services/vernacular_service.dart';
+import '/l10n/l10n.dart';
 import 'auth_create_model.dart';
 export 'auth_create_model.dart';
 
@@ -33,6 +36,46 @@ class _AuthCreateWidgetState extends State<AuthCreateWidget> {
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
     final tt = Theme.of(context).textTheme;
+    final vernService = Provider.of<VernacularService>(context);
+    final l10n = AppLocalizations.of(context);
+
+    final title = l10n?.createAccountTitle ??
+        (vernService.currentLanguage == AppLanguage.hindi
+            ? 'आरोग्यम् में आपका स्वागत है!'
+            : (vernService.currentLanguage == AppLanguage.marathi
+                ? 'आरोग्यम् मध्ये आपले स्वागत आहे!'
+                : 'Welcome to Aarogyam!'));
+
+    final subtitle = l10n?.createAccountSubtitle ??
+        (vernService.currentLanguage == AppLanguage.hindi
+            ? 'आपका स्वास्थ्य, आपकी जिम्मेदारी।'
+            : (vernService.currentLanguage == AppLanguage.marathi
+                ? 'तुमचे आरोग्य, तुमची जबाबदारी.'
+                : 'Your health, your responsibility. Let\'s get started!'));
+
+    final nameLabel = l10n?.createAccountDisplayName ??
+        (vernService.currentLanguage == AppLanguage.hindi
+            ? 'नाम'
+            : (vernService.currentLanguage == AppLanguage.marathi
+                ? 'नाव'
+                : 'Display Name'));
+
+    final emailLabel = l10n?.createAccountEmail ??
+        (vernService.currentLanguage == AppLanguage.hindi
+            ? 'ईमेल पता'
+            : (vernService.currentLanguage == AppLanguage.marathi
+                ? 'ईमेल पत्ता'
+                : 'Email Address'));
+
+    final passwordLabel = l10n?.createAccountPassword ??
+        (vernService.currentLanguage == AppLanguage.english ? 'Password' : 'पासवर्ड');
+
+    final createButtonText = l10n?.createAccountButton ??
+        (vernService.currentLanguage == AppLanguage.hindi
+            ? 'खाता बनाएं'
+            : (vernService.currentLanguage == AppLanguage.marathi
+                ? 'खाते तयार करा'
+                : 'Create Account'));
 
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
@@ -49,23 +92,62 @@ class _AuthCreateWidgetState extends State<AuthCreateWidget> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // Back button
+                        // Top bar: Back button + Language Switcher
                         Padding(
-                          padding: const EdgeInsets.only(top: 30, bottom: 12),
-                          child: IconButton.filled(
-                            onPressed: () => context.pop(),
-                            icon: const Icon(Icons.arrow_back),
-                            style: IconButton.styleFrom(
-                              backgroundColor: cs.surfaceContainerHighest,
-                              foregroundColor: cs.onSurface,
-                            ),
+                          padding: const EdgeInsets.only(top: 24, bottom: 12),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              IconButton.filled(
+                                onPressed: () => context.pop(),
+                                icon: const Icon(Icons.arrow_back),
+                                style: IconButton.styleFrom(
+                                  backgroundColor: cs.surfaceContainerHighest,
+                                  foregroundColor: cs.onSurface,
+                                ),
+                              ),
+                              Container(
+                                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+                                decoration: BoxDecoration(
+                                  color: cs.surfaceContainerHighest,
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: DropdownButtonHideUnderline(
+                                  child: DropdownButton<AppLanguage>(
+                                    value: vernService.currentLanguage,
+                                    icon: Icon(Icons.arrow_drop_down, color: cs.primary, size: 20),
+                                    dropdownColor: cs.surface,
+                                    borderRadius: BorderRadius.circular(16),
+                                    items: const [
+                                      DropdownMenuItem(
+                                        value: AppLanguage.hindi,
+                                        child: Text('हिंदी', style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold)),
+                                      ),
+                                      DropdownMenuItem(
+                                        value: AppLanguage.marathi,
+                                        child: Text('मराठी', style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold)),
+                                      ),
+                                      DropdownMenuItem(
+                                        value: AppLanguage.english,
+                                        child: Text('English', style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold)),
+                                      ),
+                                    ],
+                                    onChanged: (newLang) {
+                                      if (newLang != null) {
+                                        vernService.setLanguage(newLang);
+                                      }
+                                    },
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                         // Title
                         Padding(
-                          padding: const EdgeInsets.fromLTRB(12, 32, 0, 8),
+                          padding: const EdgeInsets.fromLTRB(12, 16, 0, 8),
                           child: Text(
-                            'Welcome to Aarogyam!',
+                            title,
                             style: tt.displayMedium?.copyWith(
                               fontFamily: GoogleFonts.outfit().fontFamily,
                             ),
@@ -74,7 +156,7 @@ class _AuthCreateWidgetState extends State<AuthCreateWidget> {
                         Padding(
                           padding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
                           child: Text(
-                            'Your health, your responsibility. Let\'s get started!',
+                            subtitle,
                             style: tt.labelLarge?.copyWith(
                               fontFamily: GoogleFonts.manrope().fontFamily,
                               color: cs.onSurfaceVariant,
@@ -88,9 +170,9 @@ class _AuthCreateWidgetState extends State<AuthCreateWidget> {
                             controller: _model.displayNameTextController,
                             focusNode: _model.displayNameFocusNode,
                             textCapitalization: TextCapitalization.words,
-                            decoration: const InputDecoration(
-                              labelText: 'Display Name',
-                              border: OutlineInputBorder(),
+                            decoration: InputDecoration(
+                              labelText: nameLabel,
+                              border: const OutlineInputBorder(),
                             ),
                             validator: (v) {
                               if (v == null || v.isEmpty) return 'Name required';
@@ -105,9 +187,9 @@ class _AuthCreateWidgetState extends State<AuthCreateWidget> {
                             controller: _model.emailAddressTextController,
                             focusNode: _model.emailAddressFocusNode,
                             keyboardType: TextInputType.emailAddress,
-                            decoration: const InputDecoration(
-                              labelText: 'Email Address',
-                              border: OutlineInputBorder(),
+                            decoration: InputDecoration(
+                              labelText: emailLabel,
+                              border: const OutlineInputBorder(),
                             ),
                             validator: (v) {
                               if (v == null || v.isEmpty) return 'Email required';
@@ -124,7 +206,7 @@ class _AuthCreateWidgetState extends State<AuthCreateWidget> {
                             focusNode: _model.passwordFocusNode,
                             obscureText: !_model.passwordVisibility,
                             decoration: InputDecoration(
-                              labelText: 'Password',
+                              labelText: passwordLabel,
                               border: const OutlineInputBorder(),
                               suffixIcon: IconButton(
                                 icon: Icon(
@@ -175,7 +257,7 @@ class _AuthCreateWidgetState extends State<AuthCreateWidget> {
                         elevation: 4,
                       ),
                       child: Text(
-                        'Create Account',
+                        createButtonText,
                         style: GoogleFonts.manrope(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,

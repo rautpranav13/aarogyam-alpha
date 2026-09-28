@@ -95,9 +95,7 @@ class _ReminderEmptyWidgetState extends State<ReminderEmptyWidget>
               }
               context.pushNamed('ReminderPage');
             },
-            text: FFLocalizations.of(context).getText(
-              'zukstjy4' /* Set Reminder */,
-            ),
+            text: 'Set Daily Reminder',
             options: FFButtonOptions(
               height: 40.0,
               padding: const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),

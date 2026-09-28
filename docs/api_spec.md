@@ -125,3 +125,130 @@ Synthesizes spoken audio from text using IBM Watson Text-to-Speech in native Ind
 
 #### Response:
 `audio/mpeg` binary stream (playable directly on Android via `audioplayers`).
+
+---
+
+### 5. `POST /api/dadi-ma/chat`
+Dadi-Ma AI Companion Chat: Conversational vernacular health companion powered by IBM Granite. Explains drug prescriptions in grandmotherly terminology, checks patient schedule, recommends safe Ayurvedic home remedies, and detects life-threatening emergency symptoms.
+
+#### Request Body:
+```json
+{
+  "query": "मुझे रात में सूखी खांसी हो रही है, क्या करूं?",
+  "language": "hi",
+  "patient_name": "बेटा",
+  "medications": [
+    {
+      "name": "Metformin 500mg",
+      "frequency": "1-0-1",
+      "food_relation": "After Food"
+    }
+  ],
+  "diagnosis": "Type 2 Diabetes"
+}
+```
+
+#### Response (200 OK - Standard Guidance):
+```json
+{
+  "status": "success",
+  "is_emergency": false,
+  "response_text": "घबराओ मत बेटा! मौसम बदलने से जुकाम-खांसी हो जाती है। मैंने नीचे तुलसी-अदरक का काढ़ा बताया है, इसे पियो।",
+  "speech_text": "घबराओ मत बेटा! तुलसी-अदरक का काढ़ा पियो और ठंडी चीजें मत खाना।",
+  "action_required": "NONE",
+  "remedies": [
+    {
+      "id": "cough_cold",
+      "title": "तुलसी, अदरक और शहद का काढ़ा (खांसी-जुकाम)",
+      "description": "खांसी और गले की खराश के लिए दादी-माँ का सबसे भरोसेमंद नुस्खा।",
+      "ingredients": ["5-6 ताजी तुलसी की पत्तियां", "1 छोटा टुकड़ा अदरक", "1 चम्मच शहद", "1 कप पानी"],
+      "preparation": "पानी में तुलसी और अदरक उबालें। गुनगुना होने पर शहद मिलाकर धीरे-धीरे पिएं।",
+      "precaution": "मधुमेह के मरीज शहद की मात्रा कम रखें।"
+    }
+  ]
+}
+```
+
+#### Response (200 OK - Emergency Red-Flag Triage):
+```json
+{
+  "status": "emergency",
+  "is_emergency": true,
+  "emergency_warning": "⚠️ आपातकालीन चेतावनी: यह गंभीर लक्षण हो सकते हैं। कृपया तुरंत नजदीकी डॉक्टर से मिलें या १०८ एम्बुलेंस को कॉल करें।",
+  "action_required": "CALL_108_OR_VISIT_DOCTOR",
+  "remedies": []
+}
+```
+
+---
+
+### 6. `GET / POST /api/dadi-ma/remedies`
+Returns curated, clinically safe traditional Ayurvedic home-care remedies categorized by condition (respiratory, digestive, pain relief, chronic care, sleep).
+
+#### Parameters:
+- `language`: `hi` | `mr` | `en`
+- `category` (optional): `respiratory` | `digestive` | `pain_relief` | `chronic_care` | `mental_wellness`
+- `query` (optional): search string
+
+#### Response (200 OK):
+```json
+{
+  "status": "success",
+  "count": 6,
+  "language": "hi",
+  "remedies": [
+    {
+      "id": "cough_cold",
+      "category": "respiratory",
+      "title": "तुलसी, अदरक और शहद का काढ़ा (खांसी-जुकाम)",
+      "ingredients": ["..."],
+      "preparation": "...",
+      "precaution": "..."
+    }
+  ]
+}
+```
+
+---
+
+### 7. `GET / POST /api/dadi-ma/daily-greeting`
+Generates dynamic, time-of-day contextual maternal greetings and daily wellness encouragement.
+
+#### Parameters:
+- `hour`: integer (0-23)
+- `language`: `hi` | `mr` | `en`
+
+#### Response (200 OK):
+```json
+{
+  "status": "success",
+  "data": {
+    "period": "morning",
+    "title": "शुभ प्रभात! 🌅",
+    "text": "नमस्ते बेटा! पहले खाली पेट वाली दवा लें, फिर पौष्टिक नाश्ता करें और गुनगुना पानी पिएं।",
+    "audio_text": "शुभ प्रभात! सुबह की दवाइयाँ समय पर लें और नाश्ता करें।"
+  }
+}
+```
+
+---
+
+### 8. `POST /api/dadi-ma/explain-prescription`
+Deep prescription explainer breaking down every medicine, why it was prescribed, food timings, and recovery home habits.
+
+#### Request Body:
+```json
+{
+  "doctor_name": "डॉ. एस. के. शर्मा",
+  "diagnosis": "उच्च रक्तचाप और मधुमेह",
+  "language": "hi",
+  "medications": [
+    {
+      "name": "Metformin 500mg",
+      "frequency": "1-0-1",
+      "instructions_vernacular": "भोजन के बाद पानी के साथ लें।"
+    }
+  ]
+}
+```
+

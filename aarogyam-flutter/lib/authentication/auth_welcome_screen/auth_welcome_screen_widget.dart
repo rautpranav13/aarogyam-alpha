@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import '/core/services/vernacular_service.dart';
+import '/l10n/l10n.dart';
 import 'auth_welcome_screen_model.dart';
 export 'auth_welcome_screen_model.dart';
 
@@ -30,6 +33,40 @@ class _AuthWelcomeScreenWidgetState extends State<AuthWelcomeScreenWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final vernService = Provider.of<VernacularService>(context);
+    final l10n = AppLocalizations.of(context);
+
+    final tagline = l10n?.welcomeTagline ??
+        (vernService.currentLanguage == AppLanguage.hindi
+            ? 'स्वास्थ्य को आसान बनाएं\nक्योंकि आपको जानने का हक है!'
+            : (vernService.currentLanguage == AppLanguage.marathi
+                ? 'आरोग्य सोपे केले\nकारण तुम्ही जाणून घेण्यास पात्र आहात!'
+                : 'Health Made Easy\nBecause You Matter'));
+
+    final appName = l10n?.welcomeAppName ??
+        (vernService.currentLanguage == AppLanguage.english ? 'aarogyam' : 'आरोग्यम्');
+
+    final subtitle = l10n?.welcomeSubtitle ??
+        (vernService.currentLanguage == AppLanguage.hindi
+            ? 'आपका स्वागत है!'
+            : (vernService.currentLanguage == AppLanguage.marathi
+                ? 'आपले स्वागत आहे!'
+                : 'Welcomes You!'));
+
+    final loginText = l10n?.welcomeLogin ??
+        (vernService.currentLanguage == AppLanguage.hindi
+            ? 'लॉगिन करें'
+            : (vernService.currentLanguage == AppLanguage.marathi
+                ? 'लॉगिन करा'
+                : 'Login'));
+
+    final createAccountText = l10n?.welcomeCreateAccount ??
+        (vernService.currentLanguage == AppLanguage.hindi
+            ? 'खाता बनाएं'
+            : (vernService.currentLanguage == AppLanguage.marathi
+                ? 'खाते तयार करा'
+                : 'Create an Account'));
+
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
@@ -48,9 +85,52 @@ class _AuthWelcomeScreenWidgetState extends State<AuthWelcomeScreenWidget> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const SizedBox(height: 8),
+                // Top bar with language switcher
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+                        decoration: BoxDecoration(
+                          color: Colors.white.withValues(alpha: 0.2),
+                          borderRadius: BorderRadius.circular(20),
+                          border: Border.all(color: Colors.white.withValues(alpha: 0.4)),
+                        ),
+                        child: DropdownButtonHideUnderline(
+                          child: DropdownButton<AppLanguage>(
+                            value: vernService.currentLanguage,
+                            icon: const Icon(Icons.arrow_drop_down, color: Colors.white, size: 20),
+                            dropdownColor: const Color(0xFF00897B),
+                            borderRadius: BorderRadius.circular(16),
+                            items: const [
+                              DropdownMenuItem(
+                                value: AppLanguage.hindi,
+                                child: Text('हिंदी', style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.white)),
+                              ),
+                              DropdownMenuItem(
+                                value: AppLanguage.marathi,
+                                child: Text('मराठी', style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.white)),
+                              ),
+                              DropdownMenuItem(
+                                value: AppLanguage.english,
+                                child: Text('English', style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.white)),
+                              ),
+                            ],
+                            onChanged: (newLang) {
+                              if (newLang != null) {
+                                vernService.setLanguage(newLang);
+                              }
+                            },
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
                 Text(
-                  'Health Made Easy\nBecause You Matter',
+                  tagline,
                   textAlign: TextAlign.center,
                   style: GoogleFonts.montserrat(
                     fontSize: 15,
@@ -72,20 +152,20 @@ class _AuthWelcomeScreenWidgetState extends State<AuthWelcomeScreenWidget> {
                       ),
                     ),
                     const SizedBox(height: 16),
-                    const Text(
-                      'aarogyam',
+                    Text(
+                      appName,
                       style: TextStyle(
-                        fontFamily: 'Samarkan',
-                        fontSize: 40,
+                        fontFamily: vernService.currentLanguage == AppLanguage.english ? 'Samarkan' : 'KCS',
+                        fontSize: vernService.currentLanguage == AppLanguage.english ? 40 : 36,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
                       ),
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      'Welcomes You!',
+                      subtitle,
                       style: GoogleFonts.playfairDisplay(
-                        fontSize: 32,
+                        fontSize: 28,
                         fontWeight: FontWeight.bold,
                         color: Colors.white.withValues(alpha: 0.9),
                       ),
@@ -109,7 +189,7 @@ class _AuthWelcomeScreenWidgetState extends State<AuthWelcomeScreenWidget> {
                             elevation: 4,
                           ),
                           child: Text(
-                            'Login',
+                            loginText,
                             style: GoogleFonts.manrope(
                               fontSize: 16,
                               fontWeight: FontWeight.w600,
@@ -129,7 +209,7 @@ class _AuthWelcomeScreenWidgetState extends State<AuthWelcomeScreenWidget> {
                             shape: const StadiumBorder(),
                           ),
                           child: Text(
-                            'Create an Account',
+                            createAccountText,
                             style: GoogleFonts.outfit(
                               fontSize: 16,
                               fontWeight: FontWeight.w600,

@@ -200,16 +200,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           ),
         ),
         GoRoute(
-          name: 'ChatBot',
-          path: '/chatBot',
-          pageBuilder: (context, state) => _buildPage(
-            context,
-            state,
-            appStateNotifier,
-            const ChatBotWidget(),
-          ),
-        ),
-        GoRoute(
           name: 'BlisterVerifier',
           path: '/blisterVerifier',
           pageBuilder: (context, state) => _buildPage(
@@ -217,6 +207,16 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             state,
             appStateNotifier,
             const BlisterVerifierWidget(),
+          ),
+        ),
+        GoRoute(
+          name: 'DadiMa',
+          path: '/dadiMa',
+          pageBuilder: (context, state) => _buildPage(
+            context,
+            state,
+            appStateNotifier,
+            const DadiMaWidget(),
           ),
         ),
       ],
