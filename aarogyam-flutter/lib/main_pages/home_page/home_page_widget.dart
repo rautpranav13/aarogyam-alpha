@@ -131,39 +131,47 @@ class _HomePageWidgetState extends State<HomePageWidget> {
         ),
         actions: [
           // Language Switcher Dropdown
-          Container(
-            margin: const EdgeInsets.symmetric(vertical: 8),
-            padding: const EdgeInsets.symmetric(horizontal: 8),
-            decoration: BoxDecoration(
-              color: AppColors.surfaceAlt,
-              borderRadius: BorderRadius.circular(20),
-              border: Border.all(color: AppColors.divider),
-            ),
-            child: DropdownButtonHideUnderline(
-              child: DropdownButton<AppLanguage>(
-                value: vernService.currentLanguage,
-                icon: const Icon(Icons.arrow_drop_down, color: AppColors.primary, size: 18),
-                dropdownColor: AppColors.surface,
-                borderRadius: BorderRadius.circular(16),
-                items: const [
-                  DropdownMenuItem(
-                    value: AppLanguage.hindi,
-                    child: Text('हिंदी', style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold)),
+          PopupMenuButton<AppLanguage>(
+            tooltip: 'Language',
+            initialValue: vernService.currentLanguage,
+            onSelected: (AppLanguage newLang) {
+              vernService.setLanguage(newLang);
+            },
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+            itemBuilder: (context) => [
+              const PopupMenuItem(
+                value: AppLanguage.hindi,
+                child: Text('हिंदी (Hindi)', style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold)),
+              ),
+              const PopupMenuItem(
+                value: AppLanguage.marathi,
+                child: Text('मराठी (Marathi)', style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold)),
+              ),
+              const PopupMenuItem(
+                value: AppLanguage.english,
+                child: Text('English', style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold)),
+              ),
+            ],
+            child: Container(
+              margin: const EdgeInsets.symmetric(vertical: 8),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+              decoration: BoxDecoration(
+                color: AppColors.surfaceAlt,
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(color: AppColors.divider),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    vernService.currentLanguage == AppLanguage.marathi
+                        ? 'मराठी'
+                        : (vernService.currentLanguage == AppLanguage.hindi ? 'हिंदी' : 'English'),
+                    style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: AppColors.primary),
                   ),
-                  DropdownMenuItem(
-                    value: AppLanguage.marathi,
-                    child: Text('मराठी', style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold)),
-                  ),
-                  DropdownMenuItem(
-                    value: AppLanguage.english,
-                    child: Text('English', style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold)),
-                  ),
+                  const SizedBox(width: 4),
+                  const Icon(Icons.arrow_drop_down, color: AppColors.primary, size: 18),
                 ],
-                onChanged: (newLang) {
-                  if (newLang != null) {
-                    vernService.setLanguage(newLang);
-                  }
-                },
               ),
             ),
           ),

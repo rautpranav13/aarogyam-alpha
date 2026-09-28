@@ -10,9 +10,10 @@ void main() {
         '345678901238',
         '987654321096',
         '555544443333',
-        '412345678900',
-        '890123456788',
+        '412345678902',
+        '890123456784',
       ];
+
 
       int tested = 0;
       int missed = 0;
@@ -67,7 +68,6 @@ void main() {
 
       if (tested > 0) {
         final rate = (tested - missed) / tested;
-        print('Dart Twin Error Detection: Tested=$tested, Missed=$missed, Rate=${(rate * 100).toStringAsFixed(2)}%');
         expect(rate, greaterThanOrEqualTo(0.90));
       }
     });
@@ -101,9 +101,9 @@ void main() {
 
       expect(tested, greaterThan(30));
       final rate = (tested - missed) / tested;
-      print('Dart Jump Transposition Detection: Tested=$tested, Missed=$missed, Rate=${(rate * 100).toStringAsFixed(2)}%');
-      expect(rate, inInclusiveRange(0.90, 0.98));
+      expect(rate, greaterThanOrEqualTo(0.90));
     });
+
 
     test('Rejects invalid leading digits 0 and 1, lengths, and boundaries', () {
       expect(VerhoeffAlgorithm.validate('000000000000'), isFalse);
@@ -141,31 +141,29 @@ void main() {
 
     test('Demonstrates Phone Regex Cross-Interference on contiguous 12-digit batch codes', () {
       // 987654321096 is a valid Verhoeff batch code
-      // When contiguous, digits 2..11 (7654321096) match _mobilePattern
       const input = 'Medication: Paracetamol, Batch: 987654321096';
       final result = EdgePiiSanitizer.sanitize(input);
 
-      print('Dart Batch Cross-Interference: ${result.sanitizedText}');
-      print('Aadhaar count: ${result.entityCounts[PiiType.aadhaar]}');
-      print('Phone count: ${result.entityCounts[PiiType.phone]}');
-
-      // Aadhaar shield worked:
-      expect(result.entityCounts[PiiType.aadhaar], equals(0));
-      // BUT Phone regex falsely captured trailing 10 digits:
-      expect(result.entityCounts[PiiType.phone], equals(1));
-      expect(result.sanitizedText, contains('98XXXXX-XX096'));
+      // In Iteration 2 (Hardened):
+      // Both Aadhaar and Phone masking must be suppressed:
+      expect(result.entityCounts[PiiType.aadhaar], equals(0),
+          reason: 'Aadhaar shield must protect batch code');
+      expect(result.entityCounts[PiiType.phone], equals(0),
+          reason: 'Phone regex must NOT capture inside 12-digit batch code');
+      expect(result.sanitizedText, contains('987654321096'),
+          reason: 'Batch code must be preserved intact');
     });
 
     test('Demonstrates Rx# regex word-boundary defect in Dart', () {
-      // In Dart, _pharmaContextPattern has 'rx#)\b'
-      // '#' is non-word, space is non-word, so \b never matches
       const input = 'Pharmacy: Rx# 2345 6789 0124';
       final result = EdgePiiSanitizer.sanitize(input);
 
-      print('Rx# test: ${result.sanitizedText}, Aadhaar count: ${result.entityCounts[PiiType.aadhaar]}');
-      // Demonstrates that Rx# fails to shield the batch code from Aadhaar masking:
-      expect(result.entityCounts[PiiType.aadhaar], equals(1));
-      expect(result.sanitizedText, contains('XXXXXXXX0124'));
+      // In Iteration 2 (Hardened):
+      // Rx# must be recognized, suppressing Aadhaar masking:
+      expect(result.entityCounts[PiiType.aadhaar], equals(0),
+          reason: 'Rx# must successfully shield the batch code from Aadhaar masking');
+      expect(result.sanitizedText, contains('2345 6789 0124'),
+          reason: 'Prescription batch code under Rx# must be preserved');
     });
   });
 
@@ -184,28 +182,31 @@ void main() {
     });
 
     test('Demonstrates 11-digit boundary defect in Dart', () {
-      // Missing leading boundary causes trailing 10 digits to be masked as phone
       const input = 'Transaction Ref: 98765432101';
       final result = EdgePiiSanitizer.sanitize(input);
 
-      print('11-digit test: ${result.sanitizedText}, Phone count: ${result.entityCounts[PiiType.phone]}');
-      // Trailing 10 digits 8765432101 matched and masked:
-      expect(result.entityCounts[PiiType.phone], equals(1));
-      expect(result.sanitizedText, contains('9XXXXX-XX101'));
+      // In Iteration 2 (Hardened):
+      // 11-digit identifier must NOT be masked as phone:
+      expect(result.entityCounts[PiiType.phone], equals(0),
+          reason: '11-digit identifier must not have trailing 10 digits masked');
+      expect(result.sanitizedText, equals('Transaction Ref: 98765432101'),
+          reason: 'Transaction reference must be preserved intact');
     });
 
     test('Demonstrates non-standard spaced phone numbers LEAKING unmasked in Dart', () {
       // 4+6 format
       final res4_6 = EdgePiiSanitizer.sanitize('Call 9876 543210 immediately');
-      print('4+6 format: "${res4_6.sanitizedText}", phone count: ${res4_6.entityCounts[PiiType.phone]}');
-      expect(res4_6.entityCounts[PiiType.phone], equals(0)); // Leaked!
-      expect(res4_6.sanitizedText, contains('9876 543210'));
+      expect(res4_6.entityCounts[PiiType.phone], equals(1),
+          reason: '4+6 spaced Indian phone number must be masked');
+      expect(res4_6.sanitizedText, isNot(contains('9876 543210')),
+          reason: 'Raw 4+6 phone number must not leak');
 
       // 3+3+4 format
       final res3_3_4 = EdgePiiSanitizer.sanitize('Call 987 654 3210 immediately');
-      print('3+3+4 format: "${res3_3_4.sanitizedText}", phone count: ${res3_3_4.entityCounts[PiiType.phone]}');
-      expect(res3_3_4.entityCounts[PiiType.phone], equals(0)); // Leaked!
-      expect(res3_3_4.sanitizedText, contains('987 654 3210'));
+      expect(res3_3_4.entityCounts[PiiType.phone], equals(1),
+          reason: '3+3+4 spaced Indian phone number must be masked');
+      expect(res3_3_4.sanitizedText, isNot(contains('987 654 3210')),
+          reason: 'Raw 3+3+4 phone number must not leak');
     });
 
     test('Demonstrates Cross-Platform V10 Phone Masking Mismatch', () {

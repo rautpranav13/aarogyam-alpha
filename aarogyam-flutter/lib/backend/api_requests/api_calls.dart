@@ -7,9 +7,14 @@ import 'api_manager.dart';
 export 'api_manager.dart' show ApiCallResponse;
 
 String _getBackendUrl() {
-  return dotenv.env['BACKEND_URL'] ??
-      dotenv.env['LVM_API_URL'] ??
-      'http://localhost:5001';
+  try {
+    if (dotenv.isInitialized) {
+      return dotenv.env['BACKEND_URL'] ??
+          dotenv.env['LVM_API_URL'] ??
+          'http://localhost:5001';
+    }
+  } catch (_) {}
+  return 'http://localhost:5001';
 }
 
 /// Step 1: De-Identify & Redact PII via Backend Gateway

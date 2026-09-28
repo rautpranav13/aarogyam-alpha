@@ -26,10 +26,14 @@ class DadiMaService extends ChangeNotifier {
   String? get currentlySpeakingMessageId => _currentlySpeakingMessageId;
 
   String get _backendUrl {
-    final url = dotenv.env['BACKEND_URL'];
-    if (url != null && url.isNotEmpty) {
-      return url.endsWith('/') ? url.substring(0, url.length - 1) : url;
-    }
+    try {
+      if (dotenv.isInitialized) {
+        final url = dotenv.env['BACKEND_URL'];
+        if (url != null && url.isNotEmpty) {
+          return url.endsWith('/') ? url.substring(0, url.length - 1) : url;
+        }
+      }
+    } catch (_) {}
     return 'http://localhost:5001';
   }
 
@@ -75,6 +79,8 @@ class DadiMaService extends ChangeNotifier {
   void resetForLanguage(AppLanguage lang) {
     _messages.clear();
     _addInitialWelcomeMessage(lang);
+    _remedies = _getLocalFallbackRemedies(lang);
+    notifyListeners();
     fetchDailyGuidance();
     fetchRemedies();
   }

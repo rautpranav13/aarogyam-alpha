@@ -178,12 +178,11 @@ def test_synthesized_verhoeff_batch_preservation():
             assert spaced in sanitized, f"Batch code {spaced} was modified under keyword {kw}"
 
 
+
 def test_batch_code_phone_cross_interference_vulnerability():
     """
-    Vulnerability Demonstration:
-    When a valid 12-digit Verhoeff batch number contains a 10-digit sequence
-    starting with 6-9 (e.g. 987654321096 or 9876 5432 1096),
-    the mobile phone regex incorrectly matches and masks the batch number.
+    Verifies that a valid 12-digit Verhoeff batch number containing digits
+    starting with 6-9 is NOT falsely captured or mutilated by the phone regex.
     """
     # 9876 5432 1096 is a valid Verhoeff number
     v_code = "987654321096"
@@ -192,23 +191,20 @@ def test_batch_code_phone_cross_interference_vulnerability():
     text_spaced = "Rx: Amoxicillin 500mg, Batch No: 9876 5432 1096, Exp: 12/2027"
     sanitized_spaced, meta_spaced = mask_pii(text_spaced)
 
-    # In Python, MOBILE_PATTERN_RE matches 76 5432 1096 inside the batch code
-    # This test documents the empirical failure:
     phone_masked = meta_spaced["entities_masked"]["phone"]
     aadhaar_masked = meta_spaced["entities_masked"]["aadhaar"]
 
-    # Document empirical reality:
-    print(f"\nEmpirical batch cross-interference result: '{sanitized_spaced}' (phone: {phone_masked}, aadhaar: {aadhaar_masked})")
+    # In Iteration 2 (Hardened):
+    # Phone regex with (?<!\d) must NOT match inside the 12-digit batch code.
     assert aadhaar_masked == 0, "Aadhaar shield worked"
-    # Note: Phone regex falsely captures suffix because of missing boundary constraint
-    assert phone_masked == 1, "Demonstrated phone cross-interference on batch code"
-    assert "[MASKED-PHONE-XXXX]" in sanitized_spaced
+    assert phone_masked == 0, "Batch code must NOT be falsely masked by phone regex"
+    assert "9876 5432 1096" in sanitized_spaced, "Batch number preserved intact"
 
 
 def test_missing_batch_labels_in_python_backend():
     """
-    Empirically demonstrates that SN:, Item:, and Rx# are missing from Python's
-    BATCH_LABEL_RE, causing valid Verhoeff batch codes to be falsely redacted as Aadhaar.
+    Verifies that SN:, Item:, and Rx# are recognized as pharmaceutical batch labels,
+    preventing valid Verhoeff batch codes from being falsely redacted as Aadhaar.
     """
     code = "2345 6789 0124"
     assert validate_verhoeff(code) is True
@@ -220,10 +216,14 @@ def test_missing_batch_labels_in_python_backend():
     # Rx#
     s_rx, m_rx = mask_pii(f"Prescription Rx# {code}")
 
-    # Empirical behavior: Python backend masks all 3 as Aadhaar because labels are missing from BATCH_LABEL_RE
-    assert m_sn["entities_masked"]["aadhaar"] == 1
-    assert m_item["entities_masked"]["aadhaar"] == 1
-    assert m_rx["entities_masked"]["aadhaar"] == 1
+    # In Iteration 2 (Hardened):
+    # All 3 labels must be recognized, suppressing Aadhaar masking:
+    assert m_sn["entities_masked"]["aadhaar"] == 0, "SN: must shield batch number"
+    assert m_item["entities_masked"]["aadhaar"] == 0, "Item: must shield batch number"
+    assert m_rx["entities_masked"]["aadhaar"] == 0, "Rx# must shield batch number"
+    assert code in s_sn
+    assert code in s_item
+    assert code in s_rx
 
 
 # =============================================================================
@@ -254,19 +254,17 @@ def test_phone_fake_mobile_prefixes_1_through_5():
 
 
 def test_phone_11digit_suffix_matching_vulnerability():
-    """
-    Vulnerability Demonstration:
-    Because MOBILE_PATTERN_RE lacks a leading word boundary / non-digit check,
-    an 11-digit number starting with 9 (e.g. 98765432101) has its trailing 10 digits
-    matched and masked as a phone number, leaving a dangling leading digit.
+    r"""
+    Verifies that MOBILE_PATTERN_RE with leading lookbehind (?<!\d) does NOT
+    match the trailing 10 digits of an 11-digit number.
     """
     text = "Transaction Ref: 98765432101"
     sanitized, meta = mask_pii(text)
 
-    # Empirical proof of regex boundary flaw:
-    print(f"\nEmpirical 11-digit result: '{sanitized}' (phone: {meta['entities_masked']['phone']})")
-    assert meta["entities_masked"]["phone"] == 1
-    assert "9[MASKED-PHONE-XXXX]" in sanitized
+    # In Iteration 2 (Hardened):
+    # Must reject 11-digit numbers and leave them uncorrupted:
+    assert meta["entities_masked"]["phone"] == 0, "11-digit identifier must NOT be masked as phone"
+    assert "Transaction Ref: 98765432101" == sanitized
 
 
 def test_phone_spaced_formats_in_python():

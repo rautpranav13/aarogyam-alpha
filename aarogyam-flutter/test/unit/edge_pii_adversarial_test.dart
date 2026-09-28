@@ -59,8 +59,6 @@ void main() {
       // Dispatched stress-test case: "नाम - सुरेश शर्मा;"
       const standalone = 'नाम - सुरेश शर्मा; उम्र: ४५ वर्ष';
       final result = EdgePiiSanitizer.sanitize(standalone);
-      final masked = result.sanitizedText.contains('[PATIENT-ANON-');
-      print('Standalone "नाम - सुरेश शर्मा;" masked status: $masked | Result: "${result.sanitizedText}"');
       expect(result.sanitizedText.contains('सुरेश शर्मा'), isFalse,
           reason: 'Raw patient name leaked under standalone "नाम -" header');
     });
@@ -68,7 +66,6 @@ void main() {
     test('Hindi age boundary without newline: "मरीज का नाम: सुरेश शर्मा उम्र: ४५ वर्ष"', () {
       const text = 'मरीज का नाम: सुरेश शर्मा उम्र: ४५ वर्ष';
       final result = EdgePiiSanitizer.sanitize(text);
-      print('Age boundary test result: "${result.sanitizedText}"');
       // Must not leak raw name AND must not swallow "उम्र" into the pseudonym token!
       expect(result.sanitizedText.contains('सुरेश शर्मा'), isFalse);
       expect(result.sanitizedText.contains('[PATIENT-ANON-BA83]'), isTrue,
@@ -78,11 +75,9 @@ void main() {
     test('Devanagari numerals in Aadhaar and Phone numbers', () {
       const aadhaarDev = 'आधार: २३४५ ६७८९ ०१२४';
       final resAadhaar = EdgePiiSanitizer.sanitize(aadhaarDev);
-      print('Devanagari Aadhaar result: "${resAadhaar.sanitizedText}" (counts: ${resAadhaar.entityCounts})');
 
       const phoneDev = 'संपर्क: ९८७६५४३२१०';
       final resPhone = EdgePiiSanitizer.sanitize(phoneDev);
-      print('Devanagari Phone result: "${resPhone.sanitizedText}" (counts: ${resPhone.entityCounts})');
 
       expect(resAadhaar.sanitizedText.contains('२३४५'), isFalse,
           reason: 'Devanagari Aadhaar leaked unmasked!');
@@ -289,7 +284,7 @@ Rx: Tab Atorvastatin 20mg
     test('Processes 100KB prescription text without ReDoS or memory blowout', () {
       final buffer = StringBuffer();
       // Generate realistic mixed clinical prescription lines totaling ~100KB
-      final singleBlock = '''
+      const singleBlock = '''
 District Hospital Pune | AIIMS Outreach Clinic
 Dr. S. K. Sharma, MD, MBBS, Reg: MMC-12345
 Patient Name: Ramesh Kumar, Age: 54 Yrs, Gender: Male, UHID: UHID-98124
@@ -309,14 +304,11 @@ Rx: Metformin 500mg BD after food, Atorvastatin 20mg HS
       }
 
       final massiveText = buffer.toString();
-      final sizeInKb = (utf8.encode(massiveText).length / 1024).toStringAsFixed(2);
       expect(utf8.encode(massiveText).length, greaterThan(100 * 1024));
 
       final stopwatch = Stopwatch()..start();
       final result = EdgePiiSanitizer.sanitize(massiveText);
       stopwatch.stop();
-
-      print('Processed ${sizeInKb} KB in ${stopwatch.elapsedMilliseconds} ms');
 
       // Performance check: Must complete within 2000ms (no catastrophic backtracking)
       expect(stopwatch.elapsedMilliseconds, lessThan(3000),

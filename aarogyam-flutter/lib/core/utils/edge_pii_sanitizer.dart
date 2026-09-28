@@ -163,10 +163,25 @@ class VerhoeffAlgorithm {
 
   static const List<int> inv = [0, 4, 3, 2, 1, 5, 6, 7, 8, 9];
 
+  /// Normalizes Devanagari numerals (०-९, U+0966-U+096F) to standard ASCII digits (0-9).
+  static String normalizeDevanagariDigits(String input) {
+    final buffer = StringBuffer();
+    for (int i = 0; i < input.length; i++) {
+      final code = input.codeUnitAt(i);
+      if (code >= 0x0966 && code <= 0x096F) {
+        buffer.writeCharCode(0x30 + (code - 0x0966));
+      } else {
+        buffer.writeCharCode(code);
+      }
+    }
+    return buffer.toString();
+  }
+
   /// Validates a 12-digit UIDAI Aadhaar number string using the Verhoeff algorithm.
   /// Rejects numbers that do not have 12 digits or whose first digit is 0 or 1.
   static bool validate(String number) {
-    final digits = number.replaceAll(RegExp(r'\D'), '');
+    final ascii = normalizeDevanagariDigits(number);
+    final digits = ascii.replaceAll(RegExp(r'\D'), '');
     if (digits.length != 12) return false;
 
     final firstDigit = int.tryParse(digits[0]);
@@ -186,7 +201,8 @@ class VerhoeffAlgorithm {
 
   /// Calculates the 12th Verhoeff checksum digit for an 11-digit prefix.
   static int generateChecksum(String prefix11) {
-    final digits = prefix11.replaceAll(RegExp(r'\D'), '');
+    final ascii = normalizeDevanagariDigits(prefix11);
+    final digits = ascii.replaceAll(RegExp(r'\D'), '');
     if (digits.length != 11) {
       throw ArgumentError('Prefix must be exactly 11 digits, got: ${digits.length}');
     }
@@ -202,6 +218,10 @@ class VerhoeffAlgorithm {
 
 /// On-Device / Edge PII Sanitization Engine for Aarogyam Flutter Client.
 class EdgePiiSanitizer {
+  /// Converts Devanagari numerals (०-९) to ASCII digits (0-9).
+  static String devanagariToAscii(String input) =>
+      VerhoeffAlgorithm.normalizeDevanagariDigits(input);
+
   // 1. Doctor & Medical Facility Safeguard Filter
   static final RegExp _doctorFilterPattern = RegExp(
     r'\b(Dr\.?|Doctor|डॉ\.?|डॉ|वैद्य|Prof\.?|Professor|MBBS|MD|MS|BAMS|BHMS|BDS|FRCS|DM|MCh|DGO|DNB|Clinic|Hospital|Dispensary|Health\s+Centre|PHC|CHC|AIIMS|Nursing\s+Home|रुग्णालय|दवाखाना|अस्पताल|आरोग्य\s+केंद्र|Reg\.?\s*No|MCI|MMC)\b',
@@ -211,11 +231,11 @@ class EdgePiiSanitizer {
 
   // 2. Multilingual Patient Name Anchor Pattern (English, Hindi, Marathi)
   static final RegExp _patientAnchorPattern = RegExp(
-    r'(?:patient(?:\s+name)?|pt\.?\s*name|pt\b|मरीज(?:\s+का\s+नाम)?|रोगी(?:\s+का\s+नाम)?|रुग्णाचे\s+नाव)'
+    r'(?:patient(?:\s+name)?|pt\.?\s*name|pt\b|मरीज(?:\s+का\s+नाम)?|रोगी(?:\s+का\s+नाम)?|रुग्णाचे\s+नाव|(?:मरीज\s*)?नाम|(?:रुग्णाचे\s*)?नाव)'
     r'\s*[:\-\s]\s*'
     r'((?:(?:Mr|Mrs|Ms|Shri|Smt|Kumari|Master|श्री|श्रीमती|कु)\.?\s+)?'
     r'[A-Za-z\u0900-\u097F]+(?:\s+[A-Za-z\u0900-\u097F]+){0,3})'
-    r'(?=\s*(?:,|\n|\r|Age|Sex|Gender|Yrs|Yr|M/F|\bM\b|\bF\b|वर्ष|वय|दिनांक|UHID|OPD|$))',
+    r'(?=\s*(?:[,;\n\r|/]|Age|उम्र|आयु|Sex|Gender|Yrs|Yr|M/F|\bM\b|\bF\b|वर्ष|वय|दिनांक|UHID|OPD|$))',
     caseSensitive: false,
     unicode: true,
   );
@@ -242,30 +262,33 @@ class EdgePiiSanitizer {
     r'\b(\d{2}-\d{4}-\d{4}-\d{4})\b',
   );
 
-  // 4. Aadhaar Patterns (Explicit and General)
+  // 4. Aadhaar Patterns (Explicit and General with Devanagari support)
   static final RegExp _aadhaarGeneralPattern = RegExp(
-    r'\b([2-9]\d{3}[\s\-]?[0-9]{4}[\s\-]?[0-9]{4})\b',
+    r'(?<![0-9\u0966-\u096F])([2-9\u0968-\u096F][0-9\u0966-\u096F]{3}[\s\-]?[0-9\u0966-\u096F]{4}[\s\-]?[0-9\u0966-\u096F]{4})(?![0-9\u0966-\u096F])',
+    unicode: true,
   );
 
   static final RegExp _aadhaarExplicitPattern = RegExp(
-    r'(?:^|[\s,;:\n])(?:aadhaar|aadhar|adhar|uid|uidai|आधार(?:\s*क्र\.?)?)\s*[:\-\s]*([0-9]{4}[\s\-]?[0-9]{4}[\s\-]?[0-9]{4})\b',
+    r'(?:^|[\s,;:\n])(?:aadhaar|aadhar|adhar|uid|uidai|आधार(?:\s*क्र\.?)?)\s*[:\-\s]*([0-9\u0966-\u096F]{4}[\s\-]?[0-9\u0966-\u096F]{4}[\s\-]?[0-9\u0966-\u096F]{4})(?![0-9\u0966-\u096F])',
     caseSensitive: false,
     unicode: true,
   );
 
   // 5. Pharmaceutical / Supply Chain Context Pattern (False-Positive Aadhaar Shield)
   static final RegExp _pharmaContextPattern = RegExp(
-    r'\b(batch(?:\s*no\.?|\s*#)?|lot(?:\s*no\.?)?|exp(?:\.|\s*date)?|expiry|mfg(?:\.|\s*date)?|barcode|gtin|invoice|sn|serial(?:\s*no\.?)?|item|rx#)\b',
+    r'\b(batch(?:\s*no\.?|\s*#)?|lot(?:\s*no\.?)?|exp(?:\.|\s*date)?|expiry|mfg(?:\.|\s*date)?|barcode|gtin|invoice|sn|serial(?:\s*no\.?)?|item|rx(?:\s*#)?)\b|बैच|लॉट|कालबाह्य|घटक',
     caseSensitive: false,
+    unicode: true,
   );
 
-  // 6. Contact Number Patterns (Indian Mobile and Landlines)
+  // 6. Contact Number Patterns (Indian Mobile and Landlines with Lookbehinds & Devanagari)
   static final RegExp _mobilePattern = RegExp(
-    r'(?:(?:\+91|0091|91|0)[\s\-]?)?(?:(?:\(0\)\s*))?([6-9]\d{4}[\s\-]?\d{5})\b',
+    r'(?<![0-9\u0966-\u096F])(?:(?:\+(?:91|९१)|0091|००९१|91|९१|0|०)[\s\-]?)?(?:(?:\((?:0|०)\)\s*))?([6-9\u096C-\u096F](?:[\s\-]?[0-9\u0966-\u096F]){9})(?![0-9\u0966-\u096F])',
+    unicode: true,
   );
 
   static final RegExp _landlinePattern = RegExp(
-    r'(?:^|[\s,;:\n])(?:tel|telephone|phone|ph|contact|call|फोन|संपर्क|दूरध्वनी)\s*[:\-\s]\s*(?:\+91[\-\s]?)?(0\d{1,4}[\-\s]?\d{6,8})(?=$|[\s,;:\n])',
+    r'(?:^|[\s,;:\n])(?:tel|telephone|phone|ph|contact|call|फोन|संपर्क|दूरध्वनी)\s*[:\-\s]\s*(?:\+(?:91|९१)[\-\s]?)?((?:0|०)[0-9\u0966-\u096F]{1,4}[\-\s]?[0-9\u0966-\u096F]{6,8})(?=$|[\s,;:\n\r])',
     caseSensitive: false,
     unicode: true,
   );
@@ -308,7 +331,8 @@ class EdgePiiSanitizer {
 
   /// Masks Aadhaar number to partial format: XXXXXXXX1234.
   static String maskAadhaar(String aadhaar, {bool partial = true}) {
-    final digits = aadhaar.replaceAll(RegExp(r'\D'), '');
+    final ascii = VerhoeffAlgorithm.normalizeDevanagariDigits(aadhaar);
+    final digits = ascii.replaceAll(RegExp(r'\D'), '');
     if (digits.length < 4) return '[MASKED-AADHAAR-XXXX]';
     final last4 = digits.substring(digits.length - 4);
     if (partial) {
@@ -320,11 +344,12 @@ class EdgePiiSanitizer {
   /// Masks Indian mobile or landline phone numbers.
   static String maskPhoneNumber(String phone,
       {PhoneMaskStyle style = PhoneMaskStyle.partial}) {
-    final digits = phone.replaceAll(RegExp(r'\D'), '');
+    final ascii = VerhoeffAlgorithm.normalizeDevanagariDigits(phone);
+    final digits = ascii.replaceAll(RegExp(r'\D'), '');
     if (digits.length < 3) return '[MASKED-PHONE-XXXX]';
     final last3 = digits.substring(digits.length - 3);
     if (style == PhoneMaskStyle.partial) {
-      final has91 = phone.contains('+91') || phone.startsWith('0091');
+      final has91 = ascii.contains('+91') || ascii.startsWith('0091');
       return has91 ? '+91-XXXXX-XX$last3' : 'XXXXX-XX$last3';
     }
     return '[MASKED-PHONE-XXXX]';
@@ -361,7 +386,10 @@ class EdgePiiSanitizer {
       }
 
       final anonToken = deidentifyPatientName(rawName);
-      final replaced = fullMatch.replaceFirst(rawName, anonToken);
+      final rawIndex = fullMatch.lastIndexOf(rawName);
+      final replaced = rawIndex != -1
+          ? fullMatch.substring(0, rawIndex) + anonToken + fullMatch.substring(rawIndex + rawName.length)
+          : fullMatch.replaceFirst(rawName, anonToken);
       redactionList.add(RedactedEntity(
         type: PiiType.patientName,
         original: rawName,
@@ -377,7 +405,10 @@ class EdgePiiSanitizer {
     processed = processed.replaceAllMapped(_agePattern, (match) {
       final full = match.group(0)!;
       final ageVal = match.group(1)!;
-      final replaced = full.replaceFirst(ageVal, '[REDACTED]');
+      final rawIndex = full.lastIndexOf(ageVal);
+      final replaced = rawIndex != -1
+          ? full.substring(0, rawIndex) + '[REDACTED]' + full.substring(rawIndex + ageVal.length)
+          : full.replaceFirst(ageVal, '[REDACTED]');
       redactionList.add(RedactedEntity(
         type: PiiType.demographic,
         original: ageVal,
@@ -393,7 +424,10 @@ class EdgePiiSanitizer {
     processed = processed.replaceAllMapped(_genderPattern, (match) {
       final full = match.group(0)!;
       final genderVal = match.group(1)!;
-      final replaced = full.replaceFirst(genderVal, '[REDACTED]');
+      final rawIndex = full.lastIndexOf(genderVal);
+      final replaced = rawIndex != -1
+          ? full.substring(0, rawIndex) + '[REDACTED]' + full.substring(rawIndex + genderVal.length)
+          : full.replaceFirst(genderVal, '[REDACTED]');
       redactionList.add(RedactedEntity(
         type: PiiType.demographic,
         original: genderVal,
@@ -409,7 +443,10 @@ class EdgePiiSanitizer {
     processed = processed.replaceAllMapped(_uhidPattern, (match) {
       final full = match.group(0)!;
       final uhidVal = match.group(1)!;
-      final replaced = full.replaceFirst(uhidVal, '[REDACTED]');
+      final rawIndex = full.lastIndexOf(uhidVal);
+      final replaced = rawIndex != -1
+          ? full.substring(0, rawIndex) + '[REDACTED]' + full.substring(rawIndex + uhidVal.length)
+          : full.replaceFirst(uhidVal, '[REDACTED]');
       redactionList.add(RedactedEntity(
         type: PiiType.demographic,
         original: uhidVal,
@@ -444,7 +481,10 @@ class EdgePiiSanitizer {
       final numStr = match.group(1)!;
       final isValid = validateAadhaarVerhoeff(numStr);
       final masked = maskAadhaar(numStr, partial: partialAadhaarMask);
-      final replaced = full.replaceFirst(numStr, masked);
+      final rawIndex = full.lastIndexOf(numStr);
+      final replaced = rawIndex != -1
+          ? full.substring(0, rawIndex) + masked + full.substring(rawIndex + numStr.length)
+          : full.replaceFirst(numStr, masked);
       redactionList.add(RedactedEntity(
         type: PiiType.aadhaar,
         original: numStr,
@@ -493,7 +533,10 @@ class EdgePiiSanitizer {
       final full = match.group(0)!;
       final phoneStr = match.group(1)!;
       final masked = maskPhoneNumber(phoneStr, style: phoneMaskStyle);
-      final replaced = full.replaceFirst(phoneStr, masked);
+      final rawIndex = full.lastIndexOf(phoneStr);
+      final replaced = rawIndex != -1
+          ? full.substring(0, rawIndex) + masked + full.substring(rawIndex + phoneStr.length)
+          : full.replaceFirst(phoneStr, masked);
       redactionList.add(RedactedEntity(
         type: PiiType.phone,
         original: phoneStr,

@@ -1,3 +1,4 @@
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:aarogyam/core/models/dadi_ma_models.dart';
@@ -10,6 +11,7 @@ void main() {
 
   setUpAll(() {
     TestWidgetsFlutterBinding.ensureInitialized();
+    dotenv.testLoad(fileInput: 'BACKEND_URL=http://localhost:5001\n');
   });
 
   setUp(() async {
